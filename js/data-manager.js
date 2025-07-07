@@ -1,0 +1,562 @@
+/**
+ * Garden Pro Calculator - Data Manager
+ * Responsible for loading and managing crop, mutation, and pet data
+ */
+
+class DataManager {
+    constructor() {
+        this.data = {
+            crops: [],
+            mutations: {},
+            pets: [],
+            config: {}
+        };
+        this.loadPromises = new Map();
+        this.initialized = false;
+    }
+
+    /**
+     * Initialize the data manager
+     * @returns {Promise<boolean>} Whether initialization was successful
+     */
+    async init() {
+        if (this.initialized) return true;
+
+        try {
+            console.log('🔄 Initializing data manager...');
+            
+            // Load all data files in parallel (mutations handled separately by mutations.js)
+            const loadTasks = [
+                this.loadCrops(),
+                // Note: mutations.json is handled independently by mutations.js to avoid conflicts
+                this.loadPets(),
+                this.loadConfig()
+            ];
+
+            await Promise.all(loadTasks);
+            
+            this.initialized = true;
+            console.log('✅ Data manager initialization complete');
+            return true;
+        } catch (error) {
+            console.error('❌ Data manager initialization failed:', error);
+            this.initialized = false;
+            return false;
+        }
+    }
+
+    /**
+     * Load JSON data file
+     * @param {string} url - File URL
+     * @returns {Promise<Object>} Parsed data
+     */
+    async loadJSON(url) {
+        // Avoid loading the same file multiple times
+        if (this.loadPromises.has(url)) {
+            return await this.loadPromises.get(url);
+        }
+
+        const loadPromise = (async () => {
+            try {
+                console.log(`📥 Loading data file: ${url}`);
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                // Check response size for debugging
+                const contentLength = response.headers.get('Content-Length');
+                console.log(`📊 Response content length: ${contentLength} bytes`);
+                
+                const text = await response.text();
+                console.log(`📊 Actual text length: ${text.length} characters`);
+                
+                const data = JSON.parse(text);
+                console.log(`✅ Successfully loaded and parsed: ${url}`);
+                return data;
+            } catch (error) {
+                console.error(`❌ Failed to load ${url}:`, error);
+                throw error;
+            }
+        })();
+
+        this.loadPromises.set(url, loadPromise);
+        return await loadPromise;
+    }
+
+    /**
+     * Load crop data
+     * @returns {Promise<Array>} Array of crop data
+     */
+    async loadCrops() {
+        try {
+            console.log('🌱 Loading crops from data/crops(new).json...');
+            const data = await this.loadJSON('data/crops(new).json');
+            
+            this.data.crops = data.crops || [];
+            console.log(`📊 Found ${this.data.crops.length} crops in data file`);
+            
+            // Data processing and validation
+            this.data.crops = this.data.crops.map(crop => ({
+                ...crop,
+                profit: (crop.minimum_value || 0) - (crop.sheckle_price || 0),
+                sellValue: crop.minimum_value || 0,
+                buyPrice: crop.sheckle_price || 0,
+                rarity: crop.tier || 'Common',
+                multiHarvest: crop.multiHarvest || false,
+                // Use icon from data or fallback to getCropIcon
+                icon: crop.icon || this.getCropIcon(crop.id)
+            }));
+
+            console.log(`✅ Successfully loaded ${this.data.crops.length} crops`);
+            return this.data.crops;
+        } catch (error) {
+            console.error('❌ Failed to load crop data:', error);
+            this.data.crops = this.getDefaultCrops();
+            console.log(`🔄 Using ${this.data.crops.length} default crops as fallback`);
+            return this.data.crops;
+        }
+    }
+
+    /**
+     * Load mutation data
+     * @returns {Promise<Object>} Mutation data object
+     */
+    async loadMutations() {
+        try {
+            const data = await this.loadJSON('data/mutations.json');
+            this.data.mutations = data.mutations || {};
+            
+            console.log(`🌟 Loaded mutation data`);
+            return this.data.mutations;
+        } catch (error) {
+            console.error('❌ Failed to load mutation data:', error);
+            this.data.mutations = this.getDefaultMutations();
+            return this.data.mutations;
+        }
+    }
+
+    /**
+     * Load pet data
+     * @returns {Promise<Array>} Array of pet data
+     */
+    async loadPets() {
+        try {
+            console.log('🐾 Starting to load pets from data/pets(new).json...');
+            const data = await this.loadJSON('data/pets(new).json');
+            
+            console.log('🔍 Raw data loaded:', data);
+            console.log('🔍 data.pets type:', typeof data.pets);
+            console.log('🔍 data.pets is array:', Array.isArray(data.pets));
+            console.log('🔍 data.pets length:', data.pets ? data.pets.length : 'undefined');
+            
+            this.data.pets = data.pets || [];
+            
+            console.log('🔍 Before processing, pets count:', this.data.pets.length);
+            
+            // Data processing
+            this.data.pets = this.data.pets.map(pet => ({
+                ...pet,
+                icon: this.getPetIcon(pet.id)
+            }));
+
+            console.log(`🐾 Loaded ${this.data.pets.length} pets`);
+            console.log('🔍 First few pets:', this.data.pets.slice(0, 3));
+            return this.data.pets;
+        } catch (error) {
+            console.error('❌ Failed to load pet data:', error);
+            this.data.pets = this.getDefaultPets();
+            return this.data.pets;
+        }
+    }
+
+    /**
+     * Load configuration data
+     * @returns {Promise<Object>} Configuration data object
+     */
+    async loadConfig() {
+        try {
+            const data = await this.loadJSON('data/config.json');
+            this.data.config = data || {};
+            
+            console.log(`⚙️ Loaded application configuration`);
+            return this.data.config;
+        } catch (error) {
+            console.error('❌ Failed to load configuration data:', error);
+            this.data.config = this.getDefaultConfig();
+            return this.data.config;
+        }
+    }
+
+    /**
+     * Get all crops
+     * @returns {Array} Array of crop data
+     */
+    getCrops() {
+        return this.data.crops;
+    }
+
+    /**
+     * Get crop by ID
+     * @param {string} id - Crop ID
+     * @returns {Object|null} Crop object or null
+     */
+    getCropById(id) {
+        return this.data.crops.find(crop => crop.id === id) || null;
+    }
+
+    /**
+     * Get crops by category
+     * @param {string} category - Category name
+     * @returns {Array} Array of crops
+     */
+    getCropsByCategory(category) {
+        return this.data.crops.filter(crop => crop.category === category);
+    }
+
+    /**
+     * Get crops by rarity
+     * @param {string} rarity - Rarity level
+     * @returns {Array} Array of crops
+     */
+    getCropsByRarity(rarity) {
+        return this.data.crops.filter(crop => crop.rarity === rarity);
+    }
+
+    /**
+     * Search crops
+     * @param {string} query - Search keyword
+     * @returns {Array} Search results
+     */
+    searchCrops(query) {
+        if (!query || query.trim() === '') return this.data.crops;
+        
+        const searchTerm = query.toLowerCase().trim();
+        return this.data.crops.filter(crop => 
+            crop.name.toLowerCase().includes(searchTerm) ||
+            crop.category.toLowerCase().includes(searchTerm) ||
+            crop.rarity.toLowerCase().includes(searchTerm) ||
+            (crop.description && crop.description.toLowerCase().includes(searchTerm))
+        );
+    }
+
+    /**
+     * Get all unique categories
+     * @returns {Array} Array of unique categories
+     */
+    getUniqueCategories() {
+        const categories = [...new Set(this.data.crops.map(crop => crop.category))];
+        return categories.sort();
+    }
+
+    /**
+     * Get all unique tiers/rarities
+     * @returns {Array} Array of unique tiers
+     */
+    getUniqueTiers() {
+        const tiers = [...new Set(this.data.crops.map(crop => crop.tier || crop.rarity))];
+        return tiers.sort((a, b) => {
+            const order = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Mythical', 'Divine'];
+            return order.indexOf(a) - order.indexOf(b);
+        });
+    }
+
+    /**
+     * Get mutation data
+     * @returns {Object} Mutation object
+     */
+    getMutations() {
+        return this.data.mutations;
+    }
+
+    /**
+     * Get growth mutations
+     * @returns {Object} Growth mutation object
+     */
+    getGrowthMutations() {
+        return this.data.mutations.growth || {};
+    }
+
+    /**
+     * Get environmental mutations
+     * @returns {Object} Environmental mutation object
+     */
+    getEnvironmentalMutations() {
+        return this.data.mutations.environmental || {};
+    }
+
+    /**
+     * Get all pet data
+     * @returns {Array} Array of pets
+     */
+    getPets() {
+        return this.data.pets;
+    }
+
+    /**
+     * Get pet by ID
+     * @param {string} id - Pet ID
+     * @returns {Object|null} Pet object or null
+     */
+    getPetById(id) {
+        return this.data.pets.find(pet => pet.id === id) || null;
+    }
+
+    /**
+     * Get pets by rarity
+     * @param {string} rarity - Rarity level
+     * @returns {Array} Array of pets
+     */
+    getPetsByRarity(rarity) {
+        return this.data.pets.filter(pet => pet.rarity === rarity);
+    }
+
+    /**
+     * Get configuration data
+     * @returns {Object} Configuration object
+     */
+    getConfig() {
+        return this.data.config;
+    }
+
+    /**
+     * Get application configuration
+     * @returns {Object} Application configuration
+     */
+    getAppConfig() {
+        return this.data.config.app || {};
+    }
+
+    /**
+     * Get feature configuration
+     * @returns {Object} Feature configuration
+     */
+    getFeatureConfig() {
+        return this.data.config.features || {};
+    }
+
+    /**
+     * Get UI configuration
+     * @returns {Object} UI configuration
+     */
+    getUIConfig() {
+        return this.data.config.ui || {};
+    }
+
+    /**
+     * Get crop icon
+     * @param {string} cropId - Crop ID
+     * @returns {string} Icon emoji
+     */
+    getCropIcon(cropId) {
+        const iconMap = {
+            carrot: '🥕',
+            strawberry: '🍓',
+            blueberry: '🫐',
+            potato: '🥔',
+            tomato: '🍅',
+            corn: '🌽',
+            wheat: '🌾',
+            rice: '🍚',
+            apple: '🍎',
+            orange: '🍊',
+            banana: '🍌',
+            grape: '🍇',
+            mango: '🥭',
+            pineapple: '🍍',
+            watermelon: '🍉'
+        };
+        return iconMap[cropId] || '🌱';
+    }
+
+    /**
+     * Get pet icon
+     * @param {string} petId - Pet ID
+     * @returns {string} Icon emoji
+     */
+    getPetIcon(petId) {
+        const iconMap = {
+            golden_lab: '🐕',
+            dog: '🐶',
+            bunny: '🐰',
+            cat: '🐱',
+            pig: '🐷',
+            cow: '🐄',
+            chicken: '🐔',
+            duck: '🦆',
+            fox: '🦊',
+            wolf: '🐺',
+            bear: '🐻',
+            panda: '🐼',
+            dragon: '🐲',
+            unicorn: '🦄',
+            phoenix: '🔥'
+        };
+        return iconMap[petId] || '🐾';
+    }
+
+    /**
+     * Get default crop data
+     * @returns {Array} Default crop array
+     */
+    getDefaultCrops() {
+        return [
+            {
+                id: 'carrot',
+                name: 'Carrot',
+                category: 'Common',
+                rarity: 'Common',
+                buyPrice: 10,
+                sellValue: 20,
+                multiHarvest: false,
+                image: 'carrot.png',
+                description: 'Basic crop, perfect for beginners',
+                icon: '🥕',
+                profit: 10,
+                roi: 100
+            }
+        ];
+    }
+
+    /**
+     * Get default mutation data
+     * @returns {Object} Default mutation object
+     */
+    getDefaultMutations() {
+        return {
+            growth: {
+                category: 'Growth Mutations',
+                description: 'Basic growth mutations, mutually exclusive',
+                color: '#FBBF24',
+                types: {
+                    normal: {
+                        id: 'normal',
+                        name: 'Normal',
+                        multiplier: 1,
+                        description: 'Normal crop, no additional bonus',
+                        icon: '🌱',
+                        color: '#9CA3AF'
+                    },
+                    golden: {
+                        id: 'golden',
+                        name: 'Golden',
+                        multiplier: 20,
+                        description: 'Golden mutation, value x20',
+                        icon: '🌟',
+                        color: '#F59E0B'
+                    },
+                    rainbow: {
+                        id: 'rainbow',
+                        name: 'Rainbow',
+                        multiplier: 50,
+                        description: 'Rainbow mutation, value x50',
+                        icon: '🌈',
+                        color: '#8B5CF6'
+                    }
+                }
+            },
+            environmental: {
+                category: 'Environmental Mutations',
+                description: 'Environmental mutations, can stack',
+                color: '#06B6D4',
+                types: {
+                    wet: {
+                        id: 'wet',
+                        name: 'Wet',
+                        bonus: 1,
+                        description: 'Wet environment, extra +1x',
+                        icon: '💧',
+                        color: '#06B6D4'
+                    }
+                }
+            }
+        };
+    }
+
+    /**
+     * Get default pet data
+     * @returns {Array} Default pet array
+     */
+    getDefaultPets() {
+        return [
+            {
+                id: 'golden_lab',
+                name: 'Golden Lab',
+                category: 'Common',
+                rarity: 'Common',
+                source: 'Common Egg',
+                hatchChance: '33.33%',
+                description: 'Loyal Golden Lab',
+                image: 'golden-lab.png',
+                abilities: ['Basic Harvest Acceleration'],
+                icon: '🐕'
+            }
+        ];
+    }
+
+    /**
+     * Get default configuration data
+     * @returns {Object} Default configuration object
+     */
+    getDefaultConfig() {
+        return {
+            app: {
+                name: 'Garden Pro Calculator',
+                version: '2.0.0',
+                description: 'Professional garden cultivation game calculator tool'
+            },
+            features: {
+                maxComparisons: 4,
+                maxHistory: 50,
+                maxFavorites: 20,
+                autoSave: true,
+                defaultTheme: 'auto'
+            },
+            ui: {
+                themes: {
+                    light: { name: 'Light Mode', icon: '☀️' },
+                    dark: { name: 'Dark Mode', icon: '🌙' },
+                    auto: { name: 'Auto Mode', icon: '🌗' }
+                }
+            }
+        };
+    }
+
+    /**
+     * Check if data is loaded
+     * @returns {boolean} Whether initialized
+     */
+    isInitialized() {
+        return this.initialized;
+    }
+
+    /**
+     * Refresh data
+     * @returns {Promise<boolean>} Whether refresh was successful
+     */
+    async refresh() {
+        this.loadPromises.clear();
+        this.initialized = false;
+        return await this.init();
+    }
+
+    /**
+     * Get data statistics
+     * @returns {Object} Statistics object
+     */
+    getStats() {
+        return {
+            crops: this.data.crops.length,
+            pets: this.data.pets.length,
+            growthMutations: Object.keys(this.getGrowthMutations().types || {}).length,
+            environmentalMutations: Object.keys(this.getEnvironmentalMutations().types || {}).length,
+            initialized: this.initialized
+        };
+    }
+}
+
+// Export for use in other modules
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = DataManager;
+}

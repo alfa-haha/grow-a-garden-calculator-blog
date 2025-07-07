@@ -1,0 +1,114 @@
+{
+  "app": {
+    "name": "Garden Pro Calculator",
+    "version": "2.0.0",
+    "description": "Professional garden planting game calculator tool",
+    "author": "Garden Pro Team",
+    "license": "MIT",
+    "repository": "https://github.com/your-username/garden-calculator-pro",
+    "website": "https://your-username.github.io/garden-calculator-pro"
+  },
+  "features": {
+    "maxComparisons": 4,
+    "maxHistory": 50,
+    "maxFavorites": 20,
+    "autoSave": true,
+    "defaultTheme": "auto",
+    "enableAnimations": true,
+    "enableSounds": false,
+    "showTooltips": true,
+    "compactMode": false
+  },
+  "ui": {
+    "themes": {
+      "light": {
+        "name": "Light Mode",
+        "icon": "☀️",
+        "colors": {
+          "primary": "#3B82F6",
+          "secondary": "#8B5CF6",
+          "success": "#10B981",
+          "warning": "#F59E0B",
+          "error": "#EF4444",
+          "background": "#FFFFFF",
+          "surface": "#F9FAFB",
+          "text": "#111827"
+        }
+      },
+      "dark": {
+        "name": "Dark Mode",
+        "icon": "🌙",
+        "colors": {
+          "primary": "#60A5FA",
+          "secondary": "#A78BFA",
+          "success": "#34D399",
+          "warning": "#FBBF24",
+          "error": "#F87171",
+          "background": "#111827",
+          "surface": "#1F2937",
+          "text": "#F9FAFB"
+        }
+      },
+      "auto": {
+        "name": "Auto Mode",
+        "icon": "🔄",
+        "description": "Follow system settings"
+      }
+    },
+    "animations": {
+      "duration": {
+        "fast": "150ms",
+        "normal": "300ms",
+        "slow": "500ms"
+      },
+      "easing": {
+        "ease": "ease",
+        "easeIn": "ease-in",
+        "easeOut": "ease-out",
+        "easeInOut": "ease-in-out"
+      }
+    },
+    "breakpoints": {
+      "mobile": "640px",
+      "tablet": "768px",
+      "desktop": "1024px",
+      "wide": "1280px"
+    }
+  },
+  "storage": {
+    "keys": {
+      "crops": "garden_crops_data",
+      "mutations": "garden_mutations_data",
+      "pets": "garden_pets_data",
+      "history": "calculation_history",
+      "favorites": "favorite_crops",
+      "settings": "user_settings",
+      "theme": "selected_theme"
+    },
+    "expiry": {
+      "history": 2592000000,
+      "cache": 86400000
+    }
+  },
+  "calculator": {
+    "precision": 2,
+    "maxValue": 999999999999,
+    "warningThreshold": 1000000,
+    "defaultCurrency": "Sheckles",
+    "formatLargeNumbers": true,
+    "showCalculationSteps": true
+  },
+  "search": {
+    "debounceDelay": 300,
+    "minQueryLength": 1,
+    "maxResults": 50,
+    "fuzzyMatch": true,
+    "highlightMatches": true
+  },
+  "performance": {
+    "virtualScrolling": true,
+    "lazyLoading": true,
+    "cacheImages": true,
+    "preloadCriticalData": true
+  }
+} 

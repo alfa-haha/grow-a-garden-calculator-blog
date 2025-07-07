@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutation Database - Garden Pro Calculator</title>
+    <meta name="description" content="Complete mutation database with all mutation information, multipliers and obtainment details">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🌱</span>
+                <span class="brand-text">Garden Pro</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="crops.html" class="nav-link">Crops</a>
+                <a href="pets.html" class="nav-link">Pets</a>
+                <a href="mutations.html" class="nav-link active">Mutations</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="menu-toggle" id="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="mutations-main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">🧬 Mutation Database</h1>
+                <p class="page-description">Complete mutation database with all mutation types, multipliers and effect details</p>
+            </div>
+
+            <!-- Filter and Search -->
+            <div class="filter-section">
+                <!-- Search Box and Category Filter - First Row -->
+                <div class="search-and-filters">
+                    <div class="search-container">
+                        <div class="search-box">
+                            <input type="text" id="mutations-search" placeholder="Search mutation names..." class="search-input">
+                            <span class="search-icon">🔍</span>
+                        </div>
+                    </div>
+
+                    <div class="filter-controls">
+                        <!-- Category Filter -->
+                        <div class="filter-group">
+                            <label class="filter-label">Category:</label>
+                            <select id="category-filter" class="filter-select">
+                                <option value="">All Categories</option>
+                                <option value="Growth Mutations">Growth Mutations</option>
+                                <option value="Temperature Mutations">Temperature Mutations</option>
+                                <option value="Environmental Mutations">Environmental Mutations</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics - Second Row -->
+                <div class="filter-stats">
+                    <span id="filter-results">Showing 0 results</span>
+                    <span class="filter-divider">|</span>
+                    <span id="total-mutations">Total 0 mutations</span>
+                </div>
+            </div>
+
+            <!-- Mutation Display Area -->
+            <div class="mutations-container">
+                <!-- Table View -->
+                <div class="mutations-table" id="mutations-table" style="display: block;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Multiplier</th>
+                                <th>Obtainment</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mutations-table-body">
+                            <!-- Table rows will be generated dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <span class="empty-icon">🔍</span>
+                    <h3>No matching mutations found</h3>
+                    <p>Try adjusting your filter criteria or search terms</p>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Pagination controls will be generated dynamically via JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Mutation Detail Modal -->
+    <div class="modal" id="mutation-detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-mutation-name">Mutation Details</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="mutation-detail">
+                    <div class="mutation-visual">
+                        <div class="mutation-icon large" id="modal-mutation-icon">🧬</div>
+                        <div class="mutation-badges">
+                            <span class="badge category" id="modal-mutation-category">Growth</span>
+                        </div>
+                    </div>
+                    <div class="mutation-info">
+                        <div class="info-section">
+                            <h4>Basic Information</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Category:</span>
+                                    <span class="info-value" id="modal-mutation-category-text">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Effect Type:</span>
+                                    <span class="info-value" id="modal-mutation-effect-type">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Multiplier:</span>
+                                    <span class="info-value" id="modal-mutation-multiplier">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Stack Type:</span>
+                                    <span class="info-value" id="modal-mutation-stack-type">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-section">
+                            <h4>Effect Details</h4>
+                            <div class="description-text" id="modal-mutation-description">
+                                Mutation description will be displayed here.
+                            </div>
+                        </div>
+                        <div class="info-section">
+                            <h4>Obtainment Method</h4>
+                            <div class="description-text" id="modal-mutation-obtainment">
+                                Obtainment method will be displayed here.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/utils.js"></script>
+    <script src="js/data-manager.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/mutations.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Pro Calculator - Professional Garden Calculator</title>
+    <meta name="description" content="Professional garden planting game calculator tool, pure frontend solution for precise crop value and mutation effects calculation">
+    <meta name="keywords" content="garden calculator,crop calculator,mutation calculator,game tool">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🌱</span>
+                <span class="brand-text">Garden Pro</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="crops.html" class="nav-link">Crops</a>
+                <a href="pets.html" class="nav-link">Pets</a>
+                <a href="mutations.html" class="nav-link">Mutations</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="menu-toggle" id="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Calculator Module -->
+        <section class="calculator-module" id="calculator-module">
+            <div class="container">
+                <div class="module-header">
+                    <h2 class="module-title">🧮 Crop Value Calculator</h2>
+                    <p class="module-description">
+                        Calculate crop values instantly with precise mutation effects analysis
+                    </p>
+                </div>
+                
+                <div class="calculator-interface">
+                    <div class="calculator-grid">
+                        <!-- Left Panel: Calculator Input -->
+                        <div class="calculator-input-panel">
+                            <!-- Quick Crop Selection -->
+                            <div class="calc-section">
+                                <h3 class="calc-section-title">🌾 Select Crop</h3>
+                                <div class="crop-selector-compact">
+                                    <div class="search-box">
+                                        <input type="text" id="hero-crop-search" placeholder="Search crops..." class="search-input">
+                                        <span class="search-icon">🔍</span>
+                                    </div>
+                                    
+                                    <!-- Category Filters -->
+                                    <div class="category-filters" id="category-filters">
+                                        <button class="category-btn active" data-category="all">All</button>
+                                        <button class="category-btn" data-category="common">Common</button>
+                                        <button class="category-btn" data-category="uncommon">Uncommon</button>
+                                        <button class="category-btn" data-category="rare">Rare</button>
+                                        <button class="category-btn" data-category="legendary">Legendary</button>
+                                        <button class="category-btn" data-category="mythical">Mythical</button>
+                                        <button class="category-btn" data-category="divine">Divine</button>
+                                    </div>
+                                    
+                                    <div class="crop-grid-compact" id="hero-crop-grid">
+                                        <!-- Crop options will be generated dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mutation Selection -->
+                            <div class="calc-section">
+                                <h3 class="calc-section-title">🌟 Mutations</h3>
+                                <div class="mutation-selector-compact">
+                                    <div class="mutation-row">
+                                        <label class="mutation-label">Growth:</label>
+                                        <div class="mutation-options-inline" id="hero-growth-mutations">
+                                            <div class="mutation-option-compact active" data-mutation="normal">
+                                                <span class="mutation-name">Normal</span>
+                                                <span class="mutation-effect">×1</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="golden">
+                                                <span class="mutation-name">Golden</span>
+                                                <span class="mutation-effect">×20</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="rainbow">
+                                                <span class="mutation-name">Rainbow</span>
+                                                <span class="mutation-effect">×50</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mutation-row">
+                                        <label class="mutation-label">Temperature:</label>
+                                        <div class="mutation-options-inline" id="hero-temperature-mutations">
+                                            <div class="mutation-option-compact active" data-mutation="normal_temp">
+                                                <span class="mutation-name">Normal</span>
+                                                <span class="mutation-effect">+0×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="chilled">
+                                                <span class="mutation-name">Chilled</span>
+                                                <span class="mutation-effect">+1×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="frozen">
+                                                <span class="mutation-name">Frozen</span>
+                                                <span class="mutation-effect">+2×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="heated">
+                                                <span class="mutation-name">Heated</span>
+                                                <span class="mutation-effect">+1×</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mutation-row">
+                                        <label class="mutation-label">Environment:</label>
+                                        <div class="mutation-options-inline" id="hero-environmental-mutations">
+                                            <div class="mutation-option-compact" data-mutation="wet">
+                                                <span class="mutation-name">Wet</span>
+                                                <span class="mutation-effect">+1×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="dry">
+                                                <span class="mutation-name">Dry</span>
+                                                <span class="mutation-effect">+1×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="windy">
+                                                <span class="mutation-name">Windy</span>
+                                                <span class="mutation-effect">+1×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="sunny">
+                                                <span class="mutation-name">Sunny</span>
+                                                <span class="mutation-effect">+2×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="cloudy">
+                                                <span class="mutation-name">Cloudy</span>
+                                                <span class="mutation-effect">+1×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="stormy">
+                                                <span class="mutation-name">Stormy</span>
+                                                <span class="mutation-effect">+3×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="foggy">
+                                                <span class="mutation-name">Foggy</span>
+                                                <span class="mutation-effect">+1×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="chocolate">
+                                                <span class="mutation-name">Chocolate</span>
+                                                <span class="mutation-effect">+1×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="honey">
+                                                <span class="mutation-name">Honey</span>
+                                                <span class="mutation-effect">+2×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="spicy">
+                                                <span class="mutation-name">Spicy</span>
+                                                <span class="mutation-effect">+2×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="sweet">
+                                                <span class="mutation-name">Sweet</span>
+                                                <span class="mutation-effect">+1×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="salty">
+                                                <span class="mutation-name">Salty</span>
+                                                <span class="mutation-effect">+1×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="moonlit">
+                                                <span class="mutation-name">Moonlit</span>
+                                                <span class="mutation-effect">+3×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="starlit">
+                                                <span class="mutation-name">Starlit</span>
+                                                <span class="mutation-effect">+4×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="shocked">
+                                                <span class="mutation-name">Shocked</span>
+                                                <span class="mutation-effect">+9×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="poisoned">
+                                                <span class="mutation-name">Poisoned</span>
+                                                <span class="mutation-effect">+5×</span>
+                                            </div>
+                                            <div class="mutation-option-compact" data-mutation="celestial">
+                                                <span class="mutation-name">Celestial</span>
+                                                <span class="mutation-effect">+19×</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Parameters -->
+                            <div class="calc-section">
+                                <h3 class="calc-section-title">⚙️ Parameters</h3>
+                                <div class="parameter-selector-compact">
+                                    <div class="parameter-row-group">
+                                        <div class="parameter-item">
+                                            <label class="parameter-label">Weight (kg):</label>
+                                            <div class="parameter-input-group">
+                                                <input type="number" id="hero-weight" class="parameter-input" value="2.85" min="0" step="0.01" max="999999">
+                                            </div>
+                                        </div>
+                                        <div class="parameter-item">
+                                            <label class="parameter-label">Quantity (pcs):</label>
+                                            <div class="parameter-input-group">
+                                                <input type="number" id="hero-quantity" class="parameter-input" value="1" min="1" step="1" max="999999">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="parameter-row-group">
+                                        <div class="parameter-item">
+                                            <label class="parameter-label">Friend Boost:</label>
+                                            <div class="parameter-input-group">
+                                                <input type="range" id="hero-friend-boost" class="parameter-slider" min="0" max="100" step="1" value="0">
+                                                <span class="parameter-value" id="hero-friend-boost-value">0%</span>
+                                            </div>
+                                        </div>
+                                        <div class="parameter-item">
+                                            <label class="parameter-label">Max Mutation:</label>
+                                            <div class="parameter-input-group">
+                                                <label class="parameter-toggle">
+                                                    <input type="checkbox" id="hero-max-mutation" class="parameter-checkbox">
+                                                    <span class="parameter-toggle-slider"></span>
+                                                    <span class="parameter-toggle-label">Off</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Calculator Results -->
+                        <div class="calculator-output-panel">
+                            <h3 class="calc-section-title">💰 Results</h3>
+                            <div class="result-display-compact" id="hero-result-display">
+                                <div class="result-crop-info">
+                                    <div class="crop-display">
+                                        <span class="crop-icon-large" id="hero-result-crop-icon">🥕</span>
+                                        <div class="crop-info-text">
+                                            <span class="crop-name" id="hero-result-crop-name">Select a crop</span>
+                                            <span class="crop-rarity" id="hero-result-crop-rarity">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="calculation-summary">
+                                    <div class="calc-row-compact">
+                                        <span class="calc-label">Base Value:</span>
+                                        <span class="calc-value" id="hero-base-value">0</span>
+                                    </div>
+                                    <div class="calc-row-compact">
+                                        <span class="calc-label">Total Multiplier:</span>
+                                        <span class="calc-value" id="hero-multiplier">×1</span>
+                                    </div>
+                                    <div class="calc-divider-compact"></div>
+                                    <div class="calc-row-compact final-value">
+                                        <span class="calc-label">Total Value:</span>
+                                        <span class="calc-value-large" id="hero-final-value">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="calc-actions">
+                                <button class="btn btn-secondary" id="hero-reset-btn">🔄 Reset</button>
+                            </div>
+                            <!-- 新增历史记录区块 -->
+                            <div class="calc-section" id="hero-history-section">
+                                <h3 class="calc-section-title">📊 Calculation History</h3>
+                                <div class="history-list-compact" id="hero-history-list">
+                                    <div class="empty-state">
+                                        <span class="empty-icon">📝</span>
+                                        <p>No calculation history yet</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">🌟 Core Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Ultimate Performance</h3>
+                        <p class="feature-description">
+                            Pure static website, loading speed < 3 seconds, real-time calculation response < 100ms
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">Precise Calculation</h3>
+                        <p class="feature-description">
+                            Supports complex calculations with multiple mutation stacking, 100% accurate value assessment
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3 class="feature-title">Perfect Adaptation</h3>
+                        <p class="feature-description">
+                            Responsive design, perfect support for mobile, tablet, desktop and all devices
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3 class="feature-title">Privacy Security</h3>
+                        <p class="feature-description">
+                            Local data processing, no server dependency, protecting your privacy and security
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3 class="feature-title">Zero Cost Deployment</h3>
+                        <p class="feature-description">
+                            GitHub Pages free hosting, no server costs required
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌈</div>
+                        <h3 class="feature-title">Modern Design</h3>
+                        <p class="feature-description">
+                            Beautiful interface design, smooth animation effects, perfect user experience
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Section -->
+        <section class="quick-start">
+            <div class="container">
+                <h2 class="section-title">🚀 Quick Start</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Select Crop</h3>
+                        <p class="step-description">
+                            Choose from 75+ crop types the one you want to calculate
+                        </p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Set Mutations</h3>
+                        <p class="step-description">
+                            Select growth, temperature, and environmental mutations for optimal value
+                        </p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">View Results</h3>
+                        <p class="step-description">
+                            View calculation results in real-time, save to favorites for later use
+                        </p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title">Compare Analysis</h3>
+                        <p class="step-description">
+                            Use comparison mode to analyze profit differences between multiple crops
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">75+</div>
+                        <div class="stat-label">Crop Types</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Mutation Types</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12+</div>
+                        <div class="stat-label">Pet Types</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Calculation Accuracy</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Garden Pro Calculator</h3>
+                    <p>Professional garden planting game calculator tool</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <a href="index.html#calculator-module">Crop Calculator</a>
+                    <a href="crops.html">Crop Database</a>
+                    <a href="pets.html">Pet Database</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="docs/frontend-optimization-plan.md">Technical Documentation</a>
+                    <a href="docs/todolist.md">Development Plan</a>
+                    <a href="https://github.com/your-username/garden-calculator-pro">GitHub</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📧 your-email@example.com</p>
+                    <p>🌐 MIT Open Source License</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Garden Pro Calculator Team. Made with ❤️ and ☕</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" title="Back to Top">
+        ↑
+    </button>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/data-manager.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Database - Garden Pro Calculator</title>
+    <meta name="description" content="Complete crop database with all crop information, value data and detailed attributes">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🌱</span>
+                <span class="brand-text">Garden Pro</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="crops.html" class="nav-link active">Crops</a>
+                <a href="pets.html" class="nav-link">Pets</a>
+                <a href="mutations.html" class="nav-link">Mutations</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="menu-toggle" id="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="crops-main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">🌾 Crop Database</h1>
+                <p class="page-description">Complete crop database with all crop information, value data and detailed attributes</p>
+            </div>
+
+            <!-- Filter and Search -->
+            <div class="filter-section">
+                <div class="filter-controls">
+                    <!-- Category Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Category:</label>
+                        <select id="category-filter" class="filter-select">
+                            <option value="">All Categories</option>
+                            <!-- 这里会动态生成所有分类选项 -->
+                        </select>
+                    </div>
+
+                    <!-- Tier Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Tier:</label>
+                        <select id="tier-filter" class="filter-select">
+                            <option value="">All Tiers</option>
+                            <!-- 这里会动态生成所有tier选项 -->
+                        </select>
+                    </div>
+
+                    <!-- Harvest Type Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Harvest Type:</label>
+                        <select id="harvest-filter" class="filter-select">
+                            <option value="">All Types</option>
+                            <option value="single">Single Harvest</option>
+                            <option value="multi">Multi Harvest</option>
+                        </select>
+                    </div>
+
+                    <!-- Sort Options -->
+                    <div class="filter-group">
+                        <label class="filter-label">Sort:</label>
+                        <select id="sort-filter" class="filter-select">
+                            <option value="name">By Name</option>
+                            <option value="sellValue">By Value</option>
+                            <option value="buyPrice">By Cost</option>
+                            <option value="profit">By Profit</option>
+                            <option value="rarity">By Rarity</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Reset Button -->
+                    <div class="filter-group reset-button-container">
+                        <button class="btn btn-secondary" id="reset-filters">🔄 Reset Filters</button>
+                    </div>
+                </div>
+                
+                <!-- Search Box (单独一行) -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="crops-search" placeholder="Search crop names..." class="search-input">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+
+                <!-- Statistics -->
+                <div class="filter-stats">
+                    <span id="filter-results">Showing 0 results</span>
+                    <span class="filter-divider">|</span>
+                    <span id="total-crops">Total 0 crops</span>
+                </div>
+            </div>
+
+            <!-- View Controls -->
+            <div class="view-controls">
+                <div class="view-info">
+                    <p class="table-tip">👆 Click on any crop in the table to start calculating</p>
+                </div>
+            </div>
+
+            <!-- Crop Display Area -->
+            <div class="crops-container">
+                <!-- Table View -->
+                <div class="crops-table" id="crops-table">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Tier</th>
+                                <th>Sheckle Price</th>
+                                <th>Robux Price</th>
+                                <th>Minimum Value</th>
+                                <th>Multi-Harvest</th>
+                                <th>Obtainable</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crops-table-body">
+                            <!-- Table rows will be generated dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <span class="empty-icon">🔍</span>
+                    <h3>No matching crops found</h3>
+                    <p>Try adjusting your filter criteria or search terms</p>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Pagination controls will be generated dynamically via JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Crop Detail Modal -->
+    <div class="modal" id="crop-detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-crop-name" data-crop-id="">Crop Details</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="crop-detail">
+                    <div class="crop-visual">
+                        <span class="crop-icon large" id="modal-crop-icon">🌱</span>
+                        <div class="crop-badges">
+                            <span class="badge rarity" id="modal-crop-rarity">Common</span>
+                            <span class="badge harvest" id="modal-crop-harvest">Single Harvest</span>
+                        </div>
+                    </div>
+                    <div class="crop-info">
+                        <div class="info-section">
+                            <h4>Basic Information</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Category:</span>
+                                    <span class="info-value" id="modal-crop-category">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Rarity:</span>
+                                    <span class="info-value" id="modal-crop-rarity-text">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Harvest Type:</span>
+                                    <span class="info-value" id="modal-crop-harvest-text">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-section">
+                            <h4>Value Information</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Buy Price:</span>
+                                    <span class="info-value" id="modal-crop-buy">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Sell Value:</span>
+                                    <span class="info-value" id="modal-crop-sell">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Net Profit:</span>
+                                    <span class="info-value" id="modal-crop-profit">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">ROI:</span>
+                                    <span class="info-value" id="modal-crop-roi">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-section">
+                            <h4>Mutation Value Preview</h4>
+                            <div class="mutation-preview">
+                                <div class="mutation-item">
+                                    <span class="mutation-name">🌟 Golden:</span>
+                                    <span class="mutation-value" id="modal-golden-value">-</span>
+                                </div>
+                                <div class="mutation-item">
+                                    <span class="mutation-name">🌈 Rainbow:</span>
+                                    <span class="mutation-value" id="modal-rainbow-value">-</span>
+                                </div>
+                                <div class="mutation-item">
+                                    <span class="mutation-name">💧 Wet:</span>
+                                    <span class="mutation-value" id="modal-wet-value">-</span>
+                                </div>
+                                <div class="mutation-item">
+                                    <span class="mutation-name">❄️ Chilled:</span>
+                                    <span class="mutation-value" id="modal-chilled-value">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-section">
+                            <p class="crop-description" id="modal-crop-description">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="modal-calculate-btn">🧮 Calculate This Crop</button>
+                <button class="btn btn-secondary" id="modal-close-btn">Close</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Garden Pro Calculator</h3>
+                    <p>Professional garden planting game calculator tool</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <a href="index.html#calculator-module">Crop Calculator</a>
+                    <a href="crops.html">Crop Database</a>
+                    <a href="pets.html">Pet Database</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- JavaScript -->
+    <script src="js/utils.js"></script>
+    <script src="js/data-manager.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 

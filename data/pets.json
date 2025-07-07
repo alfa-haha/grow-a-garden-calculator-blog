@@ -1,0 +1,168 @@
+{
+  "pets": [
+    {
+      "id": "golden_lab",
+      "name": "Golden Lab",
+      "category": "Common",
+      "rarity": "Common",
+      "source": "Common Egg",
+      "hatchChance": "33.33%",
+      "description": "Loyal Golden Labrador",
+      "image": "golden-lab.png",
+      "abilities": ["Basic Harvest Acceleration"]
+    },
+    {
+      "id": "dog",
+      "name": "Dog",
+      "category": "Common",
+      "rarity": "Common",
+      "source": "Common Egg",
+      "hatchChance": "33.33%",
+      "description": "Cute little dog",
+      "image": "dog.png",
+      "abilities": ["Basic Assistance"]
+    },
+    {
+      "id": "bunny",
+      "name": "Bunny",
+      "category": "Common",
+      "rarity": "Common",
+      "source": "Common Egg",
+      "hatchChance": "33.33%",
+      "description": "Lively little rabbit",
+      "image": "bunny.png",
+      "abilities": ["Jumping Assistance"]
+    },
+    {
+      "id": "cat",
+      "name": "Cat",
+      "category": "Uncommon",
+      "rarity": "Uncommon",
+      "source": "Uncommon Egg",
+      "hatchChance": "25%",
+      "description": "Elegant cat",
+      "image": "cat.png",
+      "abilities": ["Agile Assistance"]
+    },
+    {
+      "id": "deer",
+      "name": "Deer",
+      "category": "Uncommon",
+      "rarity": "Uncommon",
+      "source": "Uncommon Egg",
+      "hatchChance": "25%",
+      "description": "Gentle deer",
+      "image": "deer.png",
+      "abilities": ["Forest Bonus"]
+    },
+    {
+      "id": "orange_tabby",
+      "name": "Orange Tabby",
+      "category": "Rare",
+      "rarity": "Rare",
+      "source": "Rare Egg",
+      "hatchChance": "33.33%",
+      "description": "Orange tabby cat",
+      "image": "orange-tabby.png",
+      "abilities": ["Rare Assistance"]
+    },
+    {
+      "id": "spotted_deer",
+      "name": "Spotted Deer",
+      "category": "Rare",
+      "rarity": "Rare",
+      "source": "Rare Egg",
+      "hatchChance": "25%",
+      "description": "Spotted deer",
+      "image": "spotted-deer.png",
+      "abilities": ["Spotted Bonus"]
+    },
+    {
+      "id": "pig",
+      "name": "Pig",
+      "category": "Rare",
+      "rarity": "Rare",
+      "source": "Rare Egg",
+      "hatchChance": "20%",
+      "description": "Cute little pig",
+      "image": "pig.png",
+      "abilities": ["Soil Improvement"]
+    },
+    {
+      "id": "panda",
+      "name": "Panda",
+      "category": "Legendary",
+      "rarity": "Legendary",
+      "source": "Legendary Egg",
+      "hatchChance": "10%",
+      "description": "Precious giant panda",
+      "image": "panda.png",
+      "abilities": ["Legendary Bonus", "Bamboo Expertise"]
+    },
+    {
+      "id": "moon_cat",
+      "name": "Moon Cat",
+      "category": "Legendary",
+      "rarity": "Legendary",
+      "source": "Twilight Shop",
+      "hatchChance": "N/A",
+      "description": "Mysterious moon cat",
+      "image": "moon-cat.png",
+      "abilities": ["Moonlight Bonus", "Night Expertise"]
+    },
+    {
+      "id": "grey_mouse",
+      "name": "Grey Mouse",
+      "category": "Mythical",
+      "rarity": "Mythical",
+      "source": "Mythical Egg",
+      "hatchChance": "35.71%",
+      "description": "Grey little mouse",
+      "image": "grey-mouse.png",
+      "abilities": ["Mythical Assistance"]
+    },
+    {
+      "id": "brown_mouse",
+      "name": "Brown Mouse",
+      "category": "Mythical",
+      "rarity": "Mythical",
+      "source": "Mythical Egg",
+      "hatchChance": "26.79%",
+      "description": "Brown little mouse",
+      "image": "brown-mouse.png",
+      "abilities": ["Underground Assistance"]
+    }
+  ],
+  "eggTypes": {
+    "common": {
+      "name": "Common Egg",
+      "color": "#9CA3AF",
+      "description": "Common egg",
+      "pets": ["golden_lab", "dog", "bunny"]
+    },
+    "uncommon": {
+      "name": "Uncommon Egg",
+      "color": "#10B981",
+      "description": "Uncommon egg",
+      "pets": ["cat", "deer"]
+    },
+    "rare": {
+      "name": "Rare Egg",
+      "color": "#3B82F6",
+      "description": "Rare egg",
+      "pets": ["orange_tabby", "spotted_deer", "pig"]
+    },
+    "legendary": {
+      "name": "Legendary Egg",
+      "color": "#8B5CF6",
+      "description": "Legendary egg",
+      "pets": ["panda"]
+    },
+    "mythical": {
+      "name": "Mythical Egg",
+      "color": "#F59E0B",
+      "description": "Mythical egg",
+      "pets": ["grey_mouse", "brown_mouse"]
+    }
+  }
+} 

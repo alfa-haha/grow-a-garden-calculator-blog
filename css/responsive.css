@@ -1,0 +1,699 @@
+/* ===== 响应式设计 ===== */
+
+/* 平板端样式 (768px - 1024px) */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 100%;
+        padding: 0 var(--spacing-lg);
+    }
+    
+    .calculator-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .view-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing);
+    }
+    
+    .bulk-actions {
+        justify-content: center;
+    }
+}
+
+/* 移动端样式 (480px - 768px) */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 var(--spacing);
+    }
+    
+    /* 导航栏响应式 */
+    .navbar .container {
+        padding: var(--spacing-sm) var(--spacing);
+    }
+    
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--bg-card);
+        flex-direction: column;
+        padding: var(--spacing);
+        border-top: 1px solid var(--border-color);
+        box-shadow: var(--shadow-lg);
+        gap: var(--spacing-sm);
+    }
+    
+    .nav-menu.active {
+        display: flex;
+    }
+    
+    .nav-link {
+        padding: var(--spacing) var(--spacing-sm);
+        border-radius: var(--radius);
+        width: 100%;
+        text-align: center;
+    }
+    
+    .menu-toggle {
+        display: flex;
+    }
+    
+    /* 英雄区域响应式 */
+    .hero .container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-size: var(--text-3xl);
+    }
+    
+    .subtitle {
+        font-size: var(--text-xl);
+    }
+    
+    .hero-actions {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-large {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    /* 页面标题响应式 */
+    .page-title {
+        font-size: var(--text-3xl);
+    }
+    
+    .page-description {
+        font-size: var(--text-base);
+    }
+    
+    /* 特色功能响应式 */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing);
+    }
+    
+    .feature-card {
+        padding: var(--spacing);
+    }
+    
+    .feature-icon {
+        font-size: var(--text-3xl);
+    }
+    
+    .feature-title {
+        font-size: var(--text-lg);
+    }
+    
+    /* 步骤响应式 */
+    .steps-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing);
+    }
+    
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: var(--text-lg);
+    }
+    
+    /* 统计数据响应式 */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing);
+    }
+    
+    .stat-number {
+        font-size: var(--text-3xl);
+    }
+    
+    /* 计算器响应式 */
+    .calculator-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing);
+    }
+    
+    .calculator-input,
+    .calculator-output {
+        padding: var(--spacing);
+    }
+    
+    .crop-grid {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        gap: var(--spacing-xs);
+        max-height: 150px;
+    }
+    
+    .crop-option {
+        padding: var(--spacing-xs);
+    }
+    
+    .crop-option-icon {
+        font-size: var(--text-lg);
+    }
+    
+    .crop-option-name {
+        font-size: 10px;
+    }
+    
+    .mutation-group {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+    
+    .mutation-option {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+    
+    .action-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* 筛选区域响应式 */
+    .filter-section {
+        padding: var(--spacing);
+    }
+    
+    .filter-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm);
+    }
+    
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-xs);
+    }
+    
+    .filter-label {
+        font-size: var(--text-xs);
+    }
+    
+    .filter-select {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .search-box {
+        max-width: 100%;
+    }
+    
+    /* 视图控制响应式 */
+    .view-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm);
+    }
+    
+    .view-toggle {
+        justify-content: center;
+    }
+    
+    .bulk-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    /* 数据表格响应式 */
+    .data-table {
+        font-size: var(--text-sm);
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: var(--spacing-xs) var(--spacing-xs);
+    }
+    
+    /* 模态框响应式 */
+    .modal-content {
+        width: 95%;
+        max-height: 95%;
+        margin: var(--spacing);
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: var(--spacing);
+    }
+    
+    .modal-title {
+        font-size: var(--text-lg);
+    }
+    
+    /* 页脚响应式 */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing);
+        text-align: center;
+    }
+    
+    .footer-section {
+        padding: var(--spacing-sm) 0;
+    }
+    
+    /* 返回顶部按钮响应式 */
+    .back-to-top {
+        bottom: var(--spacing);
+        right: var(--spacing);
+        width: 45px;
+        height: 45px;
+        font-size: var(--text-base);
+    }
+    
+    /* 提示信息响应式 */
+    .toast-container {
+        top: var(--spacing);
+        right: var(--spacing);
+        left: var(--spacing);
+    }
+    
+    .toast {
+        max-width: 100%;
+    }
+}
+
+/* 小屏手机样式 (320px - 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    /* 英雄区域超小屏适配 */
+    .hero {
+        padding: var(--spacing-xl) 0;
+    }
+    
+    .hero-title {
+        font-size: var(--text-2xl);
+        line-height: 1.3;
+    }
+    
+    .subtitle {
+        font-size: var(--text-lg);
+    }
+    
+    .hero-description {
+        font-size: var(--text-base);
+    }
+    
+    .calculator-preview {
+        padding: var(--spacing);
+    }
+    
+    .preview-screen {
+        min-width: 200px;
+        padding: var(--spacing-sm);
+    }
+    
+    /* 页面标题超小屏适配 */
+    .page-title {
+        font-size: var(--text-2xl);
+    }
+    
+    .page-description {
+        font-size: var(--text-sm);
+    }
+    
+    /* 特色功能超小屏适配 */
+    .section-title {
+        font-size: var(--text-2xl);
+    }
+    
+    .feature-card {
+        padding: var(--spacing-sm);
+    }
+    
+    .feature-icon {
+        font-size: var(--text-2xl);
+    }
+    
+    .feature-title {
+        font-size: var(--text-base);
+    }
+    
+    .feature-description {
+        font-size: var(--text-sm);
+    }
+    
+    /* 步骤超小屏适配 */
+    .step-card {
+        padding: var(--spacing-sm);
+    }
+    
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: var(--text-base);
+    }
+    
+    .step-title {
+        font-size: var(--text-base);
+    }
+    
+    .step-description {
+        font-size: var(--text-sm);
+    }
+    
+    /* 统计数据超小屏适配 */
+    .stats {
+        padding: var(--spacing-xl) 0;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+    
+    .stat-number {
+        font-size: var(--text-2xl);
+    }
+    
+    .stat-label {
+        font-size: var(--text-sm);
+    }
+    
+    /* 计算器超小屏适配 */
+    .calculator-input,
+    .calculator-output {
+        padding: var(--spacing-sm);
+    }
+    
+    .input-section {
+        margin-bottom: var(--spacing);
+    }
+    
+    .section-title {
+        font-size: var(--text-base);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .crop-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-height: 120px;
+    }
+    
+    .crop-option-name {
+        font-size: 8px;
+    }
+    
+    .mutation-option {
+        padding: var(--spacing-xs);
+    }
+    
+    .mutation-icon {
+        font-size: var(--text-base);
+    }
+    
+    .mutation-name {
+        font-size: var(--text-sm);
+    }
+    
+    .mutation-effect {
+        font-size: var(--text-xs);
+    }
+    
+    /* 结果显示超小屏适配 */
+    .result-display {
+        padding: var(--spacing-sm);
+    }
+    
+    .calc-row {
+        font-size: var(--text-xs);
+    }
+    
+    .calc-row.final .calc-value {
+        font-size: var(--text-base);
+    }
+    
+    /* 筛选区域超小屏适配 */
+    .filter-section {
+        padding: var(--spacing-sm);
+    }
+    
+    .filter-stats {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-xs);
+        font-size: var(--text-xs);
+    }
+    
+    /* 数据表格超小屏适配 */
+    .data-table {
+        font-size: var(--text-xs);
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: var(--spacing-xs);
+    }
+    
+    /* 分页超小屏适配 */
+    .pagination {
+        gap: var(--spacing-xs);
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pagination-btn {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--text-sm);
+    }
+    
+    /* 模态框超小屏适配 */
+    .modal-content {
+        width: 98%;
+        max-height: 98%;
+        margin: 1%;
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: var(--spacing-sm);
+    }
+    
+    .modal-title {
+        font-size: var(--text-base);
+    }
+    
+    .modal-footer {
+        flex-direction: column;
+    }
+    
+    .modal-footer .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* 页脚超小屏适配 */
+    .footer {
+        padding: var(--spacing-lg) 0 var(--spacing);
+    }
+    
+    .footer-content {
+        gap: var(--spacing-sm);
+    }
+    
+    .footer-section h3,
+    .footer-section h4 {
+        font-size: var(--text-base);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .footer-section p,
+    .footer-section a {
+        font-size: var(--text-sm);
+    }
+    
+    .footer-bottom {
+        font-size: var(--text-xs);
+        padding-top: var(--spacing);
+    }
+    
+    /* 按钮超小屏适配 */
+    .btn {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--text-sm);
+    }
+    
+    .btn-large {
+        padding: var(--spacing-sm) var(--spacing);
+        font-size: var(--text-base);
+    }
+    
+    .btn-small {
+        padding: 2px var(--spacing-xs);
+        font-size: var(--text-xs);
+    }
+}
+
+/* 横屏手机样式 */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .hero .container {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing);
+        text-align: left;
+    }
+    
+    .hero-title {
+        font-size: var(--text-2xl);
+    }
+    
+    .calculator-container {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 超大屏幕样式 (1200px+) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .steps-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .crop-grid {
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    }
+}
+
+/* 可访问性和用户偏好 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-primary: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --text-light: #9CA3AF;
+        
+        --bg-primary: #111827;
+        --bg-secondary: #1F2937;
+        --bg-card: #1F2937;
+        --bg-overlay: rgba(0, 0, 0, 0.7);
+        
+        --border-color: #374151;
+        --border-light: #4B5563;
+        --border-dark: #6B7280;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    :root {
+        --border-color: #000000;
+        --text-secondary: #000000;
+        --bg-secondary: #FFFFFF;
+    }
+    
+    [data-theme="dark"] {
+        --border-color: #FFFFFF;
+        --text-secondary: #FFFFFF;
+        --bg-secondary: #000000;
+    }
+    
+    .btn {
+        border: 2px solid currentColor;
+    }
+    
+    .feature-card,
+    .step-card,
+    .calculator-input,
+    .calculator-output {
+        border: 2px solid var(--border-color);
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .navbar,
+    .back-to-top,
+    .toast-container,
+    .modal,
+    .menu-toggle,
+    .theme-toggle {
+        display: none !important;
+    }
+    
+    .hero {
+        background: none !important;
+        color: black !important;
+    }
+    
+    .feature-card,
+    .step-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .page-title,
+    .section-title {
+        color: black !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+} 

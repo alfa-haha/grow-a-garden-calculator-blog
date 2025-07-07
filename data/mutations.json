@@ -1,0 +1,446 @@
+{
+  "mutations": [
+    {
+      "id": "Ripe",
+      "name": "Ripe",
+      "category": "Growth Mutations",
+      "sheckles_multiplier": 1,
+      "stack_bonus": false,
+      "appearance": "RipeSugarAppleIcon.png",
+      "visual_description": "Magenta in color",
+      "obtainment": "This mutation can only be added to Sugar Apple."
+    },
+    {
+      "id": "Gold",
+      "name": "Gold",
+      "category": "Growth Mutations",
+      "sheckles_multiplier": 20,
+      "stack_bonus": false,
+      "appearance": "GoldenMutation.png",
+      "visual_description": "Shining, Golden in color, Will emit a shimmering sound",
+      "obtainment": "1% chance to grow replacing the normal variant. Can be applied by the Dragonfly pet."
+    },
+    {
+      "id": "Rainbow",
+      "name": "Rainbow",
+      "category": "Growth Mutations",
+      "sheckles_multiplier": 50,
+      "stack_bonus": false,
+      "appearance": "Tomato Rainbow.gif",
+      "visual_description": "Continuously changes color, Emits yellow particles and a rainbow above it",
+      "obtainment": "0.1% chance to grow replacing the normal variant. Can be applied by the Butterfly pet when a crop has 5+ mutations, and all previous mutations will be removed."
+    },
+    {
+      "id": "Wet",
+      "name": "Wet",
+      "category": "Temperature Mutations",
+      "sheckles_multiplier": 2,
+      "stack_bonus": true,
+      "appearance": "WetMutation.png",
+      "visual_description": "Dripping with water particles.",
+      "obtainment": "During Rain. During Thunderstorm. Small chance from sprinklers. Can be applied by Sea Turtle. During admin event Under The Sea."
+    },
+    {
+      "id": "Windstruck",
+      "name": "Windstruck",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 2,
+      "stack_bonus": true,
+      "appearance": "WindstruckDr.png",
+      "visual_description": "Has wind gusts swoop around the crop",
+      "obtainment": "During Windy. During Gale."
+    },
+    {
+      "id": "Moonlit",
+      "name": "Moonlit",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 2,
+      "stack_bonus": true,
+      "appearance": "Strawberry Moonlit.png",
+      "visual_description": "Glowing, purple aroma, Purple in color",
+      "obtainment": "During Night, with a max of 6 plants being moonlit every 2 minutes during the duration of the Night."
+    },
+    {
+      "id": "Clay",
+      "name": "Clay",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 3,
+      "stack_bonus": true,
+      "appearance": "Rosy Delight Clay Mutation.png",
+      "visual_description": "Appears a brown-ish color and has a unique texture",
+      "obtainment": "By combining the 'Wet' mutation and 'Sandy' mutation."
+    },
+    {
+      "id": "Chilled",
+      "name": "Chilled",
+      "category": "Temperature Mutations",
+      "sheckles_multiplier": 2,
+      "stack_bonus": true,
+      "appearance": "(Chilled).png",
+      "visual_description": "Slightly bluish in color, Emits frost particles",
+      "obtainment": "During Frost. Can be applied by the Polar Bear. Can be applied by using a Mutation Spray Chilled on a crop."
+    },
+    {
+      "id": "Choc",
+      "name": "Choc",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 2,
+      "stack_bonus": true,
+      "appearance": "Strawberry Choc Png.png",
+      "visual_description": "Brown in color, Dripping with chocolate syrup",
+      "obtainment": "From a Chocolate Sprinkler. During Chocolate Rain. Using a Mutation Choc Spray on a crop."
+    },
+    {
+      "id": "Sandy",
+      "name": "Sandy",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 3,
+      "stack_bonus": true,
+      "appearance": "Sandy_Tomato.gif",
+      "visual_description": "Tan color, Emits puffs of sand around the fruit",
+      "obtainment": "During Sandstorm"
+    },
+    {
+      "id": "Bloodlit",
+      "name": "Bloodlit",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 4,
+      "stack_bonus": true,
+      "appearance": "Bloodlitdragonfruit png.png",
+      "visual_description": "Shining, Red in color",
+      "obtainment": "During Blood Moon, which has a chance to replace Night every 4 hours."
+    },
+    {
+      "id": "Twisted",
+      "name": "Twisted",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 5,
+      "stack_bonus": true,
+      "appearance": "Twistedcocovineba.png",
+      "visual_description": "Has Tornado-like swirls coming out of it, similar to the Windstuck Mutation.",
+      "obtainment": "During Tornado."
+    },
+    {
+      "id": "Drenched",
+      "name": "Drenched",
+      "category": "Temperature Mutations",
+      "sheckles_multiplier": 5,
+      "stack_bonus": true,
+      "appearance": "Drenched_Tomato.png",
+      "visual_description": "Large water droplets fall from the crop, Crop is slightly saturated",
+      "obtainment": "Given to crops during Tropical Rain. Replaces Wet Mutation"
+    },
+    {
+      "id": "Cloudtouched",
+      "name": "Cloudtouched",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 5,
+      "stack_bonus": true,
+      "appearance": "CloudtouchedPricklyPear.png",
+      "visual_description": "Emits flashing, red glints, Cloud-like aura all around.",
+      "obtainment": "Can be applied by the Mutation Spray Cloudtouched. Small chance to be applied by the Hyacinth Macaw pet."
+    },
+    {
+      "id": "Frozen",
+      "name": "Frozen",
+      "category": "Temperature Mutations",
+      "sheckles_multiplier": 10,
+      "stack_bonus": true,
+      "appearance": "Mango Frozen.png",
+      "visual_description": "Encased in an ice block.",
+      "obtainment": "If a crop has both Wet/Drenched and Chilled mutations. Can be applied by Polar Bear. Can be applied by the Flower Froster Sprinkler (only applies to flower type plants)"
+    },
+    {
+      "id": "Aurora",
+      "name": "Aurora",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 90,
+      "stack_bonus": true,
+      "appearance": "aurora gif.gif",
+      "visual_description": "Pulses between blues and purples, Releases a faint smoke from above the crop",
+      "obtainment": "Given during Aurora Borealis."
+    },
+    {
+      "id": "Shocked",
+      "name": "Shocked",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 100,
+      "stack_bonus": true,
+      "appearance": "ShockedMutation.png",
+      "visual_description": "Has a neon glow",
+      "obtainment": "When a crop is struck during a Thunderstorm or a Jandel Storm. Using a Mutation Spray Shocked on a crop."
+    },
+    {
+      "id": "Celestial",
+      "name": "Celestial",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 120,
+      "stack_bonus": true,
+      "appearance": "Strawberry Celestial.PNG",
+      "visual_description": "Slightly reflectant, Sparkling yellow and purple",
+      "obtainment": "When a crop is struck during Meteor Shower."
+    },
+    {
+      "id": "Pollinated",
+      "name": "Pollinated",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 3,
+      "stack_bonus": true,
+      "appearance": "Pollinated_Banana.png",
+      "visual_description": "Shining, Yellow in color, Emits yellow gas-like particles.",
+      "obtainment": "During a Bee Swarm or Worker Bee Swarm. Can be applied by certain bee pets. Using a Mutation Spray Pollinated on a crop."
+    },
+    {
+      "id": "Burnt",
+      "name": "Burnt",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 4,
+      "stack_bonus": true,
+      "appearance": "Obraz 2025-06-07 173233267.png",
+      "visual_description": "Unharvested: Black in color, Sparking. Harvested: Black in color, Emits ash particles",
+      "obtainment": "Can be applied by the Cooked Owl pet. Can be applied by the Mutation Spray Burnt."
+    },
+    {
+      "id": "Verdant",
+      "name": "Verdant",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 4,
+      "stack_bonus": true,
+      "appearance": "pineapple_verdant.png",
+      "visual_description": "Green in color, Emits green rectangular particles",
+      "obtainment": "Small chance to be applied by the Scarlet Macaw pet or the Solar Flare admin weather."
+    },
+    {
+      "id": "Wiltproof",
+      "name": "Wiltproof",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 4,
+      "stack_bonus": true,
+      "appearance": "Placeholder.png",
+      "visual_description": "Unknown(Drought weather is unreleased)",
+      "obtainment": "Obtainable in the Drought Weather"
+    },
+    {
+      "id": "Plasma",
+      "name": "Plasma",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 5,
+      "stack_bonus": true,
+      "appearance": "Plasma tomato.png",
+      "visual_description": "Neon, Pinkish purple in color",
+      "obtainment": "During a Laser Storm."
+    },
+    {
+      "id": "HoneyGlazed",
+      "name": "HoneyGlazed",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 5,
+      "stack_bonus": true,
+      "appearance": "Honeyglazed template fr2.png",
+      "visual_description": "Emits a yellow fog, Dripping in honey",
+      "obtainment": "From a Honey Sprinkler. Can be applied by the Bear Bee pet."
+    },
+    {
+      "id": "Heavenly",
+      "name": "Heavenly",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 5,
+      "stack_bonus": true,
+      "appearance": "MoonBlossomHeavenlyAnimated.gif",
+      "visual_description": "Emits golden, shining stars from the base",
+      "obtainment": "During a Floating Jandel event. (Can only be spawned by admins)"
+    },
+    {
+      "id": "Fried",
+      "name": "Fried",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 8,
+      "stack_bonus": true,
+      "appearance": "Fried tomato2.png",
+      "visual_description": "Small yellow particles fall from the crop",
+      "obtainment": "During a Fried Chicken event."
+    },
+    {
+      "id": "Amber",
+      "name": "Amber",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 10,
+      "stack_bonus": true,
+      "appearance": "Amber.png",
+      "visual_description": "Coated in semi-transparent orange overlay, emits orange cloud particles",
+      "obtainment": "Using Amber Mutation Spray. Small chance to be applied by the Raptor pet when a fruit is harvested."
+    },
+    {
+      "id": "Cooked",
+      "name": "Cooked",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 10,
+      "stack_bonus": true,
+      "appearance": "Ember_Lily_Cooked.PNG",
+      "visual_description": "Orange in color, Emits white steam and red swirls",
+      "obtainment": "Small chance to be applied by the Cooked Owl pet."
+    },
+    {
+      "id": "OldAmber",
+      "name": "OldAmber",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 20,
+      "stack_bonus": true,
+      "appearance": "OldAmberSunflower.png",
+      "visual_description": "More orange than its yellow predecessor",
+      "obtainment": "After 24 hours, the Amber mutation will age into OldAmber"
+    },
+    {
+      "id": "Zombified",
+      "name": "Zombified",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 25,
+      "stack_bonus": true,
+      "appearance": "Cactus Zombified.png",
+      "visual_description": "Emits a green fog, Dripping with green liquid",
+      "obtainment": "Can be applied by the Chicken Zombie pet."
+    },
+    {
+      "id": "Molten",
+      "name": "Molten",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 25,
+      "stack_bonus": true,
+      "appearance": "Nectarine_Molten.png",
+      "visual_description": "Neon, Orange, yellow and red in color",
+      "obtainment": "During a Volcano event."
+    },
+    {
+      "id": "Ceramic",
+      "name": "Ceramic",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 30,
+      "stack_bonus": true,
+      "appearance": "Mango_Ceramic.png",
+      "visual_description": "Looks darker in color similar to sundried. Fruits with the Ceramic mutation cannot have Burnt.",
+      "obtainment": "Requires the Clay mutation and one of: Burnt, Fried, Cooked, Molten, Sundried, Meteoric or Plasma"
+    },
+    {
+      "id": "AncientAmber",
+      "name": "AncientAmber",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 50,
+      "stack_bonus": true,
+      "appearance": "Placeholder.png",
+      "visual_description": "Unknown",
+      "obtainment": "After an unknown amount of time, OldAmber will age into AncientAmber"
+    },
+    {
+      "id": "Sundried",
+      "name": "Sundried",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 85,
+      "stack_bonus": true,
+      "appearance": "Sundriedbeans.png",
+      "visual_description": "Dark brown tint applied",
+      "obtainment": "During a Heatwave or Solar Flare event. Can redirect with a Tanning Mirror."
+    },
+    {
+      "id": "Paradisal",
+      "name": "Paradisal",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 100,
+      "stack_bonus": true,
+      "appearance": "Moon Mango Paradisal.png",
+      "visual_description": "Lime Green in color, Emits sun ray-like particles.",
+      "obtainment": "Occurs when a plant is both Verdant and Sundried, replaces both mutations."
+    },
+    {
+      "id": "Alien",
+      "name": "Alienlike",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 100,
+      "stack_bonus": true,
+      "appearance": "Alienlikegif.gif",
+      "visual_description": "Cyan in color, Cyan particles emitted from the fruit, Parts of fruit can be fully transparent/invisible, or be partially transparent.",
+      "obtainment": "During the Alien Invasion Event"
+    },
+    {
+      "id": "Galactic",
+      "name": "Galactic",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 120,
+      "stack_bonus": true,
+      "appearance": "GalacticBeanstalk.png",
+      "visual_description": "Light purple or pink in color, Some areas are neon, Glimmers out pink sparkles",
+      "obtainment": "During the Space Travel Event"
+    },
+    {
+      "id": "Disco",
+      "name": "Disco",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 125,
+      "stack_bonus": true,
+      "appearance": "Disco Mutation.gif",
+      "visual_description": "Shining, Flashing red, pink, yellow, green, and blue (in that order) constantly",
+      "obtainment": "During a Disco event. (Can only be spawned by admins) Can be applied by the Disco Bee pet."
+    },
+    {
+      "id": "Meteoric",
+      "name": "Meteoric",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 125,
+      "stack_bonus": true,
+      "appearance": "Meteoric_mutation.png",
+      "visual_description": "Having golden-yellow particles around the crop.",
+      "obtainment": "During a Meteor event. (Can only be spawned by admins)"
+    },
+    {
+      "id": "Voidtouched",
+      "name": "Voidtouched",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 135,
+      "stack_bonus": true,
+      "appearance": "Voidblueberrry.jpg",
+      "visual_description": "Emits black hole particles",
+      "obtainment": "During a Black Hole event. (Can only be spawned by admins)"
+    },
+    {
+      "id": "Dawnbound",
+      "name": "Dawnbound",
+      "category": "Environmental Mutations",
+      "sheckles_multiplier": 150,
+      "stack_bonus": true,
+      "appearance": "Dawnbound Sunflower.png",
+      "visual_description": "Glows a pure white",
+      "obtainment": "During the Sun God Event, by getting 4 players holding 4 Sunflowers with each flower touching in front of the Sun God. This mutation can only be applied to Sunflowers."
+    }
+  ],
+  "mutation_rules": {
+    "description": "Mutation calculation and stacking rules",
+    "formula": "Total Price = Base Value × (1 + ∑Mutations - Number of Mutations) × Growth Mutation × (Weight/Base Weight)²",
+    "exclusivity_rules": [
+      "Only one of either Golden or Rainbow can be applied.",
+      "Only one of either Chilled, Wet, Drenched, or Frozen can be applied.",
+      "Only one of either Burnt or Cooked can be applied.",
+      "Only one of either Verdant, Sundried or Paradisal can be applied.",
+      "Only one of either Sandy, Clay, Wet or Drenched can be applied.",
+      "Only one of either Ceramic, Burnt, Fried, Cooked, Molten or Clay can be applied.",
+      "Cooked replaces Burnt",
+      "AncientAmber replaces OldAmber which replaces Amber",
+      "Drenched replaces Wet"
+    ],
+    "pet_mutations": [
+      {"pet": "Dragonfly", "mutation": "Gold", "release": "Update 1.04.0"},
+      {"pet": "Polar Bear", "mutations": ["Chilled", "Frozen"], "release": "Update 1.04.0"},
+      {"pet": "Chicken Zombie", "mutation": "Zombified", "release": "Update 1.06.0"},
+      {"pet": "Bear Bee", "mutation": "HoneyGlazed", "release": "Update 1.08.0"},
+      {"pet": "Bee, Honey Bee, Petal Bee, Queen Bee", "mutation": "Pollinated", "release": "Update 1.08.0"},
+      {"pet": "Wasp, Tarantula Hawk", "mutation": "Pollinated", "release": "Update 1.09.0"},
+      {"pet": "Disco Bee", "mutation": "Disco", "release": "Update 1.09.0"},
+      {"pet": "Butterfly", "mutation": "Rainbow", "release": "Update 1.09.0"},
+      {"pet": "Cooked Owl", "mutations": ["Burnt", "Cooked"], "release": "Update 1.10.0"},
+      {"pet": "Pack Bee", "mutation": "Pollinated", "release": "Update 1.10.0"},
+      {"pet": "Scarlet Macaw", "mutation": "Verdant", "release": "Update 1.11.0"},
+      {"pet": "Sea Turtle", "mutation": "Wet", "release": "Update 1.11.0"},
+      {"pet": "Hyacinth Macaw", "mutation": "Cloudtouched", "release": "Update 1.12.0"},
+      {"pet": "Raptor", "mutation": "Amber", "release": "Update 1.13.0"},
+      {"pet": "Pterodactyl", "mutations": ["Windstruck", "Twisted"], "release": "Update 1.13.0"}
+    ]
+  }
+} 

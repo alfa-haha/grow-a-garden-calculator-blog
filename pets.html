@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Database - Garden Pro Calculator</title>
+    <meta name="description" content="Complete pet database with all pet information, rarity and hatching probability details">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">🌱</span>
+                <span class="brand-text">Garden Pro</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="crops.html" class="nav-link">Crops</a>
+                <a href="pets.html" class="nav-link active">Pets</a>
+                <a href="mutations.html" class="nav-link">Mutations</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="menu-toggle" id="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pets-main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">🐾 Pet Database</h1>
+                <p class="page-description">Complete pet database with all pet information, rarity and hatching probability details</p>
+            </div>
+
+            <!-- Filter and Search -->
+            <div class="filter-section">
+                <!-- Search Box - 移到单独一行 -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="pets-search" placeholder="Search pet names..." class="search-input">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+
+                <div class="filter-controls">
+                    <!-- Rarity Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Tier:</label>
+                        <select id="rarity-filter" class="filter-select">
+                            <option value="">All Tiers</option>
+                            <option value="Common">Common</option>
+                            <option value="Uncommon">Uncommon</option>
+                            <option value="Rare">Rare</option>
+                            <option value="Epic">Epic</option>
+                            <option value="Legendary">Legendary</option>
+                            <option value="Mythical">Mythical</option>
+                            <option value="Secret">Secret</option>
+                        </select>
+                    </div>
+
+                    <!-- Source Filter -->
+                    <div class="filter-group">
+                        <label class="filter-label">Source:</label>
+                        <select id="source-filter" class="filter-select">
+                            <option value="">All Sources</option>
+                            <option value="Common Egg">Common Egg</option>
+                            <option value="Rare Egg">Rare Egg</option>
+                            <option value="Epic Egg">Epic Egg</option>
+                            <option value="Legendary Egg">Legendary Egg</option>
+                            <option value="Mythical Egg">Mythical Egg</option>
+                            <option value="Secret">Secret</option>
+                        </select>
+                    </div>
+
+                    <!-- Sort Options -->
+                    <div class="filter-group">
+                        <label class="filter-label">Sort:</label>
+                        <select id="sort-filter" class="filter-select">
+                            <option value="name">By Name</option>
+                            <option value="rarity">By Tier</option>
+                            <option value="hatchChance">By Hatch Chance</option>
+                            <option value="source">By Source</option>
+                        </select>
+                    </div>
+
+                    <!-- Reset Button -->
+                    <button class="btn btn-secondary" id="reset-filters">🔄 Reset Filters</button>
+                </div>
+
+                <!-- Statistics -->
+                <div class="filter-stats">
+                    <span id="filter-results">Showing 0 results</span>
+                    <span class="filter-divider">|</span>
+                    <span id="total-pets">Total 0 pets</span>
+                </div>
+            </div>
+
+            <!-- View Controls -->
+            <div class="view-controls">
+                <!-- 删除view-toggle和bulk-actions部分 -->
+            </div>
+
+            <!-- Pet Display Area -->
+            <div class="pets-container">
+                <!-- 删除Grid View和List View部分 -->
+
+                <!-- Table View -->
+                <div class="pets-table" id="pets-table" style="display: block;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Tier</th>
+                                <th>Trait</th>
+                                <th>Hatch Chance</th>
+                                <th>Obtainable</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pets-table-body">
+                            <!-- Table rows will be generated dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <span class="empty-icon">🔍</span>
+                    <h3>No matching pets found</h3>
+                    <p>Try adjusting your filter criteria or search terms</p>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Pagination controls will be generated dynamically via JavaScript -->
+            </div>
+
+            <!-- 删除Rarity Statistics部分 -->
+        </div>
+    </main>
+
+    <!-- Pet Detail Modal -->
+    <div class="modal" id="pet-detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-pet-name">Pet Details</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="pet-detail">
+                    <div class="pet-visual">
+                        <span class="pet-icon large" id="modal-pet-icon">🐶</span>
+                        <div class="pet-badges">
+                            <span class="badge rarity" id="modal-pet-rarity">Common</span>
+                            <span class="badge source" id="modal-pet-source">Common Egg</span>
+                        </div>
+                    </div>
+                    <div class="pet-info">
+                        <div class="info-section">
+                            <h4>Basic Information</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Category:</span>
+                                    <span class="info-value" id="modal-pet-category">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Rarity:</span>
+                                    <span class="info-value" id="modal-pet-rarity-text">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Source:</span>
+                                    <span class="info-value" id="modal-pet-source-text">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Hatch Chance:</span>
+                                    <span class="info-value" id="modal-pet-hatch-chance">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-section">
+                            <h4>Abilities</h4>
+                            <div class="ability-list" id="modal-pet-abilities">
+                                <!-- Abilities will be generated dynamically -->
+                            </div>
+                        </div>
+                        <div class="info-section">
+                            <p class="pet-description" id="modal-pet-description">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modal-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Garden Pro Calculator</h3>
+                    <p>Professional garden planting game calculator tool</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <a href="index.html#calculator-module">Crop Calculator</a>
+                    <a href="crops.html">Crop Database</a>
+                    <a href="pets.html">Pet Database</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- JavaScript -->
+    <script src="js/utils.js"></script>
+    <script src="js/data-manager.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/pets.js"></script>
+</body>
+</html> 
