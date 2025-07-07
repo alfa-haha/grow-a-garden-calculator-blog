@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet Database - Garden Pro Calculator</title>
-    <meta name="description" content="Complete pet database with all pet information, rarity and hatching probability details">
+    <title>Egg Database - Garden Pro Calculator</title>
+    <meta name="description" content="Complete egg database with all egg information, cost, hatch time and hatching probability details">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/responsive.css">
@@ -21,8 +21,8 @@
             <div class="nav-menu" id="nav-menu">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="crops.html" class="nav-link">Crops</a>
-                <a href="pets.html" class="nav-link active">Pets</a>
-                <a href="eggs.html" class="nav-link">Eggs</a>
+                <a href="pets.html" class="nav-link">Pets</a>
+                <a href="eggs.html" class="nav-link active">Eggs</a>
                 <a href="gears.html" class="nav-link">Gears</a>
                 <a href="mutations.html" class="nav-link">Mutations</a>
             </div>
@@ -40,12 +40,12 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="pets-main">
+    <main class="eggs-main">
         <div class="container">
             <!-- Page Header -->
             <div class="page-header">
-                <h1 class="page-title">🐾 Pet Database</h1>
-                <p class="page-description">Complete pet database with all pet information, rarity and hatching probability details</p>
+                <h1 class="page-title">🥚 Egg Database</h1>
+                <p class="page-description">Complete egg database with all egg information, cost, hatch time and hatching probability details</p>
             </div>
 
             <!-- Filter and Search -->
@@ -53,38 +53,25 @@
                 <!-- Search Box - 移到单独一行 -->
                 <div class="search-container">
                     <div class="search-box">
-                        <input type="text" id="pets-search" placeholder="Search pet names..." class="search-input">
+                        <input type="text" id="eggs-search" placeholder="Search egg names..." class="search-input">
                         <span class="search-icon">🔍</span>
                     </div>
                 </div>
 
                 <div class="filter-controls">
-                    <!-- Rarity Filter -->
-                    <div class="filter-group">
-                        <label class="filter-label">Tier:</label>
-                        <select id="rarity-filter" class="filter-select">
-                            <option value="">All Tiers</option>
-                            <option value="Common">Common</option>
-                            <option value="Uncommon">Uncommon</option>
-                            <option value="Rare">Rare</option>
-                            <option value="Epic">Epic</option>
-                            <option value="Legendary">Legendary</option>
-                            <option value="Mythical">Mythical</option>
-                            <option value="Secret">Secret</option>
-                        </select>
-                    </div>
-
                     <!-- Source Filter -->
                     <div class="filter-group">
                         <label class="filter-label">Source:</label>
                         <select id="source-filter" class="filter-select">
                             <option value="">All Sources</option>
-                            <option value="Common Egg">Common Egg</option>
-                            <option value="Rare Egg">Rare Egg</option>
-                            <option value="Epic Egg">Epic Egg</option>
-                            <option value="Legendary Egg">Legendary Egg</option>
-                            <option value="Mythical Egg">Mythical Egg</option>
-                            <option value="Secret">Secret</option>
+                            <option value="Eggs Shop">Eggs Shop</option>
+                            <option value="Honey Shop">Honey Shop</option>
+                            <option value="Harvest Shop">Harvest Shop</option>
+                            <option value="Twilight Shop">Twilight Shop</option>
+                            <option value="Blood Moon Shop">Blood Moon Shop</option>
+                            <option value="Limited Time Shop">Limited Time Shop</option>
+                            <option value="Crafting">Crafting</option>
+                            <option value="Event">Event</option>
                         </select>
                     </div>
 
@@ -93,8 +80,8 @@
                         <label class="filter-label">Sort:</label>
                         <select id="sort-filter" class="filter-select">
                             <option value="name">By Name</option>
-                            <option value="rarity">By Tier</option>
-                            <option value="hatchChance">By Hatch Chance</option>
+                            <option value="cost">By Cost</option>
+                            <option value="hatchTime">By Hatch Time</option>
                             <option value="source">By Source</option>
                         </select>
                     </div>
@@ -107,7 +94,7 @@
                 <div class="filter-stats">
                     <span id="filter-results">Showing 0 results</span>
                     <span class="filter-divider">|</span>
-                    <span id="total-pets">Total 0 pets</span>
+                    <span id="total-eggs">Total 0 eggs</span>
                 </div>
             </div>
 
@@ -116,24 +103,21 @@
                 <!-- 删除view-toggle和bulk-actions部分 -->
             </div>
 
-            <!-- Pet Display Area -->
-            <div class="pets-container">
-                <!-- 删除Grid View和List View部分 -->
-
+            <!-- Egg Display Area -->
+            <div class="eggs-container">
                 <!-- Table View -->
-                <div class="pets-table" id="pets-table" style="display: block;">
+                <div class="eggs-table" id="eggs-table" style="display: block;">
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Image</th>
                                 <th>Name</th>
-                                <th>Tier</th>
-                                <th>Trait</th>
-                                <th>Hatch Chance</th>
-                                <th>Obtainable</th>
+                                <th>Price</th>
+                                <th>Hatch Time</th>
+                                <th>Hatching Probability</th>
                             </tr>
                         </thead>
-                        <tbody id="pets-table-body">
+                        <tbody id="eggs-table-body">
                             <!-- Table rows will be generated dynamically via JavaScript -->
                         </tbody>
                     </table>
@@ -142,7 +126,7 @@
                 <!-- Empty State -->
                 <div class="empty-state" id="empty-state" style="display: none;">
                     <span class="empty-icon">🔍</span>
-                    <h3>No matching pets found</h3>
+                    <h3>No matching eggs found</h3>
                     <p>Try adjusting your filter criteria or search terms</p>
                 </div>
             </div>
@@ -151,57 +135,47 @@
             <div class="pagination" id="pagination">
                 <!-- Pagination controls will be generated dynamically via JavaScript -->
             </div>
-
-            <!-- 删除Rarity Statistics部分 -->
         </div>
     </main>
 
-    <!-- Pet Detail Modal -->
-    <div class="modal" id="pet-detail-modal">
+    <!-- Egg Detail Modal -->
+    <div class="modal" id="egg-detail-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="modal-pet-name">Pet Details</h3>
+                <h3 class="modal-title" id="modal-egg-name">Egg Details</h3>
                 <button class="modal-close" id="modal-close">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="pet-detail">
-                    <div class="pet-visual">
-                        <span class="pet-icon large" id="modal-pet-icon">🐶</span>
-                        <div class="pet-badges">
-                            <span class="badge rarity" id="modal-pet-rarity">Common</span>
-                            <span class="badge source" id="modal-pet-source">Common Egg</span>
+                <div class="egg-detail">
+                    <div class="egg-visual">
+                        <img class="egg-image large" id="modal-egg-image" src="" alt="Egg Image">
+                        <div class="egg-badges">
+                            <span class="badge source" id="modal-egg-source">Shop</span>
                         </div>
                     </div>
-                    <div class="pet-info">
+                    <div class="egg-info">
                         <div class="info-section">
                             <h4>Basic Information</h4>
                             <div class="info-grid">
                                 <div class="info-item">
-                                    <span class="info-label">Category:</span>
-                                    <span class="info-value" id="modal-pet-category">-</span>
+                                    <span class="info-label">Cost:</span>
+                                    <span class="info-value" id="modal-egg-cost">-</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="info-label">Rarity:</span>
-                                    <span class="info-value" id="modal-pet-rarity-text">-</span>
+                                    <span class="info-label">Hatch Time:</span>
+                                    <span class="info-value" id="modal-egg-hatch-time">-</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Source:</span>
-                                    <span class="info-value" id="modal-pet-source-text">-</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Hatch Chance:</span>
-                                    <span class="info-value" id="modal-pet-hatch-chance">-</span>
+                                    <span class="info-value" id="modal-egg-source-text">-</span>
                                 </div>
                             </div>
                         </div>
                         <div class="info-section">
-                            <h4>Abilities</h4>
-                            <div class="ability-list" id="modal-pet-abilities">
-                                <!-- Abilities will be generated dynamically -->
+                            <h4>Hatching Probability</h4>
+                            <div class="probability-list" id="modal-egg-probability">
+                                <!-- Probabilities will be generated dynamically -->
                             </div>
-                        </div>
-                        <div class="info-section">
-                            <p class="pet-description" id="modal-pet-description">-</p>
                         </div>
                     </div>
                 </div>
@@ -225,6 +199,7 @@
                     <a href="index.html#calculator-module">Crop Calculator</a>
                     <a href="crops.html">Crop Database</a>
                     <a href="pets.html">Pet Database</a>
+                    <a href="eggs.html">Egg Database</a>
                 </div>
             </div>
         </div>
@@ -238,6 +213,6 @@
     <script src="js/data-manager.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/pets.js"></script>
+    <script src="js/eggs.js"></script>
 </body>
 </html> 

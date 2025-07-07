@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet Database - Garden Pro Calculator</title>
-    <meta name="description" content="Complete pet database with all pet information, rarity and hatching probability details">
+    <title>Gear Database - Garden Pro Calculator</title>
+    <meta name="description" content="Complete gear database with all gear information, price, tier and functionality details">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/responsive.css">
@@ -21,9 +21,9 @@
             <div class="nav-menu" id="nav-menu">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="crops.html" class="nav-link">Crops</a>
-                <a href="pets.html" class="nav-link active">Pets</a>
+                <a href="pets.html" class="nav-link">Pets</a>
                 <a href="eggs.html" class="nav-link">Eggs</a>
-                <a href="gears.html" class="nav-link">Gears</a>
+                <a href="gears.html" class="nav-link active">Gears</a>
                 <a href="mutations.html" class="nav-link">Mutations</a>
             </div>
             <div class="nav-actions">
@@ -40,51 +40,47 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="pets-main">
+    <main class="gears-main">
         <div class="container">
             <!-- Page Header -->
             <div class="page-header">
-                <h1 class="page-title">🐾 Pet Database</h1>
-                <p class="page-description">Complete pet database with all pet information, rarity and hatching probability details</p>
+                <h1 class="page-title">⚙️ Gear Database</h1>
+                <p class="page-description">Complete gear database with all gear information, price, tier and functionality details</p>
             </div>
 
             <!-- Filter and Search -->
             <div class="filter-section">
-                <!-- Search Box - 移到单独一行 -->
+                <!-- Search Box - 单独一行 -->
                 <div class="search-container">
                     <div class="search-box">
-                        <input type="text" id="pets-search" placeholder="Search pet names..." class="search-input">
+                        <input type="text" id="gears-search" placeholder="Search gear names..." class="search-input">
                         <span class="search-icon">🔍</span>
                     </div>
                 </div>
 
                 <div class="filter-controls">
-                    <!-- Rarity Filter -->
+                    <!-- Tier Filter -->
                     <div class="filter-group">
                         <label class="filter-label">Tier:</label>
-                        <select id="rarity-filter" class="filter-select">
+                        <select id="tier-filter" class="filter-select">
                             <option value="">All Tiers</option>
                             <option value="Common">Common</option>
                             <option value="Uncommon">Uncommon</option>
                             <option value="Rare">Rare</option>
-                            <option value="Epic">Epic</option>
                             <option value="Legendary">Legendary</option>
                             <option value="Mythical">Mythical</option>
-                            <option value="Secret">Secret</option>
+                            <option value="Divine">Divine</option>
+                            <option value="Craftable">Craftable</option>
                         </select>
                     </div>
 
-                    <!-- Source Filter -->
+                    <!-- Obtainable Filter -->
                     <div class="filter-group">
-                        <label class="filter-label">Source:</label>
-                        <select id="source-filter" class="filter-select">
-                            <option value="">All Sources</option>
-                            <option value="Common Egg">Common Egg</option>
-                            <option value="Rare Egg">Rare Egg</option>
-                            <option value="Epic Egg">Epic Egg</option>
-                            <option value="Legendary Egg">Legendary Egg</option>
-                            <option value="Mythical Egg">Mythical Egg</option>
-                            <option value="Secret">Secret</option>
+                        <label class="filter-label">Obtainable:</label>
+                        <select id="obtainable-filter" class="filter-select">
+                            <option value="">All</option>
+                            <option value="true">Obtainable</option>
+                            <option value="false">Not Obtainable</option>
                         </select>
                     </div>
 
@@ -93,9 +89,9 @@
                         <label class="filter-label">Sort:</label>
                         <select id="sort-filter" class="filter-select">
                             <option value="name">By Name</option>
-                            <option value="rarity">By Tier</option>
-                            <option value="hatchChance">By Hatch Chance</option>
-                            <option value="source">By Source</option>
+                            <option value="tier">By Tier</option>
+                            <option value="price">By Price</option>
+                            <option value="obtainable">By Obtainable</option>
                         </select>
                     </div>
 
@@ -107,33 +103,31 @@
                 <div class="filter-stats">
                     <span id="filter-results">Showing 0 results</span>
                     <span class="filter-divider">|</span>
-                    <span id="total-pets">Total 0 pets</span>
+                    <span id="total-gears">Total 0 gears</span>
                 </div>
             </div>
 
             <!-- View Controls -->
             <div class="view-controls">
-                <!-- 删除view-toggle和bulk-actions部分 -->
+                <!-- 可以根据需要添加其他控件 -->
             </div>
 
-            <!-- Pet Display Area -->
-            <div class="pets-container">
-                <!-- 删除Grid View和List View部分 -->
-
+            <!-- Gear Display Area -->
+            <div class="gears-container">
                 <!-- Table View -->
-                <div class="pets-table" id="pets-table" style="display: block;">
+                <div class="gears-table" id="gears-table" style="display: block;">
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Image</th>
                                 <th>Name</th>
+                                <th>Price</th>
                                 <th>Tier</th>
-                                <th>Trait</th>
-                                <th>Hatch Chance</th>
+                                <th>Description</th>
                                 <th>Obtainable</th>
                             </tr>
                         </thead>
-                        <tbody id="pets-table-body">
+                        <tbody id="gears-table-body">
                             <!-- Table rows will be generated dynamically via JavaScript -->
                         </tbody>
                     </table>
@@ -142,7 +136,7 @@
                 <!-- Empty State -->
                 <div class="empty-state" id="empty-state" style="display: none;">
                     <span class="empty-icon">🔍</span>
-                    <h3>No matching pets found</h3>
+                    <h3>No matching gears found</h3>
                     <p>Try adjusting your filter criteria or search terms</p>
                 </div>
             </div>
@@ -151,57 +145,52 @@
             <div class="pagination" id="pagination">
                 <!-- Pagination controls will be generated dynamically via JavaScript -->
             </div>
-
-            <!-- 删除Rarity Statistics部分 -->
         </div>
     </main>
 
-    <!-- Pet Detail Modal -->
-    <div class="modal" id="pet-detail-modal">
+    <!-- Gear Detail Modal -->
+    <div class="modal" id="gear-detail-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="modal-pet-name">Pet Details</h3>
+                <h3 class="modal-title" id="modal-gear-name">Gear Details</h3>
                 <button class="modal-close" id="modal-close">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="pet-detail">
-                    <div class="pet-visual">
-                        <span class="pet-icon large" id="modal-pet-icon">🐶</span>
-                        <div class="pet-badges">
-                            <span class="badge rarity" id="modal-pet-rarity">Common</span>
-                            <span class="badge source" id="modal-pet-source">Common Egg</span>
+                <div class="gear-detail">
+                    <div class="gear-visual">
+                        <img class="gear-image large" id="modal-gear-image" src="" alt="Gear Image">
+                        <div class="gear-badges">
+                            <span class="badge tier" id="modal-gear-tier">Common</span>
+                            <span class="badge obtainable" id="modal-gear-obtainable">Obtainable</span>
                         </div>
                     </div>
-                    <div class="pet-info">
+                    <div class="gear-info">
                         <div class="info-section">
                             <h4>Basic Information</h4>
                             <div class="info-grid">
                                 <div class="info-item">
-                                    <span class="info-label">Category:</span>
-                                    <span class="info-value" id="modal-pet-category">-</span>
+                                    <span class="info-label">Price:</span>
+                                    <span class="info-value" id="modal-gear-price">-</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="info-label">Rarity:</span>
-                                    <span class="info-value" id="modal-pet-rarity-text">-</span>
+                                    <span class="info-label">Tier:</span>
+                                    <span class="info-value" id="modal-gear-tier-text">-</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="info-label">Source:</span>
-                                    <span class="info-value" id="modal-pet-source-text">-</span>
+                                    <span class="info-label">Stock:</span>
+                                    <span class="info-value" id="modal-gear-stock">-</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="info-label">Hatch Chance:</span>
-                                    <span class="info-value" id="modal-pet-hatch-chance">-</span>
+                                    <span class="info-label">Obtainable:</span>
+                                    <span class="info-value" id="modal-gear-obtainable-text">-</span>
                                 </div>
                             </div>
                         </div>
                         <div class="info-section">
-                            <h4>Abilities</h4>
-                            <div class="ability-list" id="modal-pet-abilities">
-                                <!-- Abilities will be generated dynamically -->
+                            <h4>Description</h4>
+                            <div class="description-text" id="modal-gear-description">
+                                <!-- Description will be generated dynamically -->
                             </div>
-                        </div>
-                        <div class="info-section">
-                            <p class="pet-description" id="modal-pet-description">-</p>
                         </div>
                     </div>
                 </div>
@@ -225,19 +214,56 @@
                     <a href="index.html#calculator-module">Crop Calculator</a>
                     <a href="crops.html">Crop Database</a>
                     <a href="pets.html">Pet Database</a>
+                    <a href="eggs.html">Egg Database</a>
+                    <a href="gears.html">Gear Database</a>
+                    <a href="mutations.html">Mutation Database</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="https://github.com/growagarden-calculator/growagarden-calculator.github.io" target="_blank">GitHub Repository</a>
+                    <a href="docs/todolist.md" target="_blank">Development Roadmap</a>
+                    <a href="docs/" target="_blank">Documentation</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <p class="copyright">&copy; 2024 Garden Pro Calculator. All rights reserved.</p>
+                    <p class="disclaimer">This tool is not affiliated with the original game developers.</p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Toast Notifications -->
-    <div class="toast-container" id="toast-container"></div>
-
-    <!-- JavaScript -->
+    <!-- Scripts -->
     <script src="js/utils.js"></script>
     <script src="js/data-manager.js"></script>
+    <script src="js/gears.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/pets.js"></script>
+
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 DOMContentLoaded - Initializing gears page');
+            
+            // Create a gears manager instance
+            window.gearsManager = new GearsManager();
+            
+            // Try to initialize
+            if (window.app && window.app.isInitialized) {
+                console.log('🔧 App already initialized, starting gears initialization');
+                window.gearsManager.init();
+            } else {
+                console.log('🔧 App not ready, waiting for app initialization...');
+                // Wait for app to be initialized
+                const checkApp = setInterval(() => {
+                    if (window.app && window.app.isInitialized) {
+                        console.log('🔧 App initialized, starting gears initialization');
+                        clearInterval(checkApp);
+                        window.gearsManager.init();
+                    }
+                }, 100);
+            }
+        });
+    </script>
 </body>
 </html> 

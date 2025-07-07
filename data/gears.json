@@ -1,0 +1,361 @@
+{
+  "gears": [
+    {
+      "id": "watering_can",
+      "name": "Watering Can",
+      "price": {
+        "sheckles": 50000,
+        "robux": 39
+      },
+      "use": "Speeds up crop growth",
+      "obtainable": true,
+      "tier": "Common",
+      "image": "Watering-Can.png",
+      "stock": "1–4"
+    },
+    {
+      "id": "trowel",
+      "name": "Trowel",
+      "price": {
+        "sheckles": 100000,
+        "robux": 49
+      },
+      "use": "Realign crops",
+      "obtainable": true,
+      "tier": "Uncommon",
+      "image": "Trowel.png",
+      "stock": "1–3"
+    },
+    {
+      "id": "recall_wrench",
+      "name": "Recall Wrench",
+      "price": {
+        "sheckles": 150000,
+        "robux": 59
+      },
+      "use": "Teleports the user to the Gear Shop",
+      "obtainable": true,
+      "tier": "Uncommon",
+      "image": "Recall-Wrench.png",
+      "stock": "1–3"
+    },
+    {
+      "id": "basic_sprinkler",
+      "name": "Basic Sprinkler",
+      "price": {
+        "sheckles": 25000,
+        "robux": 79
+      },
+      "use": "Increases growth speed and harvest size of crops within its radius",
+      "obtainable": true,
+      "tier": "Rare",
+      "image": "Basic-Sprinkler.png",
+      "stock": "1–5"
+    },
+    {
+      "id": "firework",
+      "name": "Firework",
+      "price": {
+        "sheckles": 74000,
+        "robux": 39
+      },
+      "use": "Launches a firework into the sky",
+      "obtainable": false,
+      "tier": "Rare",
+      "image": "Firework.png",
+      "stock": "1–30"
+    },
+    {
+      "id": "advanced_sprinkler",
+      "name": "Advanced Sprinkler",
+      "price": {
+        "sheckles": 50000,
+        "robux": 99
+      },
+      "use": "Increases growth speed and mutation chance of crops within its radius",
+      "obtainable": true,
+      "tier": "Legendary",
+      "image": "Advanced-Sprinkler.png",
+      "stock": "1–2"
+    },
+    {
+      "id": "star_caller",
+      "name": "Star Caller",
+      "price": {
+        "sheckles": 12000000,
+        "skyMerchantPrice": 15000000,
+        "robux": 219
+      },
+      "use": "Redirects shooting stars to land in its close vicinity",
+      "obtainable": true,
+      "tier": "Legendary",
+      "image": "Star-Caller.png",
+      "stock": "1–3"
+    },
+    {
+      "id": "night_staff",
+      "name": "Night Staff",
+      "price": {
+        "skyMerchantPrice": 12000000,
+        "lunarPoint40": 1,
+        "lunarPoint110": 1,
+        "lunarPoint250": 1,
+        "lunarPoint360": 3
+      },
+      "use": "Guarantees the moonlit mutation of 6 random plants in the user's garden",
+      "obtainable": true,
+      "tier": "Legendary",
+      "image": "Night-Staff.png",
+      "stock": "1–3"
+    },
+    {
+      "id": "godly_sprinkler",
+      "name": "Godly Sprinkler",
+      "price": {
+        "sheckles": 120000,
+        "robux": 149
+      },
+      "use": "Increases growth speed, mutation chance and harvest size of crops within its radius",
+      "obtainable": true,
+      "tier": "Mythical",
+      "image": "Godly-Sprinkler.png",
+      "stock": "1–2"
+    },
+    {
+      "id": "chocolate_sprinkler",
+      "name": "Chocolate Sprinkler",
+      "price": {
+        "sheckles": 500000,
+        "robux": 199
+      },
+      "use": "Multi-harvest fruit within its area of effect are covered in chocolate",
+      "obtainable": false,
+      "tier": "Mythical",
+      "image": "Chocolate-Sprinkler.png",
+      "stock": "1–2"
+    },
+    {
+      "id": "magnifying_glass",
+      "name": "Magnifying Glass",
+      "price": {
+        "sheckles": 10000000,
+        "robux": 99
+      },
+      "use": "Inspects plants to reveal the value without collecting them",
+      "obtainable": true,
+      "tier": "Mythical",
+      "image": "Magnifying-Glass.png",
+      "stock": "1"
+    },
+    {
+      "id": "nectar_staff",
+      "name": "Nectar Staff",
+      "price": {
+        "honey": 25,
+        "robux": 219
+      },
+      "use": "Attracts more bees to pollinate the players fruit in their garden",
+      "obtainable": false,
+      "tier": "Mythical",
+      "image": "Nectar-Staff.png",
+      "stock": "1"
+    },
+    {
+      "id": "pollen_radar",
+      "name": "Pollen Radar",
+      "price": {
+        "honey": 20,
+        "robux": 249
+      },
+      "use": "Scans and collects nearby pollinated fruit",
+      "obtainable": false,
+      "tier": "Mythical",
+      "image": "Pollen-Radar.png",
+      "stock": "1–3"
+    },
+    {
+      "id": "master_sprinkler",
+      "name": "Master Sprinkler",
+      "price": {
+        "sheckles": 10000000,
+        "robux": 199
+      },
+      "use": "Greatly increases growth speed, mutation chance and harvest size of crops within its radius",
+      "obtainable": true,
+      "tier": "Divine",
+      "image": "Master-Sprinkler.png",
+      "stock": "1–2"
+    },
+    {
+      "id": "cleaning_spray",
+      "name": "Cleaning Spray",
+      "price": {
+        "sheckles": 15000000,
+        "robux": 139
+      },
+      "use": "Removes all mutations from the selected crop",
+      "obtainable": true,
+      "tier": "Divine",
+      "image": "Cleaning-Spray.png",
+      "stock": "1–10"
+    },
+    {
+      "id": "favorite_tool",
+      "name": "Favorite Tool",
+      "price": {
+        "sheckles": 20000000,
+        "robux": 119
+      },
+      "use": "Prevents selected crops from being picked up by the user",
+      "obtainable": true,
+      "tier": "Divine",
+      "image": "Favorite-Tool.png",
+      "stock": "1–3"
+    },
+    {
+      "id": "harvest_tool",
+      "name": "Harvest Tool",
+      "price": {
+        "sheckles": 30000000,
+        "robux": 149
+      },
+      "use": "Harvests all fruit from the selected plant",
+      "obtainable": true,
+      "tier": "Divine",
+      "image": "Harvest-Tool.png",
+      "stock": "1–3"
+    },
+    {
+      "id": "friendship_pot",
+      "name": "Friendship Pot",
+      "price": {
+        "sheckles": 15000000,
+        "robux": 39
+      },
+      "use": "A flower pot to share with a friend",
+      "obtainable": true,
+      "tier": "Divine",
+      "image": "Friendship-Pot.png",
+      "stock": "1"
+    },
+    {
+      "id": "honey_sprinkler",
+      "name": "Honey Sprinkler",
+      "price": {
+        "honey": 30,
+        "robux": 199
+      },
+      "use": "Applies the Honey Glazed mutation to crops within its radius",
+      "obtainable": true,
+      "tier": "Divine",
+      "image": "Honey-Sprinkler.png",
+      "stock": "1"
+    },
+    {
+      "id": "lightning_rod",
+      "name": "Lightning Rod",
+      "price": {
+        "craftingMaterials": "1x Basic Sprinkler + 1x Advanced Sprinkler + 1x Godly Sprinkler",
+        "sheckles": 500000,
+        "robux": 179
+      },
+      "use": "Redirects lightning strikes from its vicinity to exact position in the user's garden",
+      "obtainable": true,
+      "tier": "Craftable",
+      "image": "Lightning-Rod.png",
+      "stock": "Craftable"
+    },
+    {
+      "id": "berry_blusher_sprinkler",
+      "name": "Berry Blusher Sprinkler",
+      "price": {
+        "craftingMaterials": "1x Grape + 1x Blueberry + 1x Strawberry + 1x Godly Sprinkler",
+        "robux": 229
+      },
+      "use": "Greatly increases the size bonus for Grapes, Blueberries, Strawberries, Raspberries and Celestiberries. Lasts 1.5 minutes",
+      "obtainable": true,
+      "tier": "Craftable",
+      "image": "Berry-Blusher-Sprinkler.png",
+      "stock": "Craftable"
+    },
+    {
+      "id": "flower_froster_sprinkler",
+      "name": "Flower Froster Sprinkler",
+      "price": {
+        "craftingMaterials": "1x Orange Tulip + 1x Daffodil + 1x Advanced Sprinkler + 1x Basic Sprinkler",
+        "robux": 229
+      },
+      "use": "Freezes Flower type plants. Lasts for 2.5 minutes",
+      "obtainable": true,
+      "tier": "Craftable",
+      "image": "Flower-Froster-Sprinkler.png",
+      "stock": "Craftable"
+    },
+    {
+      "id": "spice_spritzer_sprinkler",
+      "name": "Spice Spritzer Sprinkler",
+      "price": {
+        "craftingMaterials": "1x Pepper + 1x Ember Lily + 1x Cacao + 1x Master Sprinkler",
+        "robux": 229
+      },
+      "use": "Greatly increase variant chance for Cacao, Pepper and Papaya. Lasts 2.5 minutes",
+      "obtainable": true,
+      "tier": "Craftable",
+      "image": "Spice-Spritzer-Sprinkler.png",
+      "stock": "Craftable"
+    },
+    {
+      "id": "stalk_sprout_sprinkler",
+      "name": "Stalk Sprout Sprinkler",
+      "price": {
+        "craftingMaterials": "1x Bamboo + 1x Beanstalk + 1x Mushroom + 1x Advanced Sprinkler",
+        "robux": 229
+      },
+      "use": "Greatly increases the growth speed of Mushrooms, Bamboo, and Beanstalk and can also make them get the wet mutation. Lasts 2 minutes",
+      "obtainable": true,
+      "tier": "Craftable",
+      "image": "Stalk-Sprout-Sprinkler.png",
+      "stock": "Craftable"
+    },
+    {
+      "id": "sweet_soaker_sprinkler",
+      "name": "Sweet Soaker Sprinkler",
+      "price": {
+        "craftingMaterials": "3x Watermelon + Master Sprinkler",
+        "robux": 229
+      },
+      "use": "Increases size bonus for Watermelon, Pumpkin, and Moon Melon. Lasts 5 minutes",
+      "obtainable": true,
+      "tier": "Craftable",
+      "image": "Sweet-Soaker-Sprinkler.png",
+      "stock": "Craftable"
+    },
+    {
+      "id": "tropical_mist_sprinkler",
+      "name": "Tropical Mist Sprinkler",
+      "price": {
+        "craftingMaterials": "1x Coconut + 1x Dragon Fruit + 1x Mango + 1x Godly Sprinkler",
+        "robux": 229
+      },
+      "use": "Increases growth speed and size bonus for tropical fruits, lasts 4 minutes",
+      "obtainable": true,
+      "tier": "Craftable",
+      "image": "Tropical-Mist-Sprinkler.png",
+      "stock": "Craftable"
+    },
+    {
+      "id": "reclaimer",
+      "name": "Reclaimer",
+      "price": {
+        "craftingMaterials": "1x Common Egg + 1x Harvest Tool",
+        "sheckles": 500000,
+        "robux": 199
+      },
+      "use": "Reclaims plants, turning them into seeds. 3 use",
+      "obtainable": true,
+      "tier": "Craftable",
+      "image": "Reclaimer.png",
+      "stock": "Craftable"
+    }
+  ]
+} 

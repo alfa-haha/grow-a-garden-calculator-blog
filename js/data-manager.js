@@ -9,6 +9,8 @@ class DataManager {
             crops: [],
             mutations: {},
             pets: [],
+            eggs: [],
+            gears: [],
             config: {}
         };
         this.loadPromises = new Map();
@@ -30,6 +32,8 @@ class DataManager {
                 this.loadCrops(),
                 // Note: mutations.json is handled independently by mutations.js to avoid conflicts
                 this.loadPets(),
+                this.loadEggs(),
+                this.loadGears(),
                 this.loadConfig()
             ];
 
@@ -168,6 +172,74 @@ class DataManager {
             console.error('❌ Failed to load pet data:', error);
             this.data.pets = this.getDefaultPets();
             return this.data.pets;
+        }
+    }
+
+    /**
+     * Load egg data
+     * @returns {Promise<Array>} Array of egg data
+     */
+    async loadEggs() {
+        try {
+            console.log('🥚 Starting to load eggs from data/eggs.json...');
+            const data = await this.loadJSON('data/eggs.json');
+            
+            console.log('🔍 Raw egg data loaded:', data);
+            console.log('🔍 data.eggs type:', typeof data.eggs);
+            console.log('🔍 data.eggs is array:', Array.isArray(data.eggs));
+            console.log('🔍 data.eggs length:', data.eggs ? data.eggs.length : 'undefined');
+            
+            this.data.eggs = data.eggs || [];
+            
+            console.log('🔍 Before processing, eggs count:', this.data.eggs.length);
+            
+            // Data processing
+            this.data.eggs = this.data.eggs.map(egg => ({
+                ...egg,
+                icon: this.getEggIcon(egg.id)
+            }));
+
+            console.log(`🥚 Loaded ${this.data.eggs.length} eggs`);
+            console.log('🔍 First few eggs:', this.data.eggs.slice(0, 3));
+            return this.data.eggs;
+        } catch (error) {
+            console.error('❌ Failed to load egg data:', error);
+            this.data.eggs = this.getDefaultEggs();
+            return this.data.eggs;
+        }
+    }
+
+    /**
+     * Load gear data
+     * @returns {Promise<Array>} Array of gear data
+     */
+    async loadGears() {
+        try {
+            console.log('⚙️ Starting to load gears from data/gears.json...');
+            const data = await this.loadJSON('data/gears.json');
+            
+            console.log('🔍 Raw gear data loaded:', data);
+            console.log('🔍 data.gears type:', typeof data.gears);
+            console.log('🔍 data.gears is array:', Array.isArray(data.gears));
+            console.log('🔍 data.gears length:', data.gears ? data.gears.length : 'undefined');
+            
+            this.data.gears = data.gears || [];
+            
+            console.log('🔍 Before processing, gears count:', this.data.gears.length);
+            
+            // Data processing
+            this.data.gears = this.data.gears.map(gear => ({
+                ...gear,
+                icon: this.getGearIcon(gear.id)
+            }));
+
+            console.log(`⚙️ Loaded ${this.data.gears.length} gears`);
+            console.log('🔍 First few gears:', this.data.gears.slice(0, 3));
+            return this.data.gears;
+        } catch (error) {
+            console.error('❌ Failed to load gear data:', error);
+            this.data.gears = this.getDefaultGears();
+            return this.data.gears;
         }
     }
 
@@ -313,6 +385,67 @@ class DataManager {
     }
 
     /**
+     * Get all egg data
+     * @returns {Array} Array of eggs
+     */
+    getEggs() {
+        return this.data.eggs;
+    }
+
+    /**
+     * Get egg by ID
+     * @param {string} id - Egg ID
+     * @returns {Object|null} Egg object or null
+     */
+    getEggById(id) {
+        return this.data.eggs.find(egg => egg.id === id) || null;
+    }
+
+    /**
+     * Get eggs by source
+     * @param {string} source - Source filter
+     * @returns {Array} Array of eggs
+     */
+    getEggsBySource(source) {
+        return this.data.eggs.filter(egg => egg.source && egg.source.includes(source));
+    }
+
+    /**
+     * Get all gear data
+     * @returns {Array} Array of gears
+     */
+    getGears() {
+        return this.data.gears;
+    }
+
+    /**
+     * Get gear by ID
+     * @param {string} id - Gear ID
+     * @returns {Object|null} Gear object or null
+     */
+    getGearById(id) {
+        return this.data.gears.find(gear => gear.id === id) || null;
+    }
+
+    /**
+     * Get gears by tier
+     * @param {string} tier - Tier filter
+     * @returns {Array} Array of gears
+     */
+    getGearsByTier(tier) {
+        return this.data.gears.filter(gear => gear.tier === tier);
+    }
+
+    /**
+     * Get obtainable gears
+     * @param {boolean} obtainable - Obtainable filter
+     * @returns {Array} Array of gears
+     */
+    getGearsByObtainable(obtainable) {
+        return this.data.gears.filter(gear => gear.obtainable === obtainable);
+    }
+
+    /**
      * Get configuration data
      * @returns {Object} Configuration object
      */
@@ -394,6 +527,63 @@ class DataManager {
             phoenix: '🔥'
         };
         return iconMap[petId] || '🐾';
+    }
+
+    /**
+     * Get egg icon
+     * @param {string} eggId - Egg ID
+     * @returns {string} Icon emoji
+     */
+    getEggIcon(eggId) {
+        const iconMap = {
+            common_egg: '🥚',
+            uncommon_egg: '🥚',
+            rare_egg: '🥚',
+            legendary_egg: '🥚',
+            mythical_egg: '🥚',
+            bug_egg: '🐛',
+            exotic_bug_egg: '🐛',
+            night_egg: '🌙',
+            premium_night_egg: '🌙',
+            bee_egg: '🐝',
+            anti_bee_egg: '🐝',
+            premium_anti_bee_egg: '🐝',
+            paradise_egg: '🌴',
+            oasis_egg: '🏜️',
+            premium_oasis_egg: '🏜️'
+        };
+        return iconMap[eggId] || '🥚';
+    }
+
+    /**
+     * Get gear icon
+     * @param {string} gearId - Gear ID
+     * @returns {string} Icon emoji
+     */
+    getGearIcon(gearId) {
+        const iconMap = {
+            watering_can: '🚿',
+            trowel: '🔧',
+            recall_wrench: '🔧',
+            basic_sprinkler: '💧',
+            advanced_sprinkler: '💧',
+            godly_sprinkler: '💧',
+            master_sprinkler: '💧',
+            chocolate_sprinkler: '🍫',
+            honey_sprinkler: '🍯',
+            star_caller: '⭐',
+            night_staff: '🌙',
+            nectar_staff: '🌸',
+            pollen_radar: '📡',
+            lightning_rod: '⚡',
+            cleaning_spray: '🧼',
+            favorite_tool: '💝',
+            harvest_tool: '🔨',
+            friendship_pot: '🌱',
+            magnifying_glass: '🔍',
+            reclaimer: '♻️'
+        };
+        return iconMap[gearId] || '⚙️';
     }
 
     /**
@@ -496,6 +686,55 @@ class DataManager {
     }
 
     /**
+     * Get default egg data
+     * @returns {Array} Default egg array
+     */
+    getDefaultEggs() {
+        return [
+            {
+                id: 'common_egg',
+                name: 'Common Egg',
+                cost: {
+                    sheckles: 50000,
+                    robux: 19
+                },
+                hatchingProbability: {
+                    'Golden Lab': '33.33%',
+                    'Dog': '33.33%',
+                    'Bunny': '33.33%'
+                },
+                hatchTime: '10 minutes',
+                source: 'Eggs Shop 100% chance of being in stock',
+                image: 'Common-Egg.png',
+                icon: '🥚'
+            }
+        ];
+    }
+
+    /**
+     * Get default gear data
+     * @returns {Array} Default gear array
+     */
+    getDefaultGears() {
+        return [
+            {
+                id: 'watering_can',
+                name: 'Watering Can',
+                price: {
+                    sheckles: 50000,
+                    robux: 39
+                },
+                use: 'Speeds up crop growth',
+                obtainable: true,
+                tier: 'Common',
+                image: 'Watering-Can.png',
+                stock: '1–4',
+                icon: '🚿'
+            }
+        ];
+    }
+
+    /**
      * Get default configuration data
      * @returns {Object} Default configuration object
      */
@@ -549,6 +788,8 @@ class DataManager {
         return {
             crops: this.data.crops.length,
             pets: this.data.pets.length,
+            eggs: this.data.eggs.length,
+            gears: this.data.gears.length,
             growthMutations: Object.keys(this.getGrowthMutations().types || {}).length,
             environmentalMutations: Object.keys(this.getEnvironmentalMutations().types || {}).length,
             initialized: this.initialized

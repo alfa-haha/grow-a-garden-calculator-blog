@@ -1,0 +1,303 @@
+{
+  "eggs": [
+    {
+      "id": "common_egg",
+      "name": "Common Egg",
+      "cost": {
+        "sheckles": 50000,
+        "robux": 19
+      },
+      "hatchingProbability": {
+        "Golden Lab": "33.33%",
+        "Dog": "33.33%",
+        "Bunny": "33.33%"
+      },
+      "hatchTime": "10 minutes",
+      "source": "Eggs Shop 100% chance of being in stock",
+      "image": "Common-Egg.png"
+    },
+    {
+      "id": "uncommon_egg",
+      "name": "Uncommon Egg",
+      "cost": {
+        "sheckles": 150000,
+        "robux": 39
+      },
+      "hatchingProbability": {
+        "Black Bunny": "25%",
+        "Chicken": "25%",
+        "Cat": "25%",
+        "Deer": "25%"
+      },
+      "hatchTime": "20 minutes",
+      "source": "Eggs Shop 54% chance of being in stock (unavailable)",
+      "image": "Uncommon-Egg.png"
+    },
+    {
+      "id": "rare_egg",
+      "name": "Rare Egg",
+      "cost": {
+        "sheckles": 600000,
+        "robux": 89
+      },
+      "hatchingProbability": {
+        "Orange Tabby": "33.33%",
+        "Spotted Deer": "25%",
+        "Pig": "16.67%",
+        "Rooster": "16.67%",
+        "Monkey": "8.33%"
+      },
+      "hatchTime": "2 hours",
+      "source": "Eggs Shop 24% chance of being in stock (unavailable), Was obtainable as a reward in the Summer Harvest Event",
+      "image": "Rare-Egg.png"
+    },
+    {
+      "id": "legendary_egg",
+      "name": "Legendary Egg",
+      "cost": {
+        "sheckles": 3000000,
+        "robux": 129
+      },
+      "hatchingProbability": {
+        "Cow": "42.55%",
+        "Silver Monkey": "42.55%",
+        "Sea Otter": "10.64%",
+        "Turtle": "2.13%",
+        "Polar Bear": "2.13%"
+      },
+      "hatchTime": "4 hours",
+      "source": "Eggs Shop 12% chance of being in stock (unavailable)",
+      "image": "Legendary-Egg.png"
+    },
+    {
+      "id": "mythical_egg",
+      "name": "Mythical Egg",
+      "cost": {
+        "sheckles": 8000000,
+        "robux": 119
+      },
+      "hatchingProbability": {
+        "Grey Mouse": "35.71%",
+        "Brown Mouse": "26.79%",
+        "Squirrel": "26.79%",
+        "Red Giant Ant": "8.93%",
+        "Red Fox": "1.79%"
+      },
+      "hatchTime": "5 hours and 7 minutes",
+      "source": "Eggs Shop 7% chance of being in stock",
+      "image": "Mythical-Egg.png"
+    },
+    {
+      "id": "bug_egg",
+      "name": "Bug Egg",
+      "cost": {
+        "sheckles": 50000000,
+        "robux": 149
+      },
+      "hatchingProbability": {
+        "Snail": "40%",
+        "Giant Ant": "30%",
+        "Caterpillar": "25%",
+        "Praying Mantis": "4%",
+        "Dragonfly": "1%"
+      },
+      "hatchTime": "8 hours",
+      "source": "Eggs Shop 3% chance of being in stock",
+      "image": "Bug-Egg.png"
+    },
+    {
+      "id": "exotic_bug_egg",
+      "name": "Exotic Bug Egg",
+      "cost": {
+        "robux": 199
+      },
+      "hatchingProbability": {
+        "Snail": "40%",
+        "Giant Ant": "30%",
+        "Caterpillar": "25%",
+        "Praying Mantis": "4%",
+        "Dragonfly": "1%"
+      },
+      "hatchTime": "30 seconds",
+      "source": "Limited Time Shop",
+      "image": "Bug-Egg.png"
+    },
+    {
+      "id": "night_egg",
+      "name": "Night Egg",
+      "cost": {
+        "sheckles": 25000000,
+        "bloodMoonPrice": 25000000,
+        "twilightPrice": 50000000
+      },
+      "hatchingProbability": {
+        "Hedgehog": "47%",
+        "Mole": "23.5%",
+        "Frog": "17.63%",
+        "Echo Frog": "8.23%",
+        "Night Owl": "3.53%",
+        "Raccoon": "0.12%"
+      },
+      "hatchTime": "4 hours and 10 minutes",
+      "source": "Lunar Glow Event reward track, Twilight Shop unknown chance of being in stock, Blood Moon Shop unknown chance of being in stock",
+      "image": "Night-Egg.png"
+    },
+    {
+      "id": "premium_night_egg",
+      "name": "Premium Night Egg",
+      "cost": {
+        "robux": 199
+      },
+      "hatchingProbability": {
+        "Hedgehog": "49%",
+        "Mole": "22%",
+        "Frog": "14%",
+        "Echo Frog": "10%",
+        "Night Owl": "4%",
+        "Raccoon": "1%"
+      },
+      "hatchTime": "30 seconds",
+      "source": "Lunar Glow Event stand",
+      "image": "Premium-Night-Egg.png"
+    },
+    {
+      "id": "bee_egg",
+      "name": "Bee Egg",
+      "cost": {
+        "honey": 18,
+        "robux": 129
+      },
+      "hatchingProbability": {
+        "Bee": "65%",
+        "Honey Bee": "25%",
+        "Bear Bee": "5%",
+        "Petal Bee": "4%",
+        "Queen Bee": "1%"
+      },
+      "hatchTime": "4 hours and 10 minutes",
+      "source": "Honey Shop unknown chance of being in stock, Eggs Shop 6% chance of being in stock",
+      "image": "Bee-Egg.png"
+    },
+    {
+      "id": "anti_bee_egg",
+      "name": "Anti Bee Egg",
+      "cost": {
+        "crafting": true
+      },
+      "hatchingProbability": {
+        "Wasp": "55%",
+        "Tarantula Hawk": "30%",
+        "Moth": "13.75%",
+        "Butterfly": "1%",
+        "Disco Bee": "0.25%"
+      },
+      "hatchTime": "4 hours and 10 minutes",
+      "source": "Crafting",
+      "image": "Anti-Bee-Egg.png"
+    },
+    {
+      "id": "premium_anti_bee_egg",
+      "name": "Premium Anti Bee Egg",
+      "cost": {
+        "robux": 199
+      },
+      "hatchingProbability": {
+        "Wasp": "55%",
+        "Tarantula Hawk": "30%",
+        "Moth": "13.75%",
+        "Butterfly": "1%",
+        "Disco Bee": "0.25%"
+      },
+      "hatchTime": "30 seconds",
+      "source": "Limited Time Shop",
+      "image": "Anti-Bee-Egg.png"
+    },
+    {
+      "id": "common_summer_egg",
+      "name": "Common Summer Egg",
+      "cost": {
+        "sheckles": 1000000,
+        "robux": 29
+      },
+      "hatchingProbability": {
+        "Starfish": "50%",
+        "Seagull": "25%",
+        "Crab": "25%"
+      },
+      "hatchTime": "20 minutes",
+      "source": "Eggs Shop 35% chance of being in stock",
+      "image": "Common-Summer-Egg.png"
+    },
+    {
+      "id": "rare_summer_egg",
+      "name": "Rare Summer Egg",
+      "cost": {
+        "sheckles": 25000000,
+        "robux": 99
+      },
+      "hatchingProbability": {
+        "Flamingo": "30%",
+        "Toucan": "25%",
+        "Sea Turtle": "20%",
+        "Orangutan": "15%",
+        "Seal": "10%"
+      },
+      "hatchTime": "4 hours",
+      "source": "Eggs Shop 17% chance of being in stock",
+      "image": "Rare-Summer-Egg.png"
+    },
+    {
+      "id": "paradise_egg",
+      "name": "Paradise Egg",
+      "cost": {
+        "sheckles": 50000000,
+        "robux": 139
+      },
+      "hatchingProbability": {
+        "Ostrich": "40%",
+        "Peacock": "30%",
+        "Capybara": "21%",
+        "Scarlet Macaw": "8%",
+        "Mimic Octopus": "1%"
+      },
+      "hatchTime": "6 hours and 40 minutes",
+      "source": "Eggs Shop 7% chance of being in stock",
+      "image": "Paradise-Egg.png"
+    },
+    {
+      "id": "oasis_egg",
+      "name": "Oasis Egg",
+      "cost": {
+        "summerCoin": 10,
+        "robux": 149
+      },
+      "hatchingProbability": {
+        "Meerkat": "45%",
+        "Sand Snake": "34.5%",
+        "Axolotl": "15%",
+        "Hyacinth Macaw": "5%",
+        "Fennec Fox": "0.5%"
+      },
+      "hatchTime": "4 hours and 10 minutes",
+      "source": "Harvest Shop unknown chance of being in stock",
+      "image": "Oasis-Egg.png"
+    },
+    {
+      "id": "premium_oasis_egg",
+      "name": "Premium Oasis Egg",
+      "cost": {
+        "robux": 199
+      },
+      "hatchingProbability": {
+        "Meerkat": "45%",
+        "Sand Snake": "34.5%",
+        "Axolotl": "15%",
+        "Hyacinth Macaw": "5%",
+        "Fennec Fox": "0.5%"
+      },
+      "hatchTime": "30 seconds",
+      "source": "Limited Time Shop",
+      "image": "Oasis-Egg.png"
+    }
+  ]
+} 

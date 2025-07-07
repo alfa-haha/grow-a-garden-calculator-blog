@@ -76,6 +76,8 @@ class App {
             this.state.currentPage = 'crops';
         } else if (filename === 'pets.html' || path.includes('pets')) {
             this.state.currentPage = 'pets';
+        } else if (filename === 'eggs.html' || path.includes('eggs')) {
+            this.state.currentPage = 'eggs';
         } else {
             this.state.currentPage = 'index';
         }
@@ -121,6 +123,16 @@ class App {
                 const pets = this.dataManager.getPets();
                 console.log(`🔍 DataManager has ${pets ? pets.length : 0} pets`);
                 await this.initPetsPage();
+            }
+            
+            // Initialize eggs page UI
+            if (this.state.currentPage === 'eggs') {
+                console.log('🥚 Initializing eggs page UI...');
+                // 确保数据已加载
+                console.log('🔍 Checking DataManager eggs data before eggs page init...');
+                const eggs = this.dataManager.getEggs();
+                console.log(`🔍 DataManager has ${eggs ? eggs.length : 0} eggs`);
+                await this.initEggsPage();
             }
             
             // Always check for hero calculator on index page
@@ -309,6 +321,66 @@ class App {
         }
     }
     
+    /**
+     * Initialize eggs page UI
+     */
+    async initEggsPage() {
+        if (this.state.currentPage !== 'eggs') return;
+        
+        try {
+            console.log('🥚 Initializing eggs page UI...');
+            
+            // Get eggs data from data manager
+            const eggs = this.dataManager.getEggs();
+            console.log(`🔍 Got ${eggs ? eggs.length : 0} eggs from DataManager`);
+            
+            // Check if eggs manager exists and its status
+            if (window.eggsManager) {
+                if (window.eggsManager.isInitialized) {
+                    console.log('🥚 EggsManager already initialized, skipping...');
+                    return;
+                } else if (window.eggsManager.isInitializing) {
+                    console.log('🥚 EggsManager currently initializing, waiting...');
+                    // Wait for initialization to complete
+                    while (window.eggsManager.isInitializing) {
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                    }
+                    console.log('🥚 EggsManager initialization completed');
+                    return;
+                } else {
+                    console.log('🥚 EggsManager found, initializing with data...');
+                    // 直接设置数据，避免等待逻辑
+                    window.eggsManager.eggs = eggs || [];
+                    window.eggsManager.filteredEggs = [...(eggs || [])];
+                    console.log('🔍 Set EggsManager.eggs length:', window.eggsManager.eggs.length);
+                    console.log('🔍 Set EggsManager.filteredEggs length:', window.eggsManager.filteredEggs.length);
+                    await window.eggsManager.init();
+                }
+            } else {
+                console.log('🥚 EggsManager not found, waiting for initialization...');
+                // Wait for initializeEggsManager function to be available
+                let retries = 0;
+                const maxRetries = 50;
+                while (!window.initializeEggsManager && retries < maxRetries) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    retries++;
+                }
+                
+                if (window.initializeEggsManager) {
+                    console.log('🥚 Found initializeEggsManager, calling it with data...');
+                    await window.initializeEggsManager(eggs);
+                } else {
+                    console.warn('⚠️ initializeEggsManager not found after waiting');
+                }
+            }
+            
+            console.log('✅ Eggs page UI initialized');
+        } catch (error) {
+            console.error('❌ Eggs page initialization failed:', error);
+            throw error;
+        }
+    }
+
     /**
      * Setup crops page interactions
      */
