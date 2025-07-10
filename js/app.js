@@ -78,6 +78,10 @@ class App {
             this.state.currentPage = 'pets';
         } else if (filename === 'eggs.html' || path.includes('eggs')) {
             this.state.currentPage = 'eggs';
+        } else if (filename === 'gears.html' || path.includes('gears')) {
+            this.state.currentPage = 'gears';
+        } else if (filename === 'mutations.html' || path.includes('mutations')) {
+            this.state.currentPage = 'mutations';
         } else {
             this.state.currentPage = 'index';
         }
@@ -133,6 +137,16 @@ class App {
                 const eggs = this.dataManager.getEggs();
                 console.log(`🔍 DataManager has ${eggs ? eggs.length : 0} eggs`);
                 await this.initEggsPage();
+            }
+            
+            // Initialize gears page UI
+            if (this.state.currentPage === 'gears') {
+                console.log('⚙️ Initializing gears page UI...');
+                // 确保数据已加载
+                console.log('🔍 Checking DataManager gears data before gears page init...');
+                const gears = this.dataManager.getGears();
+                console.log(`🔍 DataManager has ${gears ? gears.length : 0} gears`);
+                await this.initGearsPage();
             }
             
             // Always check for hero calculator on index page
@@ -377,6 +391,52 @@ class App {
             console.log('✅ Eggs page UI initialized');
         } catch (error) {
             console.error('❌ Eggs page initialization failed:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Initialize gears page UI
+     */
+    async initGearsPage() {
+        if (this.state.currentPage !== 'gears') return;
+        
+        try {
+            console.log('⚙️ Initializing gears page UI...');
+            
+            // Get gears data from data manager
+            const gears = this.dataManager.getGears();
+            console.log(`🔍 Got ${gears ? gears.length : 0} gears from DataManager`);
+            
+            // Check if gears manager exists and its status
+            if (window.gearsManager) {
+                if (window.gearsManager.isInitialized) {
+                    console.log('⚙️ GearsManager already initialized, skipping...');
+                    return;
+                } else if (window.gearsManager.isInitializing) {
+                    console.log('⚙️ GearsManager currently initializing, waiting...');
+                    // Wait for initialization to complete
+                    while (window.gearsManager.isInitializing) {
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                    }
+                    console.log('⚙️ GearsManager initialization completed');
+                    return;
+                } else {
+                    console.log('⚙️ GearsManager found, initializing with data...');
+                    // 直接设置数据，避免等待逻辑
+                    window.gearsManager.gears = gears || [];
+                    window.gearsManager.filteredGears = [...(gears || [])];
+                    console.log('🔍 Set GearsManager.gears length:', window.gearsManager.gears.length);
+                    console.log('🔍 Set GearsManager.filteredGears length:', window.gearsManager.filteredGears.length);
+                    await window.gearsManager.init();
+                }
+            } else {
+                console.log('⚙️ GearsManager not found, will be initialized by gears.js');
+            }
+            
+            console.log('✅ Gears page UI initialized');
+        } catch (error) {
+            console.error('❌ Gears page initialization failed:', error);
             throw error;
         }
     }
@@ -1092,8 +1152,18 @@ class App {
         // Get current mutations
         const mutations = this.getHeroMutations();
         
-        // Calculate
-        const result = this.calculator.calculateCropValue(crop, mutations);
+        // Get weight parameters from UI
+        const weightInput = document.getElementById('hero-weight');
+        const quantityInput = document.getElementById('hero-quantity');
+        
+        const weight = weightInput ? parseFloat(weightInput.value) || null : null;
+        const quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1;
+        
+        // Use crop's base weight if available
+        const baseWeight = crop.base_weight || 2.85; // Default base weight from UI
+        
+        // Calculate with weight support
+        const result = this.calculator.calculateCropValue(crop, mutations, quantity, weight, baseWeight);
         
         // Update display
         this.updateHeroResultDisplay(result);
@@ -1180,7 +1250,7 @@ class App {
     }
 
     /**
-     * Update hero result display
+     * Update hero result display with new calculation structure
      */
     updateHeroResultDisplay(result) {
         const crop = result.crop;
@@ -1193,17 +1263,59 @@ class App {
         
         if (cropIcon) cropIcon.textContent = crop.icon;
         if (cropName) cropName.textContent = crop.name;
-        if (cropRarity) cropRarity.textContent = crop.rarity;
+        if (cropRarity) cropRarity.textContent = crop.rarity || crop.tier;
 
-        // Update calculation values
+        // Update calculation values using new structure
         const baseValue = document.getElementById('hero-base-value');
         const multiplier = document.getElementById('hero-multiplier');
         const finalValue = document.getElementById('hero-final-value');
-        if (baseValue) baseValue.textContent = calc.baseValue;
-        if (multiplier) multiplier.textContent = `×${calc.mutationMultiplier}`;
-        if (finalValue) finalValue.textContent = calc.finalValue;
-        // 新增：刷新历史
+        
+        if (baseValue) baseValue.textContent = this.formatNumber(calc.baseValue);
+        if (multiplier) {
+            // Show the total multiplier from new calculation
+            multiplier.textContent = `×${calc.totalMultiplier.toFixed(2)}`;
+        }
+        if (finalValue) finalValue.textContent = this.formatNumber(calc.finalValue);
+        
+        // Update additional information if elements exist
+        const growthMultiplier = document.getElementById('hero-growth-multiplier');
+        const envFactor = document.getElementById('hero-env-factor');
+        const weightFactor = document.getElementById('hero-weight-factor');
+        
+        if (growthMultiplier) growthMultiplier.textContent = `×${calc.growthMultiplier}`;
+        if (envFactor) envFactor.textContent = `×${calc.environmentalFactor.toFixed(2)}`;
+        if (weightFactor) weightFactor.textContent = `×${calc.weightFactor.toFixed(3)}`;
+        
+        // Log calculation details for debugging
+        console.log('🔢 Calculation Details:', {
+            baseValue: calc.baseValue,
+            growthMultiplier: calc.growthMultiplier,
+            environmentalFactor: calc.environmentalFactor,
+            weightFactor: calc.weightFactor,
+            totalMultiplier: calc.totalMultiplier,
+            finalValue: calc.finalValue,
+            formula: calc.formula
+        });
+        
+        // 刷新历史记录
         this.renderHeroHistoryList();
+    }
+
+    /**
+     * Format large numbers for display
+     * @param {number} num - Number to format
+     * @returns {string} Formatted number string
+     */
+    formatNumber(num) {
+        if (num >= 1000000000) {
+            return (num / 1000000000).toFixed(1) + 'B';
+        } else if (num >= 1000000) {
+            return (num / 1000000).toFixed(1) + 'M';
+        } else if (num >= 1000) {
+            return (num / 1000).toFixed(1) + 'K';
+        } else {
+            return num.toLocaleString();
+        }
     }
 
     /**

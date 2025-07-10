@@ -30,25 +30,12 @@ class GearsManager {
             console.log('🔍 Current gears data length:', this.gears ? this.gears.length : 0);
             console.log('🔍 Current filteredGears data length:', this.filteredGears ? this.filteredGears.length : 0);
             
-            // Use pre-loaded data or try to load if not available
-            if (this.gears && this.gears.length > 0) {
-                console.log(`✅ Using pre-loaded gears data (${this.gears.length} gears)`);
-                // Ensure filteredGears is set
-                if (!this.filteredGears || this.filteredGears.length === 0) {
-                    this.filteredGears = [...this.gears];
-                    console.log('🔍 Set filteredGears from gears, length:', this.filteredGears.length);
-                }
-            } else {
-                console.log('🔄 No pre-loaded gears data, trying to load from DataManager...');
-                await this.loadGearsData();
-            }
+            // Always load data from DataManager to ensure we have the latest data
+            console.log('🔄 Loading data from DataManager...');
+            await this.loadGearsData();
             
             // Setup UI interactions
             this.setupEventListeners();
-            
-            // Update statistics and render
-            this.updateStatistics();
-            this.renderGearsTable();
             
             this.isInitialized = true;
             console.log('✅ Gears page initialized successfully');
@@ -105,11 +92,16 @@ class GearsManager {
             }
             
             // Get gears data from data manager
+            console.log('🔍 Debug: dataManager.data:', window.app.dataManager.data);
+            console.log('🔍 Debug: dataManager.data.gears:', window.app.dataManager.data.gears);
+            console.log('🔍 Debug: dataManager.data.gears length:', window.app.dataManager.data.gears ? window.app.dataManager.data.gears.length : 'undefined');
+            
             this.gears = window.app.dataManager.getGears();
             
             console.log('🔍 Debug: getGears() returned:', this.gears);
             console.log('🔍 Debug: gears type:', typeof this.gears);
             console.log('🔍 Debug: gears is array:', Array.isArray(this.gears));
+            console.log('🔍 Debug: gears length after getGears():', this.gears ? this.gears.length : 'undefined');
             
             if (!this.gears || this.gears.length === 0) {
                 console.warn('⚠️ No gears data available');
@@ -128,8 +120,9 @@ class GearsManager {
             console.log('🔍 Debug: filteredGears after initialization:', this.filteredGears);
             console.log('🔍 Debug: filteredGears length:', this.filteredGears.length);
             
-            // Update statistics
+            // Update statistics and render table
             this.updateStatistics();
+            this.renderGearsTable();
         } catch (error) {
             console.error('❌ Failed to load gears data:', error);
             this.gears = [];
@@ -383,27 +376,33 @@ class GearsManager {
         row.addEventListener('click', () => this.showGearDetails(gear));
         
         row.innerHTML = `
-            <td class="gear-image-cell">
-                <img src="images/gears/${gear.image}" alt="${gear.name}" class="gear-image" loading="lazy"
-                     onerror="this.src='images/gears/default.png'">
-            </td>
-            <td class="gear-name">
-                <div class="name-container">
-                    <span class="name">${gear.name}</span>
+            <td>
+                <div class="gear-cell">
+                    <img src="images/gears/${gear.image}" alt="${gear.name}" class="gear-image" loading="lazy"
+                         onerror="this.src='images/gears/default.png'">
                 </div>
             </td>
-            <td class="gear-price">
-                ${this.formatPrice(gear.price)}
+            <td>
+                <div class="gear-name">
+                    ${gear.name}
+                </div>
             </td>
-            <td class="gear-tier">
-                <span class="badge tier-${gear.tier.toLowerCase()}">${gear.tier}</span>
+            <td>
+                <div class="gear-price">
+                    ${this.formatPrice(gear.price)}
+                </div>
             </td>
-            <td class="gear-description">
-                <div class="description-text">${gear.use || 'No description available'}</div>
+            <td>
+                <span class="gear-tier-badge ${gear.tier.toLowerCase()}">${gear.tier}</span>
             </td>
-            <td class="gear-obtainable">
-                <span class="badge ${gear.obtainable ? 'obtainable' : 'not-obtainable'}">
-                    ${gear.obtainable ? '✅ Yes' : '❌ No'}
+            <td>
+                <div class="gear-description">
+                    ${gear.use || 'No description available'}
+                </div>
+            </td>
+            <td>
+                <span class="obtainable-status ${gear.obtainable ? 'yes' : 'no'}">
+                    ${gear.obtainable ? 'Yes' : 'No'}
                 </span>
             </td>
         `;
@@ -415,38 +414,38 @@ class GearsManager {
      * Format price for display
      */
     formatPrice(price) {
-        if (!price) return '<span class="price-free">Free</span>';
+        if (!price) return '<span class="gear-price-item">Free</span>';
         
         const priceItems = [];
         
         if (price.sheckles) {
-            priceItems.push(`<span class="price-sheckles">🪙 ${price.sheckles.toLocaleString()}</span>`);
+            priceItems.push(`<div class="gear-price-item">🪙 ${price.sheckles.toLocaleString()}</div>`);
         }
         
         if (price.robux) {
-            priceItems.push(`<span class="price-robux">💎 ${price.robux}</span>`);
+            priceItems.push(`<div class="gear-price-item">💎 ${price.robux}</div>`);
         }
         
         if (price.honey) {
-            priceItems.push(`<span class="price-honey">🍯 ${price.honey}</span>`);
+            priceItems.push(`<div class="gear-price-item">🍯 ${price.honey}</div>`);
         }
         
         if (price.skyMerchantPrice) {
-            priceItems.push(`<span class="price-sky">☁️ ${price.skyMerchantPrice.toLocaleString()}</span>`);
+            priceItems.push(`<div class="gear-price-item">☁️ ${price.skyMerchantPrice.toLocaleString()}</div>`);
         }
         
         if (price.craftingMaterials) {
-            priceItems.push(`<span class="price-crafting">🔨 ${price.craftingMaterials}</span>`);
+            priceItems.push(`<div class="gear-price-item">🔨 ${price.craftingMaterials}</div>`);
         }
         
         // Add other price types as needed
         Object.keys(price).forEach(key => {
             if (!['sheckles', 'robux', 'honey', 'skyMerchantPrice', 'craftingMaterials'].includes(key)) {
-                priceItems.push(`<span class="price-other">${key}: ${price[key]}</span>`);
+                priceItems.push(`<div class="gear-price-item">${key}: ${price[key]}</div>`);
             }
         });
         
-        return priceItems.length > 0 ? priceItems.join('<br>') : '<span class="price-unknown">Unknown</span>';
+        return priceItems.length > 0 ? priceItems.join('') : '<span class="gear-price-item">Unknown</span>';
     }
 
     /**

@@ -10,24 +10,30 @@ class GardenCalculator {
     }
 
     /**
-     * Calculate crop value
+     * Calculate crop value according to official formula
      * @param {Object} crop - Crop object
      * @param {Object} mutations - Mutation configuration
      * @param {number} quantity - Quantity
+     * @param {number} weight - Current weight in kg (optional)
+     * @param {number} baseWeight - Base weight in kg (optional)
      * @returns {Object} Calculation result
      */
-    calculateCropValue(crop, mutations = {}, quantity = 1) {
+    calculateCropValue(crop, mutations = {}, quantity = 1, weight = null, baseWeight = null) {
         if (!crop) {
             throw new Error('Crop data cannot be empty');
         }
 
         // Basic value calculation
-        const baseValue = crop.sellValue || 0;
-        const baseCost = crop.buyPrice || 0;
+        const baseValue = crop.sellValue || crop.minimum_value || 0;
+        const baseCost = crop.buyPrice || crop.sheckle_price || 0;
         const baseProfit = baseValue - baseCost;
+        
+        // Use provided weight or crop's base weight
+        const currentWeight = weight !== null ? weight : (crop.base_weight || null);
+        const cropBaseWeight = baseWeight !== null ? baseWeight : (crop.base_weight || null);
 
-        // Apply mutation effects
-        const mutationResult = this.applyMutations(baseValue, mutations);
+        // Apply mutation effects using the official formula
+        const mutationResult = this.applyMutations(baseValue, mutations, currentWeight, cropBaseWeight);
         
         // Final calculation
         const finalValue = mutationResult.finalValue * quantity;
@@ -39,17 +45,27 @@ class GardenCalculator {
             crop: crop,
             quantity: quantity,
             mutations: mutations,
+            weight: currentWeight,
+            baseWeight: cropBaseWeight,
             calculation: {
                 baseValue: baseValue,
                 baseCost: baseCost,
                 baseProfit: baseProfit,
-                mutationMultiplier: mutationResult.totalMultiplier,
-                mutationBonus: mutationResult.totalBonus,
+                // New calculation results following official formula
+                growthMultiplier: mutationResult.growthMultiplier,
+                environmentalFactor: mutationResult.environmentalFactor,
+                weightFactor: mutationResult.weightFactor,
+                mutationSum: mutationResult.mutationSum,
+                mutationCount: mutationResult.mutationCount,
+                totalMultiplier: mutationResult.totalMultiplier,
+                valueAfterEnvironmental: mutationResult.valueAfterEnvironmental,
+                valueAfterGrowth: mutationResult.valueAfterGrowth,
                 finalValue: finalValue,
                 totalCost: totalCost,
                 totalProfit: totalProfit,
                 roi: roi,
-                breakdown: mutationResult.breakdown
+                breakdown: mutationResult.breakdown,
+                formula: mutationResult.formula
             },
             timestamp: Date.now(),
             id: Utils.generateId()
@@ -62,67 +78,301 @@ class GardenCalculator {
     }
 
     /**
-     * Apply mutation effects
+     * Apply mutation effects according to official formula:
+     * Total Price = Base Value × (1 + ΣMutations - Number of Mutations) × Growth Mutation × (Weight/Base Weight)²
+     * 
      * @param {number} baseValue - Base value
      * @param {Object} mutations - Mutation configuration
+     * @param {number} weight - Current weight in kg (optional)
+     * @param {number} baseWeight - Base weight in kg (optional)
      * @returns {Object} Mutation calculation result
      */
-    applyMutations(baseValue, mutations) {
-        let totalMultiplier = 1;
-        let totalBonus = 0;
+    applyMutations(baseValue, mutations, weight = null, baseWeight = null) {
         const breakdown = [];
-
-        // Handle growth mutations (multiplicative effect, mutually exclusive)
-        if (mutations.growth) {
-            const growthMutation = dataManager.getGrowthMutations().types?.[mutations.growth];
+        
+        // Step 1: Calculate Growth Mutation multiplier (mutually exclusive)
+        let growthMultiplier = 1;
+        if (mutations.growth && mutations.growth !== 'normal') {
+            const growthMutation = dataManager.getMutationById(mutations.growth) || 
+                                 dataManager.getMutationById(mutations.growth.charAt(0).toUpperCase() + mutations.growth.slice(1));
             if (growthMutation) {
-                const multiplier = growthMutation.multiplier || 1;
-                totalMultiplier *= multiplier;
+                growthMultiplier = growthMutation.sheckles_multiplier || 1;
                 breakdown.push({
                     type: 'growth',
                     name: growthMutation.name,
-                    effect: `x${multiplier}`,
-                    description: growthMutation.description,
-                    icon: growthMutation.icon,
-                    color: growthMutation.color
+                    effect: `×${growthMultiplier}`,
+                    value: growthMultiplier,
+                    description: growthMutation.obtainment || '',
+                    icon: '🌟',
+                    color: '#F59E0B'
                 });
             }
         }
 
-        // Handle environmental mutations (additive effect, can stack)
+        // Step 2: Calculate Environmental Mutations sum and count
+        let mutationSum = 0;
+        let mutationCount = 0;
+        
         if (mutations.environmental && Array.isArray(mutations.environmental)) {
-            const envMutations = dataManager.getEnvironmentalMutations().types || {};
-            mutations.environmental.forEach(envId => {
-                const envMutation = envMutations[envId];
-                if (envMutation) {
-                    const bonus = envMutation.additive || envMutation.bonus || 0;
-                    totalBonus += bonus;
+            mutations.environmental.forEach(mutationId => {
+                const mutation = dataManager.getMutationById(mutationId) || 
+                               dataManager.getMutationById(mutationId.charAt(0).toUpperCase() + mutationId.slice(1));
+                if (mutation) {
+                    const multiplier = mutation.sheckles_multiplier || 1;
+                    mutationSum += multiplier;
+                    mutationCount++;
+                    
                     breakdown.push({
                         type: 'environmental',
-                        name: envMutation.name,
-                        effect: `+${bonus}x`,
-                        description: envMutation.description,
-                        icon: envMutation.icon,
-                        color: envMutation.color
+                        name: mutation.name,
+                        effect: `+${multiplier}`,
+                        value: multiplier,
+                        description: mutation.obtainment || '',
+                        icon: this.getMutationIcon(mutation.category),
+                        color: this.getMutationColor(mutation.category)
                     });
                 }
             });
         }
 
-        // Calculate final value: (base value * multiplicative effect) + (base value * additive effect)
-        const multipliedValue = baseValue * totalMultiplier;
-        const bonusValue = baseValue * totalBonus;
-        const finalValue = multipliedValue + bonusValue;
+        // Step 3: Calculate Environmental factor (1 + ΣMutations - Number of Mutations)
+        const environmentalFactor = 1 + mutationSum - mutationCount;
+        
+        // Step 4: Calculate Weight factor (Weight/Base Weight)²
+        let weightFactor = 1;
+        if (weight !== null && baseWeight !== null && baseWeight > 0) {
+            weightFactor = Math.pow(weight / baseWeight, 2);
+        }
+
+        // Step 5: Apply the official formula
+        // Total Price = Base Value × Environmental Factor × Growth Multiplier × Weight Factor
+        const finalValue = baseValue * environmentalFactor * growthMultiplier * weightFactor;
+
+        // Calculate intermediate values for display
+        const valueAfterEnv = baseValue * environmentalFactor;
+        const valueAfterGrowth = valueAfterEnv * growthMultiplier;
 
         return {
             baseValue: baseValue,
-            totalMultiplier: totalMultiplier,
-            totalBonus: totalBonus,
-            multipliedValue: multipliedValue,
-            bonusValue: bonusValue,
+            growthMultiplier: growthMultiplier,
+            environmentalFactor: environmentalFactor,
+            weightFactor: weightFactor,
+            mutationSum: mutationSum,
+            mutationCount: mutationCount,
+            totalMultiplier: environmentalFactor * growthMultiplier * weightFactor,
+            valueAfterEnvironmental: valueAfterEnv,
+            valueAfterGrowth: valueAfterGrowth,
             finalValue: finalValue,
-            breakdown: breakdown
+            breakdown: breakdown,
+            formula: {
+                description: 'Total Price = Base Value × (1 + ΣMutations - Count) × Growth × Weight²',
+                baseValue: baseValue,
+                environmentalPart: `(1 + ${mutationSum} - ${mutationCount}) = ${environmentalFactor}`,
+                growthPart: `×${growthMultiplier}`,
+                weightPart: weight && baseWeight ? `×(${weight}/${baseWeight})² = ×${weightFactor.toFixed(3)}` : '×1 (no weight)',
+                result: finalValue
+            }
         };
+    }
+
+    /**
+     * Get mutation icon based on category
+     * @param {string} category - Mutation category
+     * @returns {string} Icon emoji
+     */
+    getMutationIcon(category) {
+        const iconMap = {
+            'Growth Mutations': '🌟',
+            'Environmental Mutations': '🌍',
+            'Temperature Mutations': '🌡️'
+        };
+        return iconMap[category] || '💫';
+    }
+
+    /**
+     * Get mutation color based on category
+     * @param {string} category - Mutation category
+     * @returns {string} Color hex code
+     */
+    getMutationColor(category) {
+        const colorMap = {
+            'Growth Mutations': '#F59E0B',
+            'Environmental Mutations': '#10B981',
+            'Temperature Mutations': '#06B6D4'
+        };
+        return colorMap[category] || '#8B5CF6';
+    }
+
+    /**
+     * Validate mutation combinations according to official rules
+     * @param {Object} mutations - Mutation configuration
+     * @returns {Object} Validation result with corrected mutations
+     */
+    validateMutations(mutations) {
+        const validatedMutations = {
+            growth: mutations.growth,
+            environmental: [...(mutations.environmental || [])]
+        };
+        
+        const warnings = [];
+        const conflicts = [];
+
+        // Rule 1: Only one growth mutation (Golden or Rainbow)
+        if (validatedMutations.growth) {
+            const growthMutation = dataManager.getMutationById(validatedMutations.growth);
+            if (!growthMutation || growthMutation.category !== 'Growth Mutations') {
+                warnings.push(`Invalid growth mutation: ${validatedMutations.growth}`);
+                validatedMutations.growth = 'normal';
+            }
+        }
+
+        // Environmental mutation conflict resolution
+        const environmentalIds = validatedMutations.environmental.map(id => id.toLowerCase());
+        
+        // Rule 2 & 5: Chilled, Wet, Drenched, Frozen conflicts (and Sandy, Clay)
+        const temperatureGroup = ['chilled', 'wet', 'drenched', 'frozen'];
+        const temperaturePresent = environmentalIds.filter(id => temperatureGroup.includes(id));
+        if (temperaturePresent.length > 1) {
+            // Priority: Frozen > Drenched > Chilled > Wet
+            const priority = ['frozen', 'drenched', 'chilled', 'wet'];
+            const kept = priority.find(p => temperaturePresent.includes(p));
+            const removed = temperaturePresent.filter(t => t !== kept);
+            
+            conflicts.push({
+                type: 'temperature_conflict',
+                kept: kept,
+                removed: removed,
+                rule: 'Only one temperature mutation allowed'
+            });
+            
+            // Remove conflicts from environmental mutations
+            validatedMutations.environmental = validatedMutations.environmental.filter(id => 
+                !removed.includes(id.toLowerCase())
+            );
+        }
+
+        // Rule 3: Burnt or Cooked conflict
+        const cookingGroup = ['burnt', 'cooked'];
+        const cookingPresent = environmentalIds.filter(id => cookingGroup.includes(id));
+        if (cookingPresent.length > 1) {
+            // Cooked replaces Burnt
+            conflicts.push({
+                type: 'cooking_conflict',
+                kept: 'cooked',
+                removed: ['burnt'],
+                rule: 'Cooked replaces Burnt'
+            });
+            
+            // Remove burnt, keep cooked
+            validatedMutations.environmental = validatedMutations.environmental.filter(id => 
+                id.toLowerCase() !== 'burnt'
+            );
+        }
+
+        // Rule 4: Verdant, Sundried, Paradisal conflict
+        const verdantGroup = ['verdant', 'sundried', 'paradisal'];
+        const verdantPresent = environmentalIds.filter(id => verdantGroup.includes(id));
+        if (verdantPresent.length > 1) {
+            // Priority: Paradisal > Sundried > Verdant
+            const priority = ['paradisal', 'sundried', 'verdant'];
+            const kept = priority.find(p => verdantPresent.includes(p));
+            const removed = verdantPresent.filter(v => v !== kept);
+            
+            conflicts.push({
+                type: 'verdant_conflict',
+                kept: kept,
+                removed: removed,
+                rule: 'Only one verdant-type mutation allowed'
+            });
+            
+            validatedMutations.environmental = validatedMutations.environmental.filter(id => 
+                !removed.includes(id.toLowerCase())
+            );
+        }
+
+        // Rule 6: Ceramic, Burnt, Fried, Cooked, Molten, Clay conflict
+        const ceramicGroup = ['ceramic', 'burnt', 'fried', 'cooked', 'molten', 'clay'];
+        const ceramicPresent = environmentalIds.filter(id => ceramicGroup.includes(id));
+        if (ceramicPresent.length > 1) {
+            // Priority: Ceramic > Molten > Cooked > Fried > Clay > Burnt
+            const priority = ['ceramic', 'molten', 'cooked', 'fried', 'clay', 'burnt'];
+            const kept = priority.find(p => ceramicPresent.includes(p));
+            const removed = ceramicPresent.filter(c => c !== kept);
+            
+            conflicts.push({
+                type: 'ceramic_conflict',
+                kept: kept,
+                removed: removed,
+                rule: 'Only one ceramic-type mutation allowed'
+            });
+            
+            validatedMutations.environmental = validatedMutations.environmental.filter(id => 
+                !removed.includes(id.toLowerCase())
+            );
+        }
+
+        // Rule 8: Amber progression (AncientAmber > OldAmber > Amber)
+        const amberGroup = ['amber', 'oldamber', 'ancientamber'];
+        const amberPresent = environmentalIds.filter(id => amberGroup.includes(id));
+        if (amberPresent.length > 1) {
+            // Keep highest tier only
+            const priority = ['ancientamber', 'oldamber', 'amber'];
+            const kept = priority.find(p => amberPresent.includes(p));
+            const removed = amberPresent.filter(a => a !== kept);
+            
+            conflicts.push({
+                type: 'amber_conflict',
+                kept: kept,
+                removed: removed,
+                rule: 'Higher tier amber replaces lower tier'
+            });
+            
+            validatedMutations.environmental = validatedMutations.environmental.filter(id => 
+                !removed.includes(id.toLowerCase())
+            );
+        }
+
+        return {
+            validatedMutations: validatedMutations,
+            warnings: warnings,
+            conflicts: conflicts,
+            hasConflicts: conflicts.length > 0 || warnings.length > 0
+        };
+    }
+
+    /**
+     * Calculate crop value with mutation validation
+     * @param {Object} crop - Crop object
+     * @param {Object} mutations - Mutation configuration
+     * @param {number} quantity - Quantity
+     * @param {number} weight - Current weight in kg (optional)
+     * @param {number} baseWeight - Base weight in kg (optional)
+     * @param {boolean} validateMutations - Whether to validate mutations (default: true)
+     * @returns {Object} Calculation result with validation info
+     */
+    calculateCropValueWithValidation(crop, mutations = {}, quantity = 1, weight = null, baseWeight = null, validateMutations = true) {
+        let finalMutations = mutations;
+        let validationResult = null;
+
+        // Validate mutations if requested
+        if (validateMutations) {
+            validationResult = this.validateMutations(mutations);
+            finalMutations = validationResult.validatedMutations;
+            
+            if (validationResult.hasConflicts) {
+                console.warn('🚨 Mutation conflicts detected and resolved:', validationResult);
+            }
+        }
+
+        // Calculate with validated mutations
+        const result = this.calculateCropValue(crop, finalMutations, quantity, weight, baseWeight);
+        
+        // Add validation info to result
+        if (validationResult) {
+            result.validation = validationResult;
+        }
+
+        return result;
     }
 
     /**

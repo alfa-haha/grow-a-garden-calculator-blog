@@ -2425,11 +2425,19 @@
 }
 
 .mutations-table .data-table .obtainment-cell {
-    width: 25%;
+    width: 35%;
+    /* Allow text wrapping in obtainment column */
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
 }
 
 .mutations-table .data-table .description-cell {
-    width: 30%;
+    width: 25%;
+    /* Allow text wrapping in description column */
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
 }
 
 .mutation-image {
@@ -2549,4 +2557,351 @@
         font-size: 0.65em;
         padding: 2px 6px;
     }
+}
+
+/* ===== Gears Table Specific Styles ===== */
+/* Gears container to match filter section style */
+.gears-container {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    overflow-x: auto; /* 处理表格宽度溢出 */
+    width: 100%; /* 确保容器宽度固定 */
+    max-width: 100%; /* 防止容器超出父级宽度 */
+}
+
+/* Empty state within gears container should have no additional spacing */
+.gears-container .empty-state {
+    margin: 0;
+    padding: var(--spacing-xl) 0;
+}
+
+/* Ensure gears table scrolls smoothly */
+.gears-table {
+    width: 100% !important;
+    overflow-x: auto !important;
+    max-width: 100% !important; /* 防止表格容器超出 */
+    position: relative !important; /* 添加定位上下文 */
+}
+
+/* 重要：使用更高优先级覆盖通用样式 */
+.gears-container .gears-table .data-table {
+    table-layout: fixed !important; /* 强制固定布局 */
+    margin: 0 !important; /* Remove default margin since container has padding */
+    width: 100% !important; /* 使用100%宽度充分利用容器空间 */
+    min-width: 1000px !important; /* 设置合理的最小宽度确保所有列都有足够空间 */
+    max-width: none !important; /* 移除最大宽度限制 */
+    border-collapse: collapse !important; /* 恢复边框合并 */
+    display: table !important; /* 强制表格显示 */
+    box-sizing: border-box !important; /* 确保宽度计算包含边框 */
+}
+
+/* 列宽度调整 - 使用百分比确保总宽度为100% */
+.gears-container .gears-table .data-table th:nth-child(1),
+.gears-container .gears-table .data-table td:nth-child(1) {
+    /* Image 列 */
+    width: 8% !important; /* 约80px */
+    min-width: 80px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+}
+
+.gears-container .gears-table .data-table th:nth-child(2),
+.gears-container .gears-table .data-table td:nth-child(2) {
+    /* Name 列 */
+    width: 18% !important; /* 约180px */
+    min-width: 180px !important;
+    white-space: nowrap !important;
+}
+
+.gears-container .gears-table .data-table th:nth-child(3),
+.gears-container .gears-table .data-table td:nth-child(3) {
+    /* Price 列 */
+    width: 15% !important; /* 约150px */
+    min-width: 150px !important;
+    white-space: normal !important; /* 允许换行 */
+    word-wrap: break-word !important; /* 长单词强制换行 */
+    line-height: 1.3 !important; /* 紧凑的行高 */
+    overflow: hidden !important; /* 超出部分隐藏 */
+    text-overflow: ellipsis !important; /* 超长文本显示省略号 */
+}
+
+.gears-container .gears-table .data-table th:nth-child(4),
+.gears-container .gears-table .data-table td:nth-child(4) {
+    /* Tier 列 */
+    width: 12% !important; /* 约120px */
+    min-width: 120px !important;
+    white-space: nowrap !important;
+}
+
+.gears-container .gears-table .data-table th:nth-child(5),
+.gears-container .gears-table .data-table td:nth-child(5) {
+    /* Description 列 - 占用剩余空间 */
+    width: 35% !important; /* 约35%的空间用于描述 */
+    min-width: 300px !important;
+    white-space: normal !important; /* 覆盖通用的nowrap设置 */
+    word-wrap: break-word !important;
+    line-height: 1.4 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.gears-container .gears-table .data-table th:nth-child(6),
+.gears-container .gears-table .data-table td:nth-child(6) {
+    /* Obtainable 列 */
+    width: 12% !important; /* 约120px */
+    min-width: 120px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+}
+
+/* Gear image styles */
+.gear-image {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: var(--radius);
+    background-color: var(--bg-secondary);
+    padding: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gear-image:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+/* Gear cell container */
+.gear-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xs);
+}
+
+/* Price display */
+.gear-price {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: var(--text-sm);
+    width: 100%; /* 确保占用全部列宽 */
+}
+
+.gear-price-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: normal; /* 允许换行以配合列设置 */
+    justify-content: flex-start; /* 左对齐 */
+    flex-wrap: wrap; /* 允许内容换行 */
+    word-break: break-word; /* 确保长数字能够换行 */
+}
+
+/* Tier badge for gears */
+.gear-tier-badge {
+    padding: 2px 6px;
+    border-radius: var(--radius);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.gear-tier-badge.common {
+    background-color: #6b7280;
+    color: white;
+}
+
+.gear-tier-badge.uncommon {
+    background-color: #10b981;
+    color: white;
+}
+
+.gear-tier-badge.rare {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.gear-tier-badge.legendary {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.gear-tier-badge.mythical {
+    background-color: #8b5cf6;
+    color: white;
+}
+
+.gear-tier-badge.divine {
+    background-color: #ec4899;
+    color: white;
+}
+
+.gear-tier-badge.craftable {
+    background-color: #64748b;
+    color: white;
+}
+
+/* Obtainable status */
+.obtainable-status {
+    padding: 2px 8px;
+    border-radius: var(--radius);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    text-align: center;
+}
+
+.obtainable-status.yes {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.obtainable-status.no {
+    background-color: #fef2f2;
+    color: #991b1b;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .gears-container .gears-table .data-table {
+        width: 100% !important; /* 中等屏幕也使用100%宽度 */
+        min-width: 700px !important; /* 中等屏幕最小宽度 */
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(1),
+    .gears-container .gears-table .data-table td:nth-child(1) {
+        width: 10% !important;
+        min-width: 60px !important;
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(2),
+    .gears-container .gears-table .data-table td:nth-child(2) {
+        width: 20% !important;
+        min-width: 140px !important;
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(3),
+    .gears-container .gears-table .data-table td:nth-child(3) {
+        width: 15% !important;
+        min-width: 100px !important;
+        white-space: normal !important; /* 允许换行 */
+        word-wrap: break-word !important; /* 长单词强制换行 */
+        line-height: 1.2 !important; /* 小屏幕更紧凑的行高 */
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(4),
+    .gears-container .gears-table .data-table td:nth-child(4) {
+        width: 12% !important;
+        min-width: 80px !important;
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(5),
+    .gears-container .gears-table .data-table td:nth-child(5) {
+        width: 30% !important; /* 使用30%空间 */
+        min-width: 200px !important; /* 最小宽度保证可读性 */
+        font-size: var(--text-xs) !important;
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(6),
+    .gears-container .gears-table .data-table td:nth-child(6) {
+        width: 13% !important;
+        min-width: 100px !important;
+    }
+    
+    .gear-image {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .gear-price {
+        font-size: var(--text-xs);
+        gap: 1px; /* 减少间距以节省空间 */
+    }
+    
+    .gear-price-item {
+        font-size: var(--text-xs) !important; /* 确保价格项也使用小字体 */
+        gap: 2px !important; /* 减少内部间距 */
+    }
+}
+
+@media (max-width: 480px) {
+    .gears-container .gears-table .data-table {
+        width: 100% !important; /* 小屏幕也使用100%宽度 */
+        min-width: 550px !important; /* 小屏幕最小宽度 */
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(1),
+    .gears-container .gears-table .data-table td:nth-child(1) {
+        width: 12% !important;
+        min-width: 50px !important;
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(2),
+    .gears-container .gears-table .data-table td:nth-child(2) {
+        width: 22% !important;
+        min-width: 110px !important;
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(3),
+    .gears-container .gears-table .data-table td:nth-child(3) {
+        width: 18% !important;
+        min-width: 90px !important;
+        white-space: normal !important; /* 允许换行 */
+        word-wrap: break-word !important; /* 长单词强制换行 */
+        line-height: 1.1 !important; /* 小屏幕最紧凑的行高 */
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(4),
+    .gears-container .gears-table .data-table td:nth-child(4) {
+        width: 15% !important;
+        min-width: 80px !important;
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(5),
+    .gears-container .gears-table .data-table td:nth-child(5) {
+        width: 20% !important; /* 小屏幕上使用20%空间 */
+        min-width: 150px !important; /* 最小宽度保证可读性 */
+    }
+    
+    .gears-container .gears-table .data-table th:nth-child(6),
+    .gears-container .gears-table .data-table td:nth-child(6) {
+        width: 13% !important;
+        min-width: 80px !important;
+    }
+    
+    .gear-image {
+        width: 36px;
+        height: 36px;
+    }
 } 
+
+/* Mutations Container to match filter section style */
+.mutations-container {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Empty state within mutations container should have no additional spacing */
+.mutations-container .empty-state {
+    margin: 0;
+    padding: var(--spacing-xl) 0;
+}
+
+/* Ensure mutations table scrolls smoothly */
+.mutations-table {
+    width: 100% !important;
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    position: relative !important;
+}
+
+/* Mutations Table Styles */

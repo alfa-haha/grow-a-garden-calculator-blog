@@ -241,27 +241,32 @@
     <script src="js/app.js"></script>
 
     <script>
-        // Initialize page
+        // Initialize page through coordinated app initialization
+        console.log('🔧 Starting gears page initialization...');
+        
+        // Initialize as soon as DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🔧 DOMContentLoaded - Initializing gears page');
+            console.log('🔧 DOMContentLoaded - starting app and GearsManager...');
             
             // Create a gears manager instance
             window.gearsManager = new GearsManager();
+            console.log('🔧 GearsManager created:', window.gearsManager);
             
-            // Try to initialize
-            if (window.app && window.app.isInitialized) {
-                console.log('🔧 App already initialized, starting gears initialization');
-                window.gearsManager.init();
+            // Initialize app if not already initializing
+            if (!window.app) {
+                window.app = new App();
+                console.log('🔧 App created, starting initialization...');
+                window.app.init().catch(error => {
+                    console.error('❌ App initialization failed:', error);
+                });
+            } else if (!window.app.isInitialized) {
+                console.log('🔧 App exists but not initialized, waiting...');
+                // Wait for app to initialize, then our initGearsPage will be called
             } else {
-                console.log('🔧 App not ready, waiting for app initialization...');
-                // Wait for app to be initialized
-                const checkApp = setInterval(() => {
-                    if (window.app && window.app.isInitialized) {
-                        console.log('🔧 App initialized, starting gears initialization');
-                        clearInterval(checkApp);
-                        window.gearsManager.init();
-                    }
-                }, 100);
+                console.log('🔧 App already initialized, initializing gears directly...');
+                window.gearsManager.init().catch(error => {
+                    console.error('❌ GearsManager initialization failed:', error);
+                });
             }
         });
     </script>

@@ -27,10 +27,10 @@ class DataManager {
         try {
             console.log('🔄 Initializing data manager...');
             
-            // Load all data files in parallel (mutations handled separately by mutations.js)
+            // Load all data files in parallel
             const loadTasks = [
                 this.loadCrops(),
-                // Note: mutations.json is handled independently by mutations.js to avoid conflicts
+                this.loadMutations(),
                 this.loadPets(),
                 this.loadEggs(),
                 this.loadGears(),
@@ -124,15 +124,41 @@ class DataManager {
     }
 
     /**
-     * Load mutation data
+     * Load mutation data from new format
      * @returns {Promise<Object>} Mutation data object
      */
     async loadMutations() {
         try {
-            const data = await this.loadJSON('data/mutations.json');
-            this.data.mutations = data.mutations || {};
+            console.log('🌟 Loading mutations from data/mutations(new).json...');
+            const data = await this.loadJSON('data/mutations(new).json');
             
-            console.log(`🌟 Loaded mutation data`);
+            // Process mutations array into structured format
+            const mutationsByCategory = {};
+            const mutationsById = {};
+            
+            if (data.mutations && Array.isArray(data.mutations)) {
+                data.mutations.forEach(mutation => {
+                    // Store by ID for quick lookup
+                    mutationsById[mutation.id] = mutation;
+                    
+                    // Group by category
+                    const category = mutation.category || 'Unknown';
+                    if (!mutationsByCategory[category]) {
+                        mutationsByCategory[category] = [];
+                    }
+                    mutationsByCategory[category].push(mutation);
+                });
+            }
+            
+            this.data.mutations = {
+                raw: data.mutations || [],
+                byCategory: mutationsByCategory,
+                byId: mutationsById,
+                rules: data.mutation_rules || {}
+            };
+            
+            console.log(`🌟 Loaded ${data.mutations ? data.mutations.length : 0} mutations`);
+            console.log('🌟 Categories found:', Object.keys(mutationsByCategory));
             return this.data.mutations;
         } catch (error) {
             console.error('❌ Failed to load mutation data:', error);
@@ -335,27 +361,87 @@ class DataManager {
     }
 
     /**
-     * Get mutation data
-     * @returns {Object} Mutation object
+     * Get all mutation data
+     * @returns {Object} Mutation data object
      */
     getMutations() {
         return this.data.mutations;
     }
 
     /**
-     * Get growth mutations
-     * @returns {Object} Growth mutation object
+     * Get mutation by ID
+     * @param {string} id - Mutation ID
+     * @returns {Object|null} Mutation object or null
      */
-    getGrowthMutations() {
-        return this.data.mutations.growth || {};
+    getMutationById(id) {
+        return this.data.mutations.byId?.[id] || null;
     }
 
     /**
-     * Get environmental mutations
-     * @returns {Object} Environmental mutation object
+     * Get mutations by category
+     * @param {string} category - Category name
+     * @returns {Array} Array of mutations
+     */
+    getMutationsByCategory(category) {
+        return this.data.mutations.byCategory?.[category] || [];
+    }
+
+    /**
+     * Get growth mutations (backward compatibility)
+     * @returns {Object} Growth mutation object in old format
+     */
+    getGrowthMutations() {
+        const growthMutations = this.getMutationsByCategory('Growth Mutations');
+        const types = {};
+        
+        growthMutations.forEach(mutation => {
+            types[mutation.id.toLowerCase()] = {
+                id: mutation.id,
+                name: mutation.name,
+                multiplier: mutation.sheckles_multiplier || 1,
+                description: mutation.obtainment || '',
+                icon: '🌟',
+                color: '#F59E0B'
+            };
+        });
+        
+        return {
+            category: 'Growth Mutations',
+            description: 'Growth mutations that multiply base value',
+            color: '#F59E0B',
+            types: types
+        };
+    }
+
+    /**
+     * Get environmental mutations (backward compatibility)
+     * @returns {Object} Environmental mutation object in old format
      */
     getEnvironmentalMutations() {
-        return this.data.mutations.environmental || {};
+        const envMutations = this.getMutationsByCategory('Environmental Mutations');
+        const tempMutations = this.getMutationsByCategory('Temperature Mutations');
+        const allEnvMutations = [...envMutations, ...tempMutations];
+        
+        const types = {};
+        
+        allEnvMutations.forEach(mutation => {
+            types[mutation.id.toLowerCase()] = {
+                id: mutation.id,
+                name: mutation.name,
+                additive: mutation.sheckles_multiplier || 1,
+                bonus: mutation.sheckles_multiplier || 1,
+                description: mutation.obtainment || '',
+                icon: '💧',
+                color: '#06B6D4'
+            };
+        });
+        
+        return {
+            category: 'Environmental Mutations',
+            description: 'Environmental mutations that add bonus multipliers',
+            color: '#06B6D4',
+            types: types
+        };
     }
 
     /**
