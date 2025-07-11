@@ -3,10 +3,54 @@
  * Responsible for crop value calculation and mutation effect calculation
  */
 
+// Max Mutation预设组合常量
+const MAX_MUTATION_COMBINATIONS = {
+    universal: {
+        multiplier: 52900,
+        mutations: {
+            growth: 'rainbow',
+            environmental: [
+                'shocked', 'frozen', 'windstruck', 'choc', 'moonlit', 
+                'disco', 'celestial', 'bloodlit', 'zombified', 'plasma', 
+                'pollinated', 'honeyglazed', 'voidtouched', 'heavenly', 
+                'cooked', 'molten', 'galactic', 'alien', 'sundried', 
+                'twisted', 'paradisal', 'aurora'
+            ]
+        }
+    },
+    sunflower: {
+        multiplier: 60350,
+        mutations: {
+            growth: 'rainbow',
+            environmental: [
+                'shocked', 'frozen', 'windstruck', 'choc', 'moonlit', 
+                'disco', 'celestial', 'bloodlit', 'zombified', 'plasma', 
+                'pollinated', 'honeyglazed', 'voidtouched', 'heavenly', 
+                'cooked', 'molten', 'galactic', 'alien', 'sundried', 
+                'twisted', 'paradisal', 'aurora', 'dawnbound'
+            ]
+        }
+    }
+};
+
 class GardenCalculator {
     constructor() {
         this.calculations = [];
         this.maxHistory = 50;
+    }
+
+    /**
+     * Get max mutation combination for crop
+     * @param {Object} crop - Crop object
+     * @returns {Object} Max mutation combination
+     */
+    getMaxMutationCombination(crop) {
+        if (!crop) return null;
+        
+        // Check if crop is sunflower (case insensitive)
+        const isSunflower = crop.name && crop.name.toLowerCase().includes('sunflower');
+        
+        return isSunflower ? MAX_MUTATION_COMBINATIONS.sunflower : MAX_MUTATION_COMBINATIONS.universal;
     }
 
     /**
@@ -17,9 +61,10 @@ class GardenCalculator {
      * @param {number} weight - Current weight in kg (optional)
      * @param {number} baseWeight - Base weight in kg (optional)
      * @param {number} friendBoost - Friend boost percentage (0-100, optional)
+     * @param {boolean} maxMutation - Whether to use max mutation mode (optional)
      * @returns {Object} Calculation result
      */
-    calculateCropValue(crop, mutations = {}, quantity = 1, weight = null, baseWeight = null, friendBoost = 0) {
+    calculateCropValue(crop, mutations = {}, quantity = 1, weight = null, baseWeight = null, friendBoost = 0, maxMutation = false) {
         if (!crop) {
             throw new Error('Crop data cannot be empty');
         }
@@ -34,7 +79,7 @@ class GardenCalculator {
         const cropBaseWeight = baseWeight !== null ? baseWeight : (crop.base_weight || null);
 
         // Apply mutation effects using the official formula
-        const mutationResult = this.applyMutations(baseValue, mutations, currentWeight, cropBaseWeight, friendBoost);
+        const mutationResult = this.applyMutations(baseValue, mutations, currentWeight, cropBaseWeight, friendBoost, maxMutation, crop);
         
         // Final calculation
         const finalValue = mutationResult.finalValue * quantity;
@@ -48,6 +93,7 @@ class GardenCalculator {
             mutations: mutations,
             weight: currentWeight,
             baseWeight: cropBaseWeight,
+            maxMutation: maxMutation,
             calculation: {
                 baseValue: baseValue,
                 baseCost: baseCost,
@@ -80,18 +126,79 @@ class GardenCalculator {
 
     /**
      * Apply mutation effects according to official formula:
-     * Total Price = Base Value × (1 + ΣMutations - Number of Mutations) × Growth Mutation × (Weight/Base Weight)² × (1 + Friend Boost%)
+     * Normal Mode: Total Price = Base Value × (1 + ΣMutations - Number of Mutations) × Growth Mutation × (Weight/Base Weight)² × (1 + Friend Boost%)
+     * Max Mutation Mode: Total Price = Base Value × (1 + Friend Boost%) × Max Mutation
      * 
      * @param {number} baseValue - Base value
      * @param {Object} mutations - Mutation configuration
      * @param {number} weight - Current weight in kg (optional)
      * @param {number} baseWeight - Base weight in kg (optional)
      * @param {number} friendBoost - Friend boost percentage (0-100, optional)
+     * @param {boolean} maxMutation - Whether to use max mutation mode (optional)
+     * @param {Object} crop - Crop object (needed for max mutation mode)
      * @returns {Object} Mutation calculation result
      */
-    applyMutations(baseValue, mutations, weight = null, baseWeight = null, friendBoost = 0) {
+    applyMutations(baseValue, mutations, weight = null, baseWeight = null, friendBoost = 0, maxMutation = false, crop = null) {
         const breakdown = [];
         
+        // Max Mutation Mode
+        if (maxMutation && crop) {
+            const maxCombination = this.getMaxMutationCombination(crop);
+            const maxMultiplier = maxCombination ? maxCombination.multiplier : 1;
+            
+            // Friend Boost factor
+            const friendBoostFactor = 1 + (friendBoost / 100);
+            if (friendBoost > 0) {
+                breakdown.push({
+                    type: 'friend',
+                    name: 'Friend Boost',
+                    effect: `+${friendBoost}%`,
+                    value: friendBoostFactor,
+                    description: `Friendship bonus: ${friendBoost}%`,
+                    icon: '👥',
+                    color: '#F59E0B'
+                });
+            }
+
+            // Max Mutation factor
+            breakdown.push({
+                type: 'max_mutation',
+                name: 'Max Mutation',
+                effect: `×${maxMultiplier}`,
+                value: maxMultiplier,
+                description: `Max mutation multiplier for ${crop.name}`,
+                icon: '⭐',
+                color: '#EF4444'
+            });
+
+            const finalValue = baseValue * friendBoostFactor * maxMultiplier;
+
+            return {
+                baseValue: baseValue,
+                growthMultiplier: 1,
+                environmentalFactor: 1,
+                weightFactor: 1,
+                friendBoostFactor: friendBoostFactor,
+                maxMutationMultiplier: maxMultiplier,
+                mutationSum: 0,
+                mutationCount: 0,
+                totalMultiplier: friendBoostFactor * maxMultiplier,
+                valueAfterEnvironmental: baseValue,
+                valueAfterGrowth: baseValue,
+                valueAfterWeight: baseValue,
+                finalValue: finalValue,
+                breakdown: breakdown,
+                formula: {
+                    description: 'Max Mutation Mode: Total Price = Base Value × (1 + Friend Boost%) × Max Mutation',
+                    baseValue: baseValue,
+                    friendBoostPart: friendBoost > 0 ? `×(1 + ${friendBoost}%) = ×${friendBoostFactor}` : '×1 (no friend boost)',
+                    maxMutationPart: `×${maxMultiplier} (max mutation)`,
+                    result: finalValue
+                }
+            };
+        }
+
+        // Normal Mode - Original logic
         // Step 1: Calculate Growth Mutation multiplier (mutually exclusive)
         let growthMultiplier = 1;
         if (mutations.growth && mutations.growth !== 'normal') {
@@ -367,15 +474,17 @@ class GardenCalculator {
      * @param {number} quantity - Quantity
      * @param {number} weight - Current weight in kg (optional)
      * @param {number} baseWeight - Base weight in kg (optional)
+     * @param {number} friendBoost - Friend boost percentage (0-100, optional)
+     * @param {boolean} maxMutation - Whether to use max mutation mode (optional)
      * @param {boolean} validateMutations - Whether to validate mutations (default: true)
      * @returns {Object} Calculation result with validation info
      */
-    calculateCropValueWithValidation(crop, mutations = {}, quantity = 1, weight = null, baseWeight = null, validateMutations = true) {
+    calculateCropValueWithValidation(crop, mutations = {}, quantity = 1, weight = null, baseWeight = null, friendBoost = 0, maxMutation = false, validateMutations = true) {
         let finalMutations = mutations;
         let validationResult = null;
 
-        // Validate mutations if requested
-        if (validateMutations) {
+        // Validate mutations if requested (skip validation for max mutation mode)
+        if (validateMutations && !maxMutation) {
             validationResult = this.validateMutations(mutations);
             finalMutations = validationResult.validatedMutations;
             
@@ -385,7 +494,7 @@ class GardenCalculator {
         }
 
         // Calculate with validated mutations
-        const result = this.calculateCropValue(crop, finalMutations, quantity, weight, baseWeight);
+        const result = this.calculateCropValue(crop, finalMutations, quantity, weight, baseWeight, friendBoost, maxMutation);
         
         // Add validation info to result
         if (validationResult) {

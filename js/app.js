@@ -1414,6 +1414,12 @@ class App {
             }
         }
 
+        // Check if Max Mutation is enabled and apply combination if needed
+        const maxMutationToggle = document.getElementById('hero-max-mutation');
+        if (maxMutationToggle && maxMutationToggle.checked) {
+            this.applyMaxMutationCombination(crop);
+        }
+
         // Update calculation
         this.updateHeroCalculation(cropId);
     }
@@ -1442,7 +1448,11 @@ class App {
         const crop = this.dataManager.getCropById(cropId);
         if (!crop) return;
 
-        // Get current mutations
+        // Get Max Mutation state
+        const maxMutationToggle = document.getElementById('hero-max-mutation');
+        const maxMutation = maxMutationToggle ? maxMutationToggle.checked : false;
+
+        // Get current mutations (will be ignored if maxMutation is true)
         const mutations = this.getHeroMutations();
         
         // Get parameters from UI
@@ -1457,8 +1467,8 @@ class App {
         // Use crop's base weight if available
         const baseWeight = crop.base_weight || 2.85; // Default base weight from UI
         
-        // Calculate with weight and friend boost support
-        const result = this.calculator.calculateCropValue(crop, mutations, quantity, weight, baseWeight, friendBoost);
+        // Calculate with Max Mutation support
+        const result = this.calculator.calculateCropValue(crop, mutations, quantity, weight, baseWeight, friendBoost, maxMutation);
         
         // Update display
         this.updateHeroResultDisplay(result);
@@ -1490,6 +1500,7 @@ class App {
 
     /**
      * Get current mutations from hero calculator
+     * Note: In Max Mutation mode, these mutations will be ignored by the calculator
      */
     getHeroMutations() {
         const mutations = {
@@ -1497,6 +1508,25 @@ class App {
             environmental: []
         };
 
+        // Check if Max Mutation is enabled
+        const maxMutationToggle = document.getElementById('hero-max-mutation');
+        const maxMutation = maxMutationToggle ? maxMutationToggle.checked : false;
+        
+        // In Max Mutation mode, return preset combinations (though they'll be ignored in calculation)
+        if (maxMutation) {
+            const selectedCrop = document.querySelector('.crop-item-compact.selected');
+            if (selectedCrop) {
+                const cropId = selectedCrop.dataset.cropId;
+                const crop = this.dataManager.getCropById(cropId);
+                const combination = this.calculator.getMaxMutationCombination(crop);
+                if (combination) {
+                    console.log('🌟 Max Mutation mode: returning preset combination');
+                    return combination.mutations;
+                }
+            }
+        }
+
+        // Normal mode: get mutations from UI
         // Get selected growth mutation
         const growthMutation = document.querySelector('#hero-growth-mutations .mutation-option-compact.active');
         if (growthMutation) {
@@ -1521,6 +1551,7 @@ class App {
 
         // 🔍 调试输出：显示收集到的mutations
         console.log('🧬 Collected mutations:', {
+            maxMutation: maxMutation,
             growth: mutations.growth,
             environmental: mutations.environmental,
             total_environmental_count: mutations.environmental.length
@@ -1568,6 +1599,21 @@ class App {
         const crop = result.crop;
         const calc = result.calculation;
 
+        // Get result display container
+        const resultDisplay = document.getElementById('hero-result-display');
+        
+        // Check if Max Mutation is active
+        const isMaxMutation = result.maxMutation || false;
+        
+        // Apply or remove Max Mutation styling
+        if (resultDisplay) {
+            if (isMaxMutation) {
+                resultDisplay.classList.add('max-mutation-active');
+            } else {
+                resultDisplay.classList.remove('max-mutation-active');
+            }
+        }
+
         // Update crop info
         const cropIcon = document.getElementById('hero-result-crop-icon');
         const cropName = document.getElementById('hero-result-crop-name');
@@ -1586,6 +1632,13 @@ class App {
         if (multiplier) {
             // Show the total multiplier from new calculation
             multiplier.textContent = `×${calc.totalMultiplier.toFixed(2)}`;
+            
+            // Apply special styling for Max Mutation multiplier
+            if (isMaxMutation) {
+                multiplier.classList.add('max-mutation-multiplier');
+            } else {
+                multiplier.classList.remove('max-mutation-multiplier');
+            }
         }
         if (finalValue) finalValue.textContent = this.formatNumber(calc.finalValue);
         
@@ -1606,6 +1659,7 @@ class App {
             weightFactor: calc.weightFactor,
             totalMultiplier: calc.totalMultiplier,
             finalValue: calc.finalValue,
+            maxMutation: isMaxMutation,
             formula: calc.formula
         });
         
@@ -1844,8 +1898,9 @@ class App {
         const maxMutationLabel = document.querySelector('.parameter-toggle-label');
         if (maxMutationToggle && maxMutationLabel) {
             maxMutationToggle.addEventListener('change', () => {
+                console.log('🔄 Max Mutation toggle changed:', maxMutationToggle.checked);
                 maxMutationLabel.textContent = maxMutationToggle.checked ? 'On' : 'Off';
-                this.updateHeroCalculationFromParameters();
+                this.handleMaxMutationToggle(maxMutationToggle.checked);
             });
         }
     }
@@ -1952,6 +2007,158 @@ class App {
     }
 
     /**
+     * Handle Max Mutation toggle change
+     * @param {boolean} isEnabled - Whether Max Mutation is enabled
+     */
+    handleMaxMutationToggle(isEnabled) {
+        console.log('🔄 Handling Max Mutation toggle:', isEnabled);
+        
+        // Apply/remove styling to parameter selector
+        const parameterSelector = document.querySelector('.parameter-selector-compact');
+        if (parameterSelector) {
+            if (isEnabled) {
+                parameterSelector.classList.add('max-mutation-active');
+            } else {
+                parameterSelector.classList.remove('max-mutation-active');
+            }
+        }
+        
+        if (isEnabled) {
+            // Get currently selected crop
+            const selectedCrop = document.querySelector('.crop-item-compact.selected');
+            if (selectedCrop) {
+                const cropId = selectedCrop.dataset.cropId;
+                const crop = this.dataManager.getCropById(cropId);
+                this.applyMaxMutationCombination(crop);
+            }
+        } else {
+            // Reset to normal mutation selection
+            this.resetMutationSelection();
+        }
+        
+        // Update calculation
+        this.updateHeroCalculationFromParameters();
+    }
+
+    /**
+     * Apply max mutation combination for crop
+     * @param {Object} crop - Crop object
+     */
+    applyMaxMutationCombination(crop) {
+        if (!crop) return;
+        
+        // Get max mutation combination
+        const combination = this.calculator.getMaxMutationCombination(crop);
+        if (!combination) return;
+        
+        console.log('🌟 Applying max mutation combination for', crop.name, combination);
+        
+        // Apply growth mutation
+        this.selectGrowthMutation(combination.mutations.growth);
+        
+        // Apply environmental mutations
+        this.selectEnvironmentalMutations(combination.mutations.environmental);
+    }
+
+    /**
+     * Select growth mutation in UI
+     * @param {string} mutationId - Mutation ID
+     */
+    selectGrowthMutation(mutationId) {
+        // Clear all growth mutation selections and auto-selected classes
+        document.querySelectorAll('#hero-growth-mutations .mutation-option-compact').forEach(opt => {
+            opt.classList.remove('active', 'auto-selected');
+        });
+        
+        // Check if Max Mutation is enabled
+        const maxMutationToggle = document.getElementById('hero-max-mutation');
+        const isMaxMutation = maxMutationToggle ? maxMutationToggle.checked : false;
+        
+        // Select the specified mutation
+        const mutationElement = document.querySelector(`#hero-growth-mutations .mutation-option-compact[data-mutation="${mutationId}"]`);
+        if (mutationElement) {
+            mutationElement.classList.add('active');
+            
+            // Add auto-selected class for Max Mutation mode
+            if (isMaxMutation) {
+                mutationElement.classList.add('auto-selected');
+            }
+            
+            console.log('✅ Selected growth mutation:', mutationId, isMaxMutation ? '(auto-selected)' : '');
+        } else {
+            console.warn('⚠️ Growth mutation element not found:', mutationId);
+        }
+    }
+
+    /**
+     * Select environmental mutations in UI
+     * @param {Array} mutationIds - Array of mutation IDs
+     */
+    selectEnvironmentalMutations(mutationIds) {
+        // Clear all environmental mutation selections and auto-selected classes
+        document.querySelectorAll('#hero-environmental-mutations .mutation-option-compact').forEach(opt => {
+            opt.classList.remove('active', 'auto-selected');
+        });
+        
+        // Clear temperature mutations too
+        document.querySelectorAll('#hero-temperature-mutations .mutation-option-compact').forEach(opt => {
+            opt.classList.remove('active', 'auto-selected');
+        });
+        
+        // Check if Max Mutation is enabled
+        const maxMutationToggle = document.getElementById('hero-max-mutation');
+        const isMaxMutation = maxMutationToggle ? maxMutationToggle.checked : false;
+        
+        // Select specified mutations
+        mutationIds.forEach(mutationId => {
+            // Try environmental mutations first
+            let mutationElement = document.querySelector(`#hero-environmental-mutations .mutation-option-compact[data-mutation="${mutationId}"]`);
+            
+            // If not found, try temperature mutations
+            if (!mutationElement) {
+                mutationElement = document.querySelector(`#hero-temperature-mutations .mutation-option-compact[data-mutation="${mutationId}"]`);
+            }
+            
+            if (mutationElement) {
+                mutationElement.classList.add('active');
+                
+                // Add auto-selected class for Max Mutation mode
+                if (isMaxMutation) {
+                    mutationElement.classList.add('auto-selected');
+                }
+                
+                console.log('✅ Selected mutation:', mutationId, isMaxMutation ? '(auto-selected)' : '');
+            } else {
+                console.warn('⚠️ Mutation element not found:', mutationId);
+            }
+        });
+    }
+
+    /**
+     * Reset mutation selection to normal state
+     */
+    resetMutationSelection() {
+        console.log('🔄 Resetting mutation selection to normal state');
+        
+        // Reset growth mutations to normal
+        document.querySelectorAll('#hero-growth-mutations .mutation-option-compact').forEach(opt => {
+            opt.classList.remove('active', 'auto-selected');
+        });
+        document.querySelector('#hero-growth-mutations .mutation-option-compact[data-mutation="normal"]')?.classList.add('active');
+        
+        // Reset temperature mutations to normal
+        document.querySelectorAll('#hero-temperature-mutations .mutation-option-compact').forEach(opt => {
+            opt.classList.remove('active', 'auto-selected');
+        });
+        document.querySelector('#hero-temperature-mutations .mutation-option-compact[data-mutation="normal_temp"]')?.classList.add('active');
+        
+        // Reset environmental mutations (clear all)
+        document.querySelectorAll('#hero-environmental-mutations .mutation-option-compact').forEach(opt => {
+            opt.classList.remove('active', 'auto-selected');
+        });
+    }
+
+    /**
      * Update hero calculation from parameters
      */
     updateHeroCalculationFromParameters() {
@@ -2035,26 +2242,43 @@ class App {
      * Reset hero calculator
      */
     resetHeroCalculator() {
+        console.log('🔄 Starting hero calculator reset...');
+        
         // Clear crop selection
         document.querySelectorAll('.crop-item-compact').forEach(item => {
             item.classList.remove('selected');
         });
 
-        // Reset growth mutations
+        // Reset Max Mutation toggle FIRST (before resetting mutations)
+        const maxMutationToggle = document.getElementById('hero-max-mutation');
+        const maxMutationLabel = document.querySelector('.parameter-toggle-label');
+        if (maxMutationToggle && maxMutationLabel) {
+            const wasChecked = maxMutationToggle.checked;
+            maxMutationToggle.checked = false;
+            maxMutationLabel.textContent = 'Off';
+            
+            // If Max Mutation was previously enabled, trigger the toggle handler to clean up
+            if (wasChecked) {
+                console.log('🔄 Max Mutation was enabled, triggering cleanup...');
+                this.handleMaxMutationToggle(false);
+            }
+        }
+
+        // Reset growth mutations (clear both active and auto-selected classes)
         document.querySelectorAll('#hero-growth-mutations .mutation-option-compact').forEach(opt => {
-            opt.classList.remove('active');
+            opt.classList.remove('active', 'auto-selected');
         });
         document.querySelector('#hero-growth-mutations .mutation-option-compact[data-mutation="normal"]')?.classList.add('active');
 
-        // Reset temperature mutations
+        // Reset temperature mutations (clear both active and auto-selected classes)
         document.querySelectorAll('#hero-temperature-mutations .mutation-option-compact').forEach(opt => {
-            opt.classList.remove('active');
+            opt.classList.remove('active', 'auto-selected');
         });
         document.querySelector('#hero-temperature-mutations .mutation-option-compact[data-mutation="normal_temp"]')?.classList.add('active');
 
-        // Reset environmental mutations
+        // Reset environmental mutations (clear both active and auto-selected classes)
         document.querySelectorAll('#hero-environmental-mutations .mutation-option-compact').forEach(opt => {
-            opt.classList.remove('active');
+            opt.classList.remove('active', 'auto-selected');
         });
 
         // Reset parameters
@@ -2075,11 +2299,15 @@ class App {
             friendBoostInput.value = '0';
         }
 
-        const maxMutationToggle = document.getElementById('hero-max-mutation');
-        const maxMutationLabel = document.querySelector('.parameter-toggle-label');
-        if (maxMutationToggle && maxMutationLabel) {
-            maxMutationToggle.checked = false;
-            maxMutationLabel.textContent = 'Off';
+        // Clear Max Mutation related styling
+        const parameterSelector = document.querySelector('.parameter-selector-compact');
+        if (parameterSelector) {
+            parameterSelector.classList.remove('max-mutation-active');
+        }
+
+        const resultDisplay = document.getElementById('hero-result-display');
+        if (resultDisplay) {
+            resultDisplay.classList.remove('max-mutation-active');
         }
 
         // Reset category filter to "All"
@@ -2096,14 +2324,24 @@ class App {
         }
 
         // Reset result display
-        document.getElementById('hero-result-crop-icon').textContent = '🥕';
-        document.getElementById('hero-result-crop-name').textContent = 'Select a crop';
-        document.getElementById('hero-result-crop-rarity').textContent = '-';
-        document.getElementById('hero-base-value').textContent = '0';
-        document.getElementById('hero-multiplier').textContent = '×1';
-        document.getElementById('hero-final-value').textContent = '0';
+        const cropIcon = document.getElementById('hero-result-crop-icon');
+        const cropName = document.getElementById('hero-result-crop-name');
+        const cropRarity = document.getElementById('hero-result-crop-rarity');
+        const baseValue = document.getElementById('hero-base-value');
+        const multiplier = document.getElementById('hero-multiplier');
+        const finalValue = document.getElementById('hero-final-value');
 
-        console.log('🔄 Hero calculator reset');
+        if (cropIcon) cropIcon.textContent = '🥕';
+        if (cropName) cropName.textContent = 'Select a crop';
+        if (cropRarity) cropRarity.textContent = '-';
+        if (baseValue) baseValue.textContent = '0';
+        if (multiplier) {
+            multiplier.textContent = '×1';
+            multiplier.classList.remove('max-mutation-multiplier');
+        }
+        if (finalValue) finalValue.textContent = '0';
+
+        console.log('✅ Hero calculator reset completed');
         // 末尾新增：刷新历史
         this.renderHeroHistoryList();
     }
