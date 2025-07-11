@@ -177,7 +177,8 @@
     }
     
     .mutation-group {
-        flex-direction: column;
+        display: flex;
+        flex-wrap: wrap;
         gap: var(--spacing-xs);
     }
     

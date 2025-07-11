@@ -74,6 +74,8 @@
                                         <button class="category-btn" data-category="legendary">Legendary</button>
                                         <button class="category-btn" data-category="mythical">Mythical</button>
                                         <button class="category-btn" data-category="divine">Divine</button>
+                                        <button class="category-btn" data-category="prismatic">Prismatic</button>
+                                        <button class="category-btn" data-category="transcendent">Transcendent</button>
                                     </div>
                                     
                                     <div class="crop-grid-compact" id="hero-crop-grid">
@@ -89,112 +91,19 @@
                                     <div class="mutation-row">
                                         <label class="mutation-label">Growth:</label>
                                         <div class="mutation-options-inline" id="hero-growth-mutations">
-                                            <div class="mutation-option-compact active" data-mutation="normal">
-                                                <span class="mutation-name">Normal</span>
-                                                <span class="mutation-effect">×1</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="golden">
-                                                <span class="mutation-name">Golden</span>
-                                                <span class="mutation-effect">×20</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="rainbow">
-                                                <span class="mutation-name">Rainbow</span>
-                                                <span class="mutation-effect">×50</span>
-                                            </div>
+                                            <!-- Growth mutations will be dynamically loaded from mutations(new).json -->
                                         </div>
                                     </div>
                                     <div class="mutation-row">
                                         <label class="mutation-label">Temperature:</label>
                                         <div class="mutation-options-inline" id="hero-temperature-mutations">
-                                            <div class="mutation-option-compact active" data-mutation="normal_temp">
-                                                <span class="mutation-name">Normal</span>
-                                                <span class="mutation-effect">+0×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="chilled">
-                                                <span class="mutation-name">Chilled</span>
-                                                <span class="mutation-effect">+1×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="frozen">
-                                                <span class="mutation-name">Frozen</span>
-                                                <span class="mutation-effect">+2×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="heated">
-                                                <span class="mutation-name">Heated</span>
-                                                <span class="mutation-effect">+1×</span>
-                                            </div>
+                                            <!-- Temperature mutations will be dynamically loaded from mutations(new).json -->
                                         </div>
                                     </div>
                                     <div class="mutation-row">
                                         <label class="mutation-label">Environment:</label>
                                         <div class="mutation-options-inline" id="hero-environmental-mutations">
-                                            <div class="mutation-option-compact" data-mutation="wet">
-                                                <span class="mutation-name">Wet</span>
-                                                <span class="mutation-effect">+1×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="dry">
-                                                <span class="mutation-name">Dry</span>
-                                                <span class="mutation-effect">+1×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="windy">
-                                                <span class="mutation-name">Windy</span>
-                                                <span class="mutation-effect">+1×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="sunny">
-                                                <span class="mutation-name">Sunny</span>
-                                                <span class="mutation-effect">+2×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="cloudy">
-                                                <span class="mutation-name">Cloudy</span>
-                                                <span class="mutation-effect">+1×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="stormy">
-                                                <span class="mutation-name">Stormy</span>
-                                                <span class="mutation-effect">+3×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="foggy">
-                                                <span class="mutation-name">Foggy</span>
-                                                <span class="mutation-effect">+1×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="chocolate">
-                                                <span class="mutation-name">Chocolate</span>
-                                                <span class="mutation-effect">+1×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="honey">
-                                                <span class="mutation-name">Honey</span>
-                                                <span class="mutation-effect">+2×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="spicy">
-                                                <span class="mutation-name">Spicy</span>
-                                                <span class="mutation-effect">+2×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="sweet">
-                                                <span class="mutation-name">Sweet</span>
-                                                <span class="mutation-effect">+1×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="salty">
-                                                <span class="mutation-name">Salty</span>
-                                                <span class="mutation-effect">+1×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="moonlit">
-                                                <span class="mutation-name">Moonlit</span>
-                                                <span class="mutation-effect">+3×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="starlit">
-                                                <span class="mutation-name">Starlit</span>
-                                                <span class="mutation-effect">+4×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="shocked">
-                                                <span class="mutation-name">Shocked</span>
-                                                <span class="mutation-effect">+9×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="poisoned">
-                                                <span class="mutation-name">Poisoned</span>
-                                                <span class="mutation-effect">+5×</span>
-                                            </div>
-                                            <div class="mutation-option-compact" data-mutation="celestial">
-                                                <span class="mutation-name">Celestial</span>
-                                                <span class="mutation-effect">+19×</span>
-                                            </div>
+                                            <!-- Environmental mutations will be dynamically loaded from mutations(new).json -->
                                         </div>
                                     </div>
                                 </div>
@@ -222,8 +131,9 @@
                                         <div class="parameter-item">
                                             <label class="parameter-label">Friend Boost:</label>
                                             <div class="parameter-input-group">
-                                                <input type="range" id="hero-friend-boost" class="parameter-slider" min="0" max="100" step="1" value="0">
-                                                <span class="parameter-value" id="hero-friend-boost-value">0%</span>
+                                                <input type="range" id="hero-friend-boost" class="parameter-slider" min="0" max="100" step="10" value="0">
+                                                <input type="number" id="hero-friend-boost-input" class="parameter-input friend-boost-input" min="0" max="100" step="10" value="0">
+                                                <span class="parameter-unit">%</span>
                                             </div>
                                         </div>
                                         <div class="parameter-item">
@@ -264,7 +174,6 @@
                                         <span class="calc-label">Total Multiplier:</span>
                                         <span class="calc-value" id="hero-multiplier">×1</span>
                                     </div>
-                                    <div class="calc-divider-compact"></div>
                                     <div class="calc-row-compact final-value">
                                         <span class="calc-label">Total Value:</span>
                                         <span class="calc-value-large" id="hero-final-value">0</span>
@@ -274,16 +183,6 @@
                             
                             <div class="calc-actions">
                                 <button class="btn btn-secondary" id="hero-reset-btn">🔄 Reset</button>
-                            </div>
-                            <!-- 新增历史记录区块 -->
-                            <div class="calc-section" id="hero-history-section">
-                                <h3 class="calc-section-title">📊 Calculation History</h3>
-                                <div class="history-list-compact" id="hero-history-list">
-                                    <div class="empty-state">
-                                        <span class="empty-icon">📝</span>
-                                        <p>No calculation history yet</p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

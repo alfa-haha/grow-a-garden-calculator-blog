@@ -16,9 +16,10 @@ class GardenCalculator {
      * @param {number} quantity - Quantity
      * @param {number} weight - Current weight in kg (optional)
      * @param {number} baseWeight - Base weight in kg (optional)
+     * @param {number} friendBoost - Friend boost percentage (0-100, optional)
      * @returns {Object} Calculation result
      */
-    calculateCropValue(crop, mutations = {}, quantity = 1, weight = null, baseWeight = null) {
+    calculateCropValue(crop, mutations = {}, quantity = 1, weight = null, baseWeight = null, friendBoost = 0) {
         if (!crop) {
             throw new Error('Crop data cannot be empty');
         }
@@ -33,7 +34,7 @@ class GardenCalculator {
         const cropBaseWeight = baseWeight !== null ? baseWeight : (crop.base_weight || null);
 
         // Apply mutation effects using the official formula
-        const mutationResult = this.applyMutations(baseValue, mutations, currentWeight, cropBaseWeight);
+        const mutationResult = this.applyMutations(baseValue, mutations, currentWeight, cropBaseWeight, friendBoost);
         
         // Final calculation
         const finalValue = mutationResult.finalValue * quantity;
@@ -79,15 +80,16 @@ class GardenCalculator {
 
     /**
      * Apply mutation effects according to official formula:
-     * Total Price = Base Value × (1 + ΣMutations - Number of Mutations) × Growth Mutation × (Weight/Base Weight)²
+     * Total Price = Base Value × (1 + ΣMutations - Number of Mutations) × Growth Mutation × (Weight/Base Weight)² × (1 + Friend Boost%)
      * 
      * @param {number} baseValue - Base value
      * @param {Object} mutations - Mutation configuration
      * @param {number} weight - Current weight in kg (optional)
      * @param {number} baseWeight - Base weight in kg (optional)
+     * @param {number} friendBoost - Friend boost percentage (0-100, optional)
      * @returns {Object} Mutation calculation result
      */
-    applyMutations(baseValue, mutations, weight = null, baseWeight = null) {
+    applyMutations(baseValue, mutations, weight = null, baseWeight = null, friendBoost = 0) {
         const breakdown = [];
         
         // Step 1: Calculate Growth Mutation multiplier (mutually exclusive)
@@ -144,32 +146,50 @@ class GardenCalculator {
             weightFactor = Math.pow(weight / baseWeight, 2);
         }
 
-        // Step 5: Apply the official formula
-        // Total Price = Base Value × Environmental Factor × Growth Multiplier × Weight Factor
-        const finalValue = baseValue * environmentalFactor * growthMultiplier * weightFactor;
+        // Step 5: Calculate Friend Boost factor
+        const friendBoostFactor = 1 + (friendBoost / 100);
+        if (friendBoost > 0) {
+            breakdown.push({
+                type: 'friend',
+                name: 'Friend Boost',
+                effect: `+${friendBoost}%`,
+                value: friendBoostFactor,
+                description: `Friendship bonus: ${friendBoost}%`,
+                icon: '👥',
+                color: '#F59E0B'
+            });
+        }
+
+        // Step 6: Apply the official formula
+        // Total Price = Base Value × Environmental Factor × Growth Multiplier × Weight Factor × Friend Boost Factor
+        const finalValue = baseValue * environmentalFactor * growthMultiplier * weightFactor * friendBoostFactor;
 
         // Calculate intermediate values for display
         const valueAfterEnv = baseValue * environmentalFactor;
         const valueAfterGrowth = valueAfterEnv * growthMultiplier;
+        const valueAfterWeight = valueAfterGrowth * weightFactor;
 
         return {
             baseValue: baseValue,
             growthMultiplier: growthMultiplier,
             environmentalFactor: environmentalFactor,
             weightFactor: weightFactor,
+            friendBoostFactor: friendBoostFactor,
             mutationSum: mutationSum,
             mutationCount: mutationCount,
-            totalMultiplier: environmentalFactor * growthMultiplier * weightFactor,
+            totalMultiplier: environmentalFactor * growthMultiplier * weightFactor * friendBoostFactor,
             valueAfterEnvironmental: valueAfterEnv,
             valueAfterGrowth: valueAfterGrowth,
+            valueAfterWeight: valueAfterWeight,
             finalValue: finalValue,
             breakdown: breakdown,
             formula: {
-                description: 'Total Price = Base Value × (1 + ΣMutations - Count) × Growth × Weight²',
+                description: 'Total Price = Base Value × (1 + ΣMutations - Count) × Growth × Weight² × Friend Boost',
                 baseValue: baseValue,
                 environmentalPart: `(1 + ${mutationSum} - ${mutationCount}) = ${environmentalFactor}`,
                 growthPart: `×${growthMultiplier}`,
                 weightPart: weight && baseWeight ? `×(${weight}/${baseWeight})² = ×${weightFactor.toFixed(3)}` : '×1 (no weight)',
+                friendBoostPart: friendBoost > 0 ? `×(1 + ${friendBoost}%) = ×${friendBoostFactor}` : '×1 (no friend boost)',
                 result: finalValue
             }
         };

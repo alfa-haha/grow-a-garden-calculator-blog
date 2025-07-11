@@ -228,6 +228,9 @@ class App {
             // Render hero crop grid
             await this.renderHeroCropGrid();
             
+            // 🆕 Render hero mutations dynamically
+            await this.renderHeroMutations();
+            
             // Setup hero calculator interactions
             this.setupHeroCalculatorInteractions();
             
@@ -239,6 +242,256 @@ class App {
             console.error('❌ Hero calculator initialization failed:', error);
             throw error;
         }
+    }
+
+    /**
+     * 🆕 动态渲染hero mutations，严格按照mutations(new).json数据
+     */
+    async renderHeroMutations() {
+        try {
+            console.log('🌟 Rendering hero mutations from mutations(new).json...');
+            
+            // 获取mutations数据
+            const mutationsData = this.dataManager.getMutations();
+            console.log('🔍 Raw mutations data:', mutationsData);
+            console.log('🔍 mutationsData type:', typeof mutationsData);
+            console.log('🔍 mutationsData.byCategory exists:', !!mutationsData?.byCategory);
+            console.log('🔍 mutationsData.byCategory:', mutationsData?.byCategory);
+            
+            // 🆕 备用方案：如果byCategory不存在，尝试直接使用raw数据
+            if (!mutationsData || !mutationsData.byCategory) {
+                console.warn('⚠️ byCategory not found, trying alternative approach...');
+                
+                // 检查是否有raw数据
+                if (mutationsData && mutationsData.raw && Array.isArray(mutationsData.raw)) {
+                    console.log('🔄 Using raw mutations data to build categories...');
+                    const categorizedData = this.buildMutationCategories(mutationsData.raw);
+                    this.renderMutationsWithData(categorizedData);
+                    return;
+                }
+                
+                // 如果都没有，使用默认数据
+                console.error('❌ No mutations data available, using fallback');
+                this.renderFallbackMutations();
+                return;
+            }
+            
+            // 检查具体的category数据
+            console.log('🔍 Available categories:', Object.keys(mutationsData.byCategory));
+            console.log('🔍 Growth Mutations:', mutationsData.byCategory['Growth Mutations']);
+            console.log('🔍 Temperature Mutations:', mutationsData.byCategory['Temperature Mutations']);
+            console.log('🔍 Environmental Mutations:', mutationsData.byCategory['Environmental Mutations']);
+            
+            // 渲染Growth Mutations
+            this.renderHeroGrowthMutations(mutationsData);
+            
+            // 渲染Temperature Mutations  
+            this.renderHeroTemperatureMutations(mutationsData);
+            
+            // 渲染Environmental Mutations
+            this.renderHeroEnvironmentalMutations(mutationsData);
+            
+            console.log('✅ Hero mutations rendered successfully');
+        } catch (error) {
+            console.error('❌ Failed to render hero mutations:', error);
+            console.error('❌ Error stack:', error.stack);
+            // 🆕 出错时使用fallback
+            this.renderFallbackMutations();
+        }
+    }
+
+    /**
+     * 🆕 从原始数据构建分类结构
+     */
+    buildMutationCategories(rawMutations) {
+        const byCategory = {};
+        
+        rawMutations.forEach(mutation => {
+            const category = mutation.category || 'Unknown';
+            if (!byCategory[category]) {
+                byCategory[category] = [];
+            }
+            byCategory[category].push(mutation);
+        });
+        
+        console.log('🔄 Built categories from raw data:', Object.keys(byCategory));
+        return { byCategory };
+    }
+
+    /**
+     * 🆕 使用指定数据渲染mutations
+     */
+    renderMutationsWithData(mutationsData) {
+        this.renderHeroGrowthMutations(mutationsData);
+        this.renderHeroTemperatureMutations(mutationsData);
+        this.renderHeroEnvironmentalMutations(mutationsData);
+    }
+
+    /**
+     * 🆕 Fallback渲染方法
+     */
+    renderFallbackMutations() {
+        console.log('🔄 Rendering fallback mutations...');
+        
+        // Growth Mutations fallback
+        const growthContainer = document.getElementById('hero-growth-mutations');
+        if (growthContainer) {
+            growthContainer.innerHTML = `
+                <div class="mutation-option-compact active" data-mutation="normal">
+                    <span class="mutation-name">Normal</span>
+                    <span class="mutation-effect">×1</span>
+                </div>
+                <div class="mutation-option-compact" data-mutation="gold">
+                    <span class="mutation-name">Gold</span>
+                    <span class="mutation-effect">×20</span>
+                </div>
+                <div class="mutation-option-compact" data-mutation="rainbow">
+                    <span class="mutation-name">Rainbow</span>
+                    <span class="mutation-effect">×50</span>
+                </div>
+            `;
+        }
+        
+        // Temperature Mutations fallback
+        const tempContainer = document.getElementById('hero-temperature-mutations');
+        if (tempContainer) {
+            tempContainer.innerHTML = `
+                <div class="mutation-option-compact active" data-mutation="normal_temp">
+                    <span class="mutation-name">Normal</span>
+                    <span class="mutation-effect">+0×</span>
+                </div>
+                <div class="mutation-option-compact" data-mutation="wet">
+                    <span class="mutation-name">Wet</span>
+                    <span class="mutation-effect">+2×</span>
+                </div>
+                <div class="mutation-option-compact" data-mutation="chilled">
+                    <span class="mutation-name">Chilled</span>
+                    <span class="mutation-effect">+2×</span>
+                </div>
+                <div class="mutation-option-compact" data-mutation="frozen">
+                    <span class="mutation-name">Frozen</span>
+                    <span class="mutation-effect">+10×</span>
+                </div>
+            `;
+        }
+        
+        // Environmental Mutations fallback
+        const envContainer = document.getElementById('hero-environmental-mutations');
+        if (envContainer) {
+            envContainer.innerHTML = `
+                <div class="mutation-option-compact" data-mutation="windstruck">
+                    <span class="mutation-name">Windstruck</span>
+                    <span class="mutation-effect">+2×</span>
+                </div>
+                <div class="mutation-option-compact" data-mutation="moonlit">
+                    <span class="mutation-name">Moonlit</span>
+                    <span class="mutation-effect">+2×</span>
+                </div>
+                <div class="mutation-option-compact" data-mutation="shocked">
+                    <span class="mutation-name">Shocked</span>
+                    <span class="mutation-effect">+100×</span>
+                </div>
+                <div class="mutation-option-compact" data-mutation="celestial">
+                    <span class="mutation-name">Celestial</span>
+                    <span class="mutation-effect">+120×</span>
+                </div>
+            `;
+        }
+        
+        console.log('🔄 Fallback mutations rendered');
+    }
+
+    /**
+     * 渲染Growth Mutations
+     */
+    renderHeroGrowthMutations(mutationsData) {
+        const container = document.getElementById('hero-growth-mutations');
+        console.log('🔍 Growth mutations container:', container);
+        if (!container) {
+            console.error('❌ hero-growth-mutations container not found');
+            return;
+        }
+        
+        const growthMutations = mutationsData.byCategory['Growth Mutations'] || [];
+        console.log('🔍 Growth mutations data:', growthMutations);
+        console.log('🔍 Growth mutations count:', growthMutations.length);
+        
+        let html = `
+            <div class="mutation-option-compact active" data-mutation="normal">
+                <span class="mutation-name">Normal</span>
+                <span class="mutation-effect">×1</span>
+            </div>
+        `;
+        
+        growthMutations.forEach(mutation => {
+            const mutationId = mutation.id.toLowerCase();
+            console.log('🔍 Processing growth mutation:', mutation.name, 'multiplier:', mutation.sheckles_multiplier);
+            html += `
+                <div class="mutation-option-compact" data-mutation="${mutationId}">
+                    <span class="mutation-name">${mutation.name}</span>
+                    <span class="mutation-effect">×${mutation.sheckles_multiplier}</span>
+                </div>
+            `;
+        });
+        
+        console.log('🔍 Generated growth HTML length:', html.length);
+        container.innerHTML = html;
+        console.log(`🌟 Rendered ${growthMutations.length + 1} growth mutations`);
+        console.log('🔍 Container children after render:', container.children.length);
+    }
+
+    /**
+     * 渲染Temperature Mutations
+     */
+    renderHeroTemperatureMutations(mutationsData) {
+        const container = document.getElementById('hero-temperature-mutations');
+        if (!container) return;
+        
+        const tempMutations = mutationsData.byCategory['Temperature Mutations'] || [];
+        
+        let html = `
+            <div class="mutation-option-compact active" data-mutation="normal_temp">
+                <span class="mutation-name">Normal</span>
+                <span class="mutation-effect">+0×</span>
+            </div>
+        `;
+        
+        tempMutations.forEach(mutation => {
+            const mutationId = mutation.id.toLowerCase();
+            html += `
+                <div class="mutation-option-compact" data-mutation="${mutationId}">
+                    <span class="mutation-name">${mutation.name}</span>
+                    <span class="mutation-effect">+${mutation.sheckles_multiplier}×</span>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+        console.log(`🌡️ Rendered ${tempMutations.length + 1} temperature mutations`);
+    }
+
+    /**
+     * 渲染Environmental Mutations
+     */
+    renderHeroEnvironmentalMutations(mutationsData) {
+        const container = document.getElementById('hero-environmental-mutations');
+        if (!container) return;
+        
+        const envMutations = mutationsData.byCategory['Environmental Mutations'] || [];
+        
+        let html = '';
+        envMutations.forEach(mutation => {
+            const mutationId = mutation.id.toLowerCase();
+            html += `
+                <div class="mutation-option-compact" data-mutation="${mutationId}">
+                    <span class="mutation-name">${mutation.name}</span>
+                    <span class="mutation-effect">+${mutation.sheckles_multiplier}×</span>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+        console.log(`🌍 Rendered ${envMutations.length} environmental mutations`);
     }
     
     /**
@@ -952,27 +1205,41 @@ class App {
             return '<div class="crop-item-compact error">Invalid crop data</div>';
         }
 
-        const rarityClass = `rarity-${crop.rarity.toLowerCase()}`;
-        const displayPrice = crop.sellValue ? `💰 ${crop.sellValue}` : 'N/A';
+        // 使用正确的字段映射，严格按照crops(new).json数据结构
+        const rarity = crop.tier || crop.rarity || 'Common'; // 优先使用tier（来自crops(new).json）
+        const rarityClass = `rarity-${rarity.toLowerCase()}`;
+        
+        // 显示最小价值作为主要价格指标（这是作物的实际价值）
+        const minValue = crop.minimum_value || crop.sellValue || 0;
+        const buyPrice = crop.sheckle_price || crop.buyPrice || 0;
+        
+        // 显示格式：最小价值（这是玩家关心的收益值）
+        const displayPrice = minValue > 0 ? `💰 ${this.formatNumber(minValue)}` : 'N/A';
         
         // Debug log for first few crops
         if (crop.id === 'carrot' || crop.id === 'strawberry') {
             console.log(`🔍 Creating crop element for ${crop.name}:`, {
                 id: crop.id,
                 name: crop.name,
+                tier: crop.tier,
                 rarity: crop.rarity,
+                finalRarity: rarity,
+                minimum_value: crop.minimum_value,
+                sheckle_price: crop.sheckle_price,
                 sellValue: crop.sellValue,
+                buyPrice: crop.buyPrice,
+                displayPrice: displayPrice,
                 icon: crop.icon,
                 rarityClass: rarityClass
             });
         }
         
         return `
-            <div class="crop-item-compact ${rarityClass}" data-crop-id="${crop.id}" data-rarity="${crop.rarity.toLowerCase()}">
+            <div class="crop-item-compact ${rarityClass}" data-crop-id="${crop.id}" data-rarity="${rarity.toLowerCase()}">
                 <div class="crop-icon">${crop.icon}</div>
                 <div class="crop-name">${crop.name}</div>
                 <div class="crop-price">${displayPrice}</div>
-                <div class="crop-rarity">${crop.rarity}</div>
+                <div class="crop-rarity">${rarity}</div>
             </div>
         `;
     }
@@ -1121,6 +1388,32 @@ class App {
             cropElement.classList.add('selected');
         }
 
+        // Get crop data and auto-update weight parameter
+        const crop = this.dataManager.getCropById(cropId);
+        if (crop && crop.basic_weight) {
+            const weightInput = document.getElementById('hero-weight');
+            if (weightInput) {
+                // Convert basic_weight from string to number and set it
+                // Handle special cases like "-" or invalid values
+                let basicWeight;
+                if (crop.basic_weight === "-" || crop.basic_weight === "" || crop.basic_weight === null) {
+                    // Use default weight for crops without specified basic_weight
+                    basicWeight = 2.85;
+                    console.log(`🔧 Using default weight for ${crop.name}: ${basicWeight}kg (basic_weight was "${crop.basic_weight}")`);
+                } else {
+                    basicWeight = parseFloat(crop.basic_weight);
+                    if (isNaN(basicWeight)) {
+                        // Fallback to default if parsing fails
+                        basicWeight = 2.85;
+                        console.log(`🔧 Using fallback weight for ${crop.name}: ${basicWeight}kg (could not parse "${crop.basic_weight}")`);
+                    } else {
+                        console.log(`🔧 Auto-updated weight for ${crop.name}: ${basicWeight}kg`);
+                    }
+                }
+                weightInput.value = basicWeight;
+            }
+        }
+
         // Update calculation
         this.updateHeroCalculation(cropId);
     }
@@ -1152,18 +1445,20 @@ class App {
         // Get current mutations
         const mutations = this.getHeroMutations();
         
-        // Get weight parameters from UI
+        // Get parameters from UI
         const weightInput = document.getElementById('hero-weight');
         const quantityInput = document.getElementById('hero-quantity');
+        const friendBoostInput = document.getElementById('hero-friend-boost-input');
         
         const weight = weightInput ? parseFloat(weightInput.value) || null : null;
         const quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1;
+        const friendBoost = friendBoostInput ? parseInt(friendBoostInput.value) || 0 : 0;
         
         // Use crop's base weight if available
         const baseWeight = crop.base_weight || 2.85; // Default base weight from UI
         
-        // Calculate with weight support
-        const result = this.calculator.calculateCropValue(crop, mutations, quantity, weight, baseWeight);
+        // Calculate with weight and friend boost support
+        const result = this.calculator.calculateCropValue(crop, mutations, quantity, weight, baseWeight, friendBoost);
         
         // Update display
         this.updateHeroResultDisplay(result);
@@ -1208,10 +1503,27 @@ class App {
             mutations.growth = growthMutation.dataset.mutation;
         }
 
+        // 🔧 修复：收集Temperature Mutations
+        const temperatureMutations = document.querySelectorAll('#hero-temperature-mutations .mutation-option-compact.active');
+        temperatureMutations.forEach(mutation => {
+            const mutationId = mutation.dataset.mutation;
+            // 跳过normal_temp
+            if (mutationId && mutationId !== 'normal_temp') {
+                mutations.environmental.push(mutationId);
+            }
+        });
+
         // Get selected environmental mutations
         const environmentalMutations = document.querySelectorAll('#hero-environmental-mutations .mutation-option-compact.active');
         environmentalMutations.forEach(mutation => {
             mutations.environmental.push(mutation.dataset.mutation);
+        });
+
+        // 🔍 调试输出：显示收集到的mutations
+        console.log('🧬 Collected mutations:', {
+            growth: mutations.growth,
+            environmental: mutations.environmental,
+            total_environmental_count: mutations.environmental.length
         });
 
         return mutations;
@@ -1361,8 +1673,11 @@ class App {
         this.setupHeroMutationSelection('#hero-temperature-mutations', 'single');
         this.setupHeroMutationSelection('#hero-environmental-mutations', 'multiple');
 
-        // Setup parameter inputs
-        this.setupParameterInputs();
+        // Setup parameter inputs (with delay to ensure DOM is ready)
+        setTimeout(() => {
+            console.log('🔧 Setting up parameter inputs...');
+            this.setupParameterInputs();
+        }, 200);
 
         // Setup action buttons
         const calculateBtn = document.getElementById('hero-calculate-btn');
@@ -1504,6 +1819,7 @@ class App {
      * Setup parameter inputs
      */
     setupParameterInputs() {
+        console.log('🔧 setupParameterInputs called');
         // Weight input
         const weightInput = document.getElementById('hero-weight');
         if (weightInput) {
@@ -1520,16 +1836,8 @@ class App {
             });
         }
 
-        // Friend Boost slider
-        const friendBoostSlider = document.getElementById('hero-friend-boost');
-        const friendBoostValue = document.getElementById('hero-friend-boost-value');
-        if (friendBoostSlider && friendBoostValue) {
-            friendBoostSlider.addEventListener('input', () => {
-                const value = friendBoostSlider.value;
-                friendBoostValue.textContent = `${value}%`;
-                this.updateHeroCalculationFromParameters();
-            });
-        }
+        // Setup Friend Boost with retry mechanism
+        this.setupFriendBoostElements();
 
         // Max Mutation toggle
         const maxMutationToggle = document.getElementById('hero-max-mutation');
@@ -1539,6 +1847,107 @@ class App {
                 maxMutationLabel.textContent = maxMutationToggle.checked ? 'On' : 'Off';
                 this.updateHeroCalculationFromParameters();
             });
+        }
+    }
+
+    /**
+     * Setup Friend Boost elements with retry mechanism
+     */
+    setupFriendBoostElements(retryCount = 0) {
+        console.log(`🔧 setupFriendBoostElements called (attempt ${retryCount + 1})`);
+        
+        const friendBoostSlider = document.getElementById('hero-friend-boost');
+        const friendBoostInput = document.getElementById('hero-friend-boost-input');
+        
+        console.log('🔍 Friend Boost Debug:', {
+            slider: !!friendBoostSlider,
+            input: !!friendBoostInput,
+            sliderValue: friendBoostSlider?.value,
+            inputValue: friendBoostInput?.value,
+            attempt: retryCount + 1
+        });
+        
+        if (friendBoostSlider && friendBoostInput) {
+            console.log('✅ Friend Boost elements found, setting up events...');
+            
+            // Remove any existing listeners to prevent duplicates
+            friendBoostSlider.removeEventListener('input', this._friendBoostSliderHandler);
+            friendBoostInput.removeEventListener('input', this._friendBoostInputHandler);
+            friendBoostInput.removeEventListener('blur', this._friendBoostBlurHandler);
+            
+            // Helper function to sync values and ensure they are multiples of 10
+            const syncFriendBoost = (value, source = 'unknown') => {
+                console.log(`🔄 syncFriendBoost called: value=${value}, source=${source}`);
+                
+                // Ensure value is a multiple of 10 between 0 and 100
+                const originalValue = value;
+                value = Math.max(0, Math.min(100, Math.round(value / 10) * 10));
+                
+                console.log(`📊 Value normalized: ${originalValue} → ${value}`);
+                
+                // Update both elements
+                friendBoostSlider.value = value;
+                friendBoostInput.value = value;
+                
+                console.log(`✅ Updated elements: slider=${friendBoostSlider.value}, input=${friendBoostInput.value}`);
+                
+                // Trigger calculation update
+                this.updateHeroCalculationFromParameters();
+                return value;
+            };
+
+            // Store handlers for cleanup
+            this._friendBoostSliderHandler = (event) => {
+                console.log('🎚️ Slider input event:', event.target.value);
+                syncFriendBoost(parseInt(event.target.value) || 0, 'slider');
+            };
+
+            this._friendBoostInputHandler = (event) => {
+                console.log('⌨️ Input field input event:', event.target.value);
+                syncFriendBoost(parseInt(event.target.value) || 0, 'input');
+            };
+
+            this._friendBoostBlurHandler = (event) => {
+                console.log('👁️ Input field blur event:', event.target.value);
+                syncFriendBoost(parseInt(event.target.value) || 0, 'input-blur');
+            };
+
+            // Add event listeners
+            friendBoostSlider.addEventListener('input', this._friendBoostSliderHandler);
+            friendBoostInput.addEventListener('input', this._friendBoostInputHandler);
+            friendBoostInput.addEventListener('blur', this._friendBoostBlurHandler);
+
+            // Keyboard events for input field
+            friendBoostInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    console.log('⏎ Enter key pressed on input field');
+                    e.target.blur();
+                }
+            });
+            
+            // Test initial sync
+            setTimeout(() => {
+                console.log('🧪 Testing initial sync...');
+                syncFriendBoost(0, 'initial');
+            }, 100);
+            
+            console.log('✅ Friend Boost event listeners added successfully');
+        } else {
+            console.error('❌ Friend Boost elements not found:', {
+                slider: friendBoostSlider,
+                input: friendBoostInput,
+                attempt: retryCount + 1
+            });
+            
+            // Retry up to 3 times
+            if (retryCount < 3) {
+                setTimeout(() => {
+                    console.log(`🔄 Retrying Friend Boost setup (attempt ${retryCount + 2})`);
+                    this.setupFriendBoostElements(retryCount + 1);
+                }, 500);
+            } else {
+                console.error('❌ Failed to setup Friend Boost after 3 attempts');
+            }
         }
     }
 
@@ -1660,10 +2069,10 @@ class App {
         }
 
         const friendBoostSlider = document.getElementById('hero-friend-boost');
-        const friendBoostValue = document.getElementById('hero-friend-boost-value');
-        if (friendBoostSlider && friendBoostValue) {
+        const friendBoostInput = document.getElementById('hero-friend-boost-input');
+        if (friendBoostSlider && friendBoostInput) {
             friendBoostSlider.value = '0';
-            friendBoostValue.textContent = '0%';
+            friendBoostInput.value = '0';
         }
 
         const maxMutationToggle = document.getElementById('hero-max-mutation');

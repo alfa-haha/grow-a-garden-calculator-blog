@@ -270,6 +270,14 @@
     border-color: var(--rarity-divine);
 }
 
+.category-filters .category-btn[data-category="prismatic"] {
+    border-color: var(--rarity-prismatic);
+}
+
+.category-filters .category-btn[data-category="transcendent"] {
+    border-color: var(--rarity-transcendent);
+}
+
 .category-btn:hover {
     background-color: var(--primary-color);
     color: var(--text-white);
@@ -326,6 +334,20 @@
     color: var(--text-white) !important;
 }
 
+.category-filters .category-btn[data-category="prismatic"]:hover,
+.category-filters .category-btn[data-category="prismatic"].active {
+    background-color: var(--rarity-prismatic) !important;
+    border-color: var(--rarity-prismatic) !important;
+    color: var(--text-white) !important;
+}
+
+.category-filters .category-btn[data-category="transcendent"]:hover,
+.category-filters .category-btn[data-category="transcendent"].active {
+    background-color: var(--rarity-transcendent) !important;
+    border-color: var(--rarity-transcendent) !important;
+    color: var(--text-white) !important;
+}
+
 /* 稀有度颜色定义 */
 :root {
     --rarity-common: #9CA3AF;
@@ -334,6 +356,8 @@
     --rarity-legendary: #8B5CF6;
     --rarity-mythical: #F59E0B;
     --rarity-divine: #EF4444;
+    --rarity-prismatic: #06B6D4;
+    --rarity-transcendent: #A855F7;
 }
 
 .crop-grid-compact {
@@ -410,6 +434,16 @@
 
 .crop-item-compact.rarity-divine {
     background: linear-gradient(135deg, var(--rarity-divine), #DC2626);
+    color: var(--text-white);
+}
+
+.crop-item-compact.rarity-prismatic {
+    background: linear-gradient(135deg, var(--rarity-prismatic), #0891B2);
+    color: var(--text-white);
+}
+
+.crop-item-compact.rarity-transcendent {
+    background: linear-gradient(135deg, var(--rarity-transcendent), #9333EA);
     color: var(--text-white);
 }
 
@@ -665,6 +699,20 @@
     border: 1px solid var(--border-color);
 }
 
+.friend-boost-input {
+    width: 60px;
+    margin-left: var(--spacing-sm);
+}
+
+.parameter-unit {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-left: var(--spacing-xs);
+    min-width: 15px;
+    text-align: left;
+}
+
 .parameter-toggle {
     display: flex;
     align-items: center;
@@ -813,8 +861,10 @@
 }
 
 .calc-row-compact .calc-value-large {
-    font-size: var(--text-lg);
+    font-size: var(--text-2xl);
     font-weight: 700;
+    color: #FFFFFF;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .calc-divider-compact {
@@ -894,14 +944,21 @@
     }
     
     .mutation-options-inline {
-        flex-direction: column;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
         align-items: stretch;
     }
     
     .mutation-option-compact {
         min-width: auto;
-        flex-direction: row;
-        justify-content: space-between;
+        width: calc(25% - var(--spacing-xs));
+        margin: calc(var(--spacing-xs) / 2);
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: var(--spacing-xs) 4px;
+        font-size: 10px;
     }
     
     .calc-actions {
@@ -949,7 +1006,27 @@
     }
     
     .mutation-options-inline {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
         width: 100%;
+    }
+    
+    .mutation-option-compact {
+        width: calc(25% - 4px);
+        margin: 2px;
+        padding: 4px 2px;
+        font-size: 9px;
+    }
+    
+    .mutation-option-compact .mutation-name {
+        font-size: 9px;
+        line-height: 1.1;
+    }
+    
+    .mutation-option-compact .mutation-effect {
+        font-size: 9px;
+        margin-top: 2px;
     }
 }
 
@@ -1874,6 +1951,14 @@
     background-color: var(--rarity-divine);
 }
 
+.badge.rarity.prismatic {
+    background-color: var(--rarity-prismatic);
+}
+
+.badge.rarity.transcendent {
+    background-color: var(--rarity-transcendent);
+}
+
 .badge.harvest {
     background-color: var(--success-color);
     color: var(--text-white);
@@ -2126,61 +2211,7 @@
     }
 } 
 
-.history-list-compact {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    margin-top: var(--spacing-lg);
-    padding: var(--spacing-lg);
-    box-shadow: var(--shadow-lg);
-    transition: var(--transition);
-    position: sticky;
-    top: calc(var(--spacing-xl) + 400px);
-    z-index: 10;
-    min-height: 120px;
-    max-height: 320px;
-    overflow-y: auto;
-}
-
-.history-list-compact .history-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-sm) 0;
-    border-bottom: 1px solid var(--border-color);
-    font-size: var(--text-base);
-}
-
-.history-list-compact .history-item:last-child {
-    border-bottom: none;
-}
-
-.history-list-compact .history-crop {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.history-list-compact .history-crop-icon {
-    font-size: 1.5em;
-    margin-right: var(--spacing-xs);
-}
-
-.history-list-compact .history-meta {
-    color: var(--text-secondary);
-    font-size: var(--text-sm);
-}
-
-.history-list-compact .history-value {
-    font-weight: 600;
-    color: var(--success-color);
-}
-
-.history-list-compact .empty-state {
-    text-align: center;
-    color: var(--text-light);
-    padding: var(--spacing);
-} 
+ 
 
 /* ===== 宠物表格样式 ===== */
 .pet-cell {
@@ -2397,6 +2428,16 @@
 .data-table .badge.rarity.divine {
     background-color: #EF444430;
     color: #EF4444;
+}
+
+.data-table .badge.rarity.prismatic {
+    background-color: #06B6D430;
+    color: #06B6D4;
+}
+
+.data-table .badge.rarity.transcendent {
+    background-color: #A855F730;
+    color: #A855F7;
 }
 
 .data-table .badge.rarity.unknown {
@@ -2737,6 +2778,16 @@
 
 .gear-tier-badge.divine {
     background-color: #ec4899;
+    color: white;
+}
+
+.gear-tier-badge.prismatic {
+    background-color: #06b6d4;
+    color: white;
+}
+
+.gear-tier-badge.transcendent {
+    background-color: #a855f7;
     color: white;
 }
 
