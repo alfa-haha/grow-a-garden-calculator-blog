@@ -2426,6 +2426,18 @@ class App {
 
         // Set current page navigation highlight
         this.setActiveNavigation();
+        
+        // Initialize FAQ functionality
+        this.initFAQ();
+        
+        // Initialize CTA functionality
+        this.initCTA();
+        
+        // Initialize social share functionality
+        this.initSocialShare();
+        
+        // Initialize hero CTA button
+        this.initHeroCTA();
     }
 
     /**
@@ -2466,6 +2478,187 @@ class App {
                 link.classList.add('active');
             }
         });
+    }
+
+    /**
+     * Initialize FAQ functionality
+     */
+    initFAQ() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            // Set all FAQ items to active state by default to show all answers
+            item.classList.add('active');
+        });
+    }
+
+    /**
+     * Initialize CTA functionality
+     */
+    initCTA() {
+        const ctaStartBtn = document.getElementById('cta-start-calculating');
+        const ctaExploreBtn = document.getElementById('cta-explore-database');
+        
+        if (ctaStartBtn) {
+            ctaStartBtn.addEventListener('click', () => {
+                // Scroll to calculator module
+                const calculatorModule = document.getElementById('calculator-module');
+                if (calculatorModule) {
+                    calculatorModule.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                } else {
+                    // If on another page, redirect to home page calculator
+                    window.location.href = 'index.html#calculator-module';
+                }
+            });
+        }
+        
+        if (ctaExploreBtn) {
+            ctaExploreBtn.addEventListener('click', () => {
+                // Navigate to crops page
+                window.location.href = 'crops.html';
+            });
+        }
+    }
+
+    /**
+     * Initialize social share functionality
+     */
+    initSocialShare() {
+        const socialBtns = document.querySelectorAll('.social-btn');
+        
+        socialBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const platform = btn.getAttribute('data-platform');
+                this.shareToSocial(platform);
+            });
+        });
+    }
+
+    /**
+     * Share to social platform
+     * @param {string} platform - Social platform name
+     */
+    shareToSocial(platform) {
+        const url = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent('GAG Calculator - Free Grow A Garden Calculator for Roblox');
+        const description = encodeURIComponent('Calculate crop values, mutations, and trading profits with 99.9% accuracy. 106 crops, 43 mutations, instant results!');
+        
+        let shareUrl = '';
+        
+        switch (platform) {
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                break;
+            case 'twitter':
+                shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                break;
+            case 'reddit':
+                shareUrl = `https://reddit.com/submit?url=${url}&title=${title}`;
+                break;
+            case 'discord':
+                // Discord doesn't have a direct share URL, so we copy to clipboard
+                this.copyToClipboard(`${decodeURIComponent(title)} - ${window.location.href}`);
+                this.showSocialNotification('Link copied to clipboard! Paste it in Discord.');
+                return;
+            default:
+                console.warn('Unknown social platform:', platform);
+                return;
+        }
+        
+        if (shareUrl) {
+            // Open share window
+            const windowFeatures = 'width=600,height=400,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,directories=no,status=no';
+            window.open(shareUrl, 'share', windowFeatures);
+        }
+    }
+
+    /**
+     * Copy text to clipboard
+     * @param {string} text - Text to copy
+     */
+    async copyToClipboard(text) {
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text);
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                document.execCommand('copy');
+                textArea.remove();
+            }
+        } catch (error) {
+            console.error('Failed to copy to clipboard:', error);
+        }
+    }
+
+    /**
+     * Show social share notification
+     * @param {string} message - Notification message
+     */
+    showSocialNotification(message) {
+        // Create a simple notification
+        const notification = document.createElement('div');
+        notification.className = 'social-notification';
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: var(--success-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            font-size: 14px;
+            max-width: 300px;
+            animation: slideInUp 0.3s ease;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOutDown 0.3s ease';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
+    }
+
+    /**
+     * Initialize hero CTA button functionality
+     */
+    initHeroCTA() {
+        const heroCTA = document.querySelector('.hero-cta .btn');
+        
+        if (heroCTA) {
+            heroCTA.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Scroll to calculator module
+                const calculatorModule = document.getElementById('calculator-module');
+                if (calculatorModule) {
+                    calculatorModule.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        }
     }
 
     /**

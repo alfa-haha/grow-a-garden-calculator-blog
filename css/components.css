@@ -1045,9 +1045,37 @@
 }
 
 .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: repeat(2, 1fr) !important;
     gap: var(--spacing-lg);
+    max-width: 900px;
+    margin: 0 auto;
+    align-items: stretch;
+}
+
+/* 强制2x2布局 - 覆盖所有其他样式 */
+.features .features-grid,
+section.features .features-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: repeat(2, 1fr) !important;
+    grid-auto-flow: row !important;
+    justify-items: stretch !important;
+    align-items: stretch !important;
+}
+
+/* 确保在所有桌面设备上都是2x2布局 */
+@media (min-width: 769px) {
+    .features .features-grid,
+    section.features .features-grid,
+    .features-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-rows: repeat(2, 1fr) !important;
+        grid-auto-flow: row !important;
+        grid-template-areas: none !important;
+    }
 }
 
 .feature-card {
@@ -1057,6 +1085,11 @@
     padding: var(--spacing-lg);
     text-align: center;
     transition: var(--transition);
+    width: 100% !important;
+    max-width: none !important;
+    flex: none !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
 }
 
 .feature-card:hover {
@@ -2071,6 +2104,59 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+/* ===== Loading Overlay ===== */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.loading-overlay.loading-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-spinner {
+    text-align: center;
+    color: white;
+}
+
+.loading-spinner .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin: 0 auto var(--spacing);
+}
+
+.loading-text {
+    font-size: var(--text-lg);
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Loading Overlay 深色主题支持 */
+[data-theme="dark"] .loading-overlay {
+    background-color: rgba(17, 24, 39, 0.9);
+}
+
+[data-theme="dark"] .loading-spinner .spinner {
+    border-color: rgba(249, 250, 251, 0.3);
+    border-top-color: var(--primary-color);
 } 
 
 /* 响应式设计 */

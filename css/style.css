@@ -366,6 +366,13 @@ main {
     font-weight: 600;
 }
 
+.footer-logo {
+    font-size: 1.2em;
+    margin-right: var(--spacing-xs);
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .footer-section p,
 .footer-section a {
     color: var(--text-secondary);
@@ -379,6 +386,174 @@ main {
     color: var(--primary-color);
 }
 
+/* ===== 邮箱链接样式 ===== */
+.email-link {
+    color: var(--primary-color) !important;
+    font-weight: 500;
+    text-decoration: none;
+    position: relative;
+    transition: var(--transition);
+    border-radius: var(--radius-sm);
+    padding: 2px 6px;
+    margin: 0 -6px;
+    cursor: pointer;
+    border-bottom: 1px dotted var(--primary-color);
+}
+
+.email-link::after {
+    content: '✉️';
+    opacity: 0;
+    margin-left: var(--spacing-xs);
+    transition: opacity 0.2s ease;
+    font-size: 0.9em;
+}
+
+.email-link:hover {
+    color: var(--primary-dark) !important;
+    background-color: var(--primary-color);
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    border-bottom: none;
+}
+
+.email-link:hover::after {
+    opacity: 1;
+}
+
+.email-link:active {
+    transform: translateY(0);
+    transition: transform 0.1s ease;
+}
+
+/* 深色主题下的邮箱链接 */
+[data-theme="dark"] .email-link {
+    color: var(--primary-light) !important;
+    border-bottom-color: var(--primary-light);
+}
+
+[data-theme="dark"] .email-link:hover {
+    background-color: var(--primary-color);
+    color: white !important;
+    border-bottom: none;
+}
+
+/* ===== 社交分享按钮 ===== */
+.social-share {
+    margin-top: var(--spacing);
+}
+
+.social-share h4 {
+    color: var(--text-primary);
+    margin-bottom: var(--spacing);
+    font-size: var(--text-base);
+    font-weight: 600;
+}
+
+.social-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing);
+    border: none;
+    border-radius: var(--radius);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    min-width: 100px;
+    justify-content: center;
+}
+
+.social-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.social-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--shadow-md);
+}
+
+.social-btn:active {
+    transform: translateY(0) scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* 平台特定颜色 */
+.social-btn.facebook:hover {
+    background-color: #1877F2;
+    color: white;
+    border-color: #1877F2;
+}
+
+.social-btn.twitter:hover {
+    background-color: #000000;
+    color: white;
+    border-color: #000000;
+}
+
+.social-btn.reddit:hover {
+    background-color: #FF4500;
+    color: white;
+    border-color: #FF4500;
+}
+
+.social-btn.discord:hover {
+    background-color: #5865F2;
+    color: white;
+    border-color: #5865F2;
+}
+
+/* 深色主题下的社交按钮 */
+[data-theme="dark"] .social-btn {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .social-btn:hover {
+    color: white;
+}
+
+/* ===== 社交分享通知动画 ===== */
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+.social-notification {
+    animation: slideInUp 0.3s ease;
+}
+
 .footer-bottom {
     text-align: center;
     padding-top: var(--spacing-lg);
@@ -389,21 +564,25 @@ main {
 /* ===== 返回顶部按钮 ===== */
 .back-to-top {
     position: fixed;
-    bottom: var(--spacing-lg);
-    right: var(--spacing-lg);
+    bottom: var(--spacing-xl);
+    right: var(--spacing-xl);
     background-color: var(--primary-color);
     color: var(--text-white);
     border: none;
     border-radius: var(--radius-full);
-    width: 50px;
-    height: 50px;
-    font-size: var(--text-lg);
+    width: 60px;
+    height: 60px;
+    font-size: var(--text-xl);
+    font-weight: 600;
     cursor: pointer;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-xl);
     opacity: 0;
     visibility: hidden;
     transition: var(--transition);
     z-index: var(--z-fixed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .back-to-top.visible {
@@ -413,7 +592,19 @@ main {
 
 .back-to-top:hover {
     background-color: var(--primary-dark);
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-xl);
+}
+
+/* 深色主题下的回到顶部按钮 */
+[data-theme="dark"] .back-to-top {
+    background-color: var(--secondary-color);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+}
+
+[data-theme="dark"] .back-to-top:hover {
+    background-color: var(--secondary-dark);
+    box-shadow: 0 12px 35px rgba(139, 92, 246, 0.4);
 }
 
 /* ===== 响应式设计 ===== */
@@ -457,4 +648,439 @@ main {
         width: 100%;
         justify-content: center;
     }
-} 
+}
+
+/* ===== Hero Description Section ===== */
+.hero-description {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    padding: var(--spacing-2xl) 0;
+}
+
+.hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-slogan h1 {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xl);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.hero-text h2 {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.hero-text p {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.7;
+    text-align: left;
+}
+
+.hero-cta {
+    margin-top: var(--spacing-xl);
+}
+
+.btn-large {
+    padding: var(--spacing-md) var(--spacing-xl) !important;
+    font-size: var(--text-lg) !important;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition);
+}
+
+.btn-large:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* ===== FAQ Section ===== */
+.faq {
+    background-color: var(--bg-secondary);
+    padding: var(--spacing-2xl) 0;
+}
+
+.faq-grid {
+    display: grid;
+    gap: var(--spacing-md);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.faq-question {
+    display: block;
+    padding: var(--spacing-lg);
+    cursor: default;
+    user-select: text;
+}
+
+.faq-question h3 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.faq-toggle {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--primary-color);
+    width: 24px;
+    height: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    background-color: var(--primary-color);
+    color: white;
+    transition: var(--transition);
+}
+
+/* FAQ toggle hidden in always-expanded mode */
+
+.faq-answer {
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+    max-height: none;
+    overflow: visible;
+}
+
+/* FAQ answers always visible in expanded mode */
+
+.faq-answer p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ===== CTA Section ===== */
+.cta-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    padding: var(--spacing-2xl) 0;
+    color: var(--text-white);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+}
+
+.cta-content {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.cta-text {
+    margin-bottom: var(--spacing-xl);
+}
+
+.cta-title {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.cta-description {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    opacity: 0.95;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.btn-cta-primary {
+    background: var(--text-white) !important;
+    color: var(--primary-color) !important;
+    border: 2px solid var(--text-white) !important;
+    padding: var(--spacing-md) var(--spacing-xl) !important;
+    font-size: var(--text-lg) !important;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.btn-cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+    background: var(--bg-secondary) !important;
+}
+
+.btn-cta-secondary {
+    background: transparent !important;
+    color: var(--text-white) !important;
+    border: 2px solid var(--text-white) !important;
+    padding: var(--spacing-md) var(--spacing-xl) !important;
+    font-size: var(--text-lg) !important;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.btn-cta-secondary:hover {
+    background: var(--text-white) !important;
+    color: var(--primary-color) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn-icon {
+    font-size: var(--text-xl);
+}
+
+.cta-features {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.cta-feature {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.cta-feature-icon {
+    font-size: var(--text-xl);
+}
+
+.cta-feature-text {
+    font-size: var(--text-base);
+}
+
+/* ===== CTA Section Dark Theme Support ===== */
+[data-theme="dark"] .cta-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+}
+
+[data-theme="dark"] .btn-cta-primary {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--bg-primary) !important;
+}
+
+[data-theme="dark"] .btn-cta-primary:hover {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .btn-cta-secondary:hover {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+/* ===== Responsive Design for New Sections ===== */
+@media (max-width: 768px) {
+    .hero-slogan h1 {
+        font-size: var(--text-3xl);
+    }
+    
+    .hero-text h2 {
+        font-size: var(--text-2xl);
+        text-align: center;
+    }
+    
+    .hero-text p {
+        font-size: var(--text-base);
+        text-align: left;
+    }
+    
+    .btn-large {
+        padding: var(--spacing) var(--spacing-lg) !important;
+        font-size: var(--text-base) !important;
+    }
+    
+    .faq-question h3 {
+        font-size: var(--text-base);
+    }
+    
+    /* CTA Section 响应式 */
+    .cta-title {
+        font-size: var(--text-3xl);
+    }
+    
+    .cta-description {
+        font-size: var(--text-base);
+    }
+    
+    .cta-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing);
+    }
+    
+    .btn-cta-primary,
+    .btn-cta-secondary {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    .cta-features {
+        gap: var(--spacing);
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-slogan h1 {
+        font-size: var(--text-2xl);
+    }
+    
+    .hero-text h2 {
+        font-size: var(--text-xl);
+        text-align: center;
+    }
+    
+    .hero-text p {
+        text-align: left;
+    }
+    
+    .faq-grid {
+        max-width: 100%;
+        gap: var(--spacing);
+    }
+    
+    .faq-question {
+        padding: var(--spacing);
+    }
+    
+    .faq-answer {
+        padding: 0 var(--spacing) var(--spacing);
+    }
+    
+    /* CTA Section 超小屏响应式 */
+    .cta-section {
+        padding: var(--spacing-xl) 0;
+    }
+    
+    .cta-title {
+        font-size: var(--text-2xl);
+    }
+    
+    .cta-description {
+        font-size: var(--text-sm);
+    }
+    
+    .cta-text {
+        margin-bottom: var(--spacing);
+    }
+    
+    .cta-actions {
+        margin-bottom: var(--spacing);
+    }
+    
+    .btn-cta-primary,
+    .btn-cta-secondary {
+        padding: var(--spacing) var(--spacing-lg) !important;
+        font-size: var(--text-base) !important;
+    }
+    
+    .cta-features {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+    
+    /* 回到顶部按钮响应式 */
+    .back-to-top {
+        bottom: var(--spacing-lg);
+        right: var(--spacing-lg);
+        width: 50px;
+        height: 50px;
+        font-size: var(--text-lg);
+    }
+    
+    /* 社交按钮响应式 */
+    .social-buttons {
+        justify-content: center;
+    }
+    
+    .social-btn {
+        flex: 1;
+        min-width: 90px;
+        font-size: var(--text-xs);
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .social-btn span {
+        display: none;
+    }
+    
+    .social-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .social-share h4 {
+        text-align: center;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    /* 邮箱链接响应式 */
+    .email-link {
+        font-size: var(--text-sm);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        margin: 0 calc(-1 * var(--spacing-sm));
+        display: inline-block;
+        word-break: break-all;
+    }
+    
+    .email-link::after {
+        display: none;
+    }
+}

@@ -52,7 +52,7 @@ class UIManager {
      */
     initComponents() {
         this.initNotificationContainer();
-        this.initLoadingOverlay();
+        // this.initLoadingOverlay(); // 移除未使用的loading overlay
         this.setupFormValidation();
         this.setupAnimations();
     }

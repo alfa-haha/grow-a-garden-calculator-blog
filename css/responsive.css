@@ -13,7 +13,9 @@
     }
     
     .features-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-rows: repeat(2, 1fr) !important;
+        max-width: 900px;
     }
     
     .stats-grid {
@@ -110,7 +112,9 @@
     /* 特色功能响应式 */
     .features-grid {
         grid-template-columns: 1fr;
+        grid-template-rows: auto;
         gap: var(--spacing);
+        max-width: 100%;
     }
     
     .feature-card {
@@ -582,7 +586,8 @@
     }
     
     .features-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-rows: repeat(2, 1fr) !important;
     }
     
     .steps-grid {
@@ -597,7 +602,9 @@
     }
     
     .features-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-rows: repeat(2, 1fr) !important;
+        max-width: 1000px;
     }
     
     .stats-grid {
