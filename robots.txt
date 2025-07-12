@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /js/
+Disallow: /css/
+Disallow: /data/
+Disallow: /docs/
+Disallow: /seo/
+
+# Allow important resources
+Allow: /images/
+Allow: /icons/
+
+# Sitemap location
+Sitemap: https://growagardencalculator.blog/sitemap.xml 

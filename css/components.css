@@ -3288,3 +3288,212 @@ section.features .features-grid {
         transform: scale(1.02) !important;
     }
 }
+
+/* ===== Static Fallback Styles for SEO ===== */
+/* These styles ensure critical crop information is visible even without JavaScript */
+
+.crop-grid-static {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: var(--card-background);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.static-fallback-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.static-crops-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.static-crop-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--background-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.static-crop-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary-color);
+}
+
+.static-crop-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.static-crop-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.static-crop-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0 0 0.25rem 0;
+}
+
+.static-crop-rarity {
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    margin: 0 0 0.5rem 0;
+    display: inline-block;
+}
+
+/* Rarity Color Coding */
+.static-crop-item[data-crop*="carrot"] .static-crop-rarity,
+.static-crop-item[data-crop*="strawberry"] .static-crop-rarity {
+    background: #10b981;
+    color: white;
+}
+
+.static-crop-item[data-crop*="blueberry"] .static-crop-rarity,
+.static-crop-item[data-crop*="orange_tulip"] .static-crop-rarity {
+    background: #3b82f6;
+    color: white;
+}
+
+.static-crop-item[data-crop*="tomato"] .static-crop-rarity,
+.static-crop-item[data-crop*="watermelon"] .static-crop-rarity,
+.static-crop-item[data-crop*="daffodil"] .static-crop-rarity {
+    background: #8b5cf6;
+    color: white;
+}
+
+.static-crop-item[data-crop*="apple"] .static-crop-rarity,
+.static-crop-item[data-crop*="pumpkin"] .static-crop-rarity,
+.static-crop-item[data-crop*="banana"] .static-crop-rarity,
+.static-crop-item[data-crop*="bamboo"] .static-crop-rarity {
+    background: #f59e0b;
+    color: white;
+}
+
+.static-crop-item[data-crop*="dragon_fruit"] .static-crop-rarity,
+.static-crop-item[data-crop*="mango"] .static-crop-rarity,
+.static-crop-item[data-crop*="coconut"] .static-crop-rarity,
+.static-crop-item[data-crop*="cactus"] .static-crop-rarity,
+.static-crop-item[data-crop*="pineapple"] .static-crop-rarity {
+    background: #ef4444;
+    color: white;
+}
+
+.static-crop-item[data-crop*="mushroom"] .static-crop-rarity,
+.static-crop-item[data-crop*="grape"] .static-crop-rarity,
+.static-crop-item[data-crop*="pepper"] .static-crop-rarity {
+    background: #7c3aed;
+    color: white;
+}
+
+.static-crop-item[data-crop*="beanstalk"] .static-crop-rarity {
+    background: linear-gradient(45deg, #ec4899, #8b5cf6);
+    color: white;
+}
+
+.static-crop-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--success-color);
+    margin: 0 0 0.25rem 0;
+}
+
+.static-crop-weight {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.static-calculation-note {
+    background: var(--background-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.static-calculation-note h4 {
+    color: var(--primary-color);
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+}
+
+.static-calculation-note p {
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+}
+
+.static-calculation-note ul {
+    margin: 0 0 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.static-calculation-note li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.accuracy-note {
+    background: var(--success-color);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin: 1rem 0 0 0;
+    font-weight: 500;
+}
+
+/* Responsive Design for Static Fallback */
+@media (max-width: 768px) {
+    .static-crops-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .static-crop-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .static-crop-image {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .crop-grid-static {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+}
+
+/* Hide static fallback when JavaScript is enabled */
+.js-enabled .crop-grid-static {
+    display: none;
+}
+
+/* Show static fallback in noscript */
+noscript .crop-grid-static {
+    display: block;
+}

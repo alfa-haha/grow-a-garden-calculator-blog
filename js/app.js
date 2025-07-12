@@ -3,6 +3,31 @@
  * Responsible for application initialization, global state management and core functionality coordination
  */
 
+// Progressive Enhancement: Mark JavaScript as enabled for SEO fallback
+(function() {
+    'use strict';
+    
+    // Add js-enabled class to document immediately
+    document.documentElement.classList.add('js-enabled');
+    
+    // Hide static fallback content when JavaScript is available
+    const hideStaticFallback = () => {
+        const staticFallbacks = document.querySelectorAll('.crop-grid-static, .static-fallback');
+        staticFallbacks.forEach(element => {
+            element.style.display = 'none';
+        });
+    };
+    
+    // Run immediately if DOM is ready, otherwise wait for it
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', hideStaticFallback);
+    } else {
+        hideStaticFallback();
+    }
+    
+    console.log('🚀 Progressive Enhancement: JavaScript enabled, static fallback hidden');
+})();
+
 class App {
     constructor() {
         this.version = '2.4.0';
@@ -18,6 +43,7 @@ class App {
         this.dataManager = null;
         this.calculator = null;
         this.themeManager = null;
+        this.seoManager = null;
         
         console.log(`🌱 Garden Pro Calculator v${this.version} starting...`);
     }
@@ -172,6 +198,15 @@ class App {
                 console.log('🎨 Theme manager initialized successfully');
             } catch (error) {
                 console.warn('⚠️ Theme manager initialization failed, continuing without it:', error);
+            }
+            
+            // Initialize SEO manager
+            try {
+                this.seoManager = new SEOManager();
+                this.seoManager.setupHistoryNavigation();
+                console.log('🔍 SEO manager initialized successfully');
+            } catch (error) {
+                console.warn('⚠️ SEO manager initialization failed, continuing without it:', error);
             }
             
             console.log('✅ All core components initialized successfully');
@@ -1422,6 +1457,12 @@ class App {
 
         // Update calculation
         this.updateHeroCalculation(cropId);
+        
+        // Update SEO meta tags for the selected crop
+        if (this.seoManager && crop) {
+            this.seoManager.updateMetaTags(crop);
+            this.seoManager.updateUrl(crop);
+        }
     }
 
     /**
@@ -1472,6 +1513,11 @@ class App {
         
         // Update display
         this.updateHeroResultDisplay(result);
+        
+        // Update SEO meta tags with calculation result
+        if (this.seoManager && crop) {
+            this.seoManager.updateMetaTags(crop, result);
+        }
     }
 
     /**
@@ -2785,6 +2831,225 @@ class App {
                 <div class='history-meta'>${time}</div>
             </div>`;
         }).join('');
+    }
+}
+
+/**
+ * SEO Manager - Dynamic Meta Tags and Title Updates
+ */
+class SEOManager {
+    constructor() {
+        this.siteName = 'GAG Calculator';
+        this.baseTitle = 'GAG Calculator - Grow A Garden Calculator Magic';
+        this.baseDescription = 'Free Grow A Garden Calculator for Roblox - Calculate crop values, mutations, and trading profits with 99.9% accuracy. 106 crops, 43 mutations, instant results!';
+        this.baseUrl = 'https://growagardencalculator.blog';
+        this.defaultImage = 'https://growagardencalculator.blog/images/og-default.png';
+        
+        console.log('🔍 SEO Manager initialized');
+    }
+
+    /**
+     * Update page meta tags based on selected crop
+     * @param {Object} crop - Selected crop data
+     * @param {Object} calculation - Calculation result (optional)
+     */
+    updateMetaTags(crop = null, calculation = null) {
+        try {
+            if (crop) {
+                this.updateCropMetaTags(crop, calculation);
+            } else {
+                this.resetToDefaultMetaTags();
+            }
+            
+            // Always update the updated time
+            this.updateTimestamp();
+            
+            console.log(`🔍 SEO meta tags updated for: ${crop ? crop.name : 'default'}`);
+        } catch (error) {
+            console.error('❌ Failed to update meta tags:', error);
+        }
+    }
+
+    /**
+     * Update meta tags for specific crop
+     */
+    updateCropMetaTags(crop, calculation) {
+        const cropName = crop.name || 'Unknown Crop';
+        const rarity = crop.tier || crop.rarity || 'Common';
+        const baseValue = crop.minimum_value || crop.sellValue || 'N/A';
+        const finalValue = calculation?.finalValue ? this.formatNumber(calculation.finalValue) : baseValue;
+        
+        // Generate dynamic title
+        const newTitle = `${cropName} Calculator - ${rarity} Crop Value | ${this.siteName}`;
+        
+        // Generate dynamic description
+        const newDescription = `Calculate ${cropName} (${rarity}) value instantly! Base value: ${baseValue} Sheckles. ${calculation ? `Current calculation: ${finalValue} Sheckles. ` : ''}Use our free GAG Calculator for accurate Grow A Garden crop valuations.`;
+        
+        // Generate dynamic URL (for canonical and social)
+        const newUrl = `${this.baseUrl}?crop=${encodeURIComponent(crop.id || crop.name)}`;
+        
+        // Generate dynamic image URL (if crop has specific image)
+        const newImage = crop.image ? 
+            `${this.baseUrl}/images/crops/${crop.image}` : 
+            this.defaultImage;
+        
+        // Update all meta tags
+        this.setMetaTag('title', newTitle);
+        this.setMetaTag('meta-description', 'content', newDescription);
+        this.setMetaTag('canonical-url', 'href', newUrl);
+        
+        // Open Graph tags
+        this.setMetaTag('og-title', 'content', newTitle);
+        this.setMetaTag('og-description', 'content', newDescription);
+        this.setMetaTag('og-url', 'content', newUrl);
+        this.setMetaTag('og-image', 'content', newImage);
+        this.setMetaTag('og-image-alt', 'content', `${cropName} - ${rarity} crop from Grow A Garden`);
+        
+        // Twitter tags
+        this.setMetaTag('twitter-title', 'content', newTitle);
+        this.setMetaTag('twitter-description', 'content', newDescription);
+        this.setMetaTag('twitter-url', 'content', newUrl);
+        this.setMetaTag('twitter-image', 'content', newImage);
+        this.setMetaTag('twitter-image-alt', 'content', `${cropName} - ${rarity} crop from Grow A Garden`);
+        
+        // Schema.org tags
+        this.setMetaTag('schema-name', 'content', newTitle);
+        this.setMetaTag('schema-description', 'content', newDescription);
+        this.setMetaTag('schema-image', 'content', newImage);
+    }
+
+    /**
+     * Reset to default meta tags
+     */
+    resetToDefaultMetaTags() {
+        this.setMetaTag('title', this.baseTitle);
+        this.setMetaTag('meta-description', 'content', this.baseDescription);
+        this.setMetaTag('canonical-url', 'href', this.baseUrl + '/');
+        
+        // Open Graph tags
+        this.setMetaTag('og-title', 'content', this.baseTitle);
+        this.setMetaTag('og-description', 'content', this.baseDescription);
+        this.setMetaTag('og-url', 'content', this.baseUrl + '/');
+        this.setMetaTag('og-image', 'content', this.defaultImage);
+        this.setMetaTag('og-image-alt', 'content', 'GAG Calculator - Professional Grow A Garden Calculator for Roblox');
+        
+        // Twitter tags
+        this.setMetaTag('twitter-title', 'content', this.baseTitle);
+        this.setMetaTag('twitter-description', 'content', this.baseDescription);
+        this.setMetaTag('twitter-url', 'content', this.baseUrl + '/');
+        this.setMetaTag('twitter-image', 'content', this.defaultImage);
+        this.setMetaTag('twitter-image-alt', 'content', 'GAG Calculator - Professional Grow A Garden Calculator for Roblox');
+        
+        // Schema.org tags
+        this.setMetaTag('schema-name', 'content', this.baseTitle);
+        this.setMetaTag('schema-description', 'content', this.baseDescription);
+        this.setMetaTag('schema-image', 'content', this.defaultImage);
+    }
+
+    /**
+     * Set meta tag content
+     */
+    setMetaTag(id, attribute = null, value) {
+        const element = document.getElementById(id);
+        if (element) {
+            if (id === 'title') {
+                // Special case for title tag
+                document.title = value;
+                element.textContent = value;
+            } else if (attribute) {
+                element.setAttribute(attribute, value);
+            }
+        } else {
+            console.warn(`⚠️ Meta tag element not found: ${id}`);
+        }
+    }
+
+    /**
+     * Update timestamp for og:updated_time
+     */
+    updateTimestamp() {
+        const now = new Date().toISOString();
+        this.setMetaTag('og-updated-time', 'content', now);
+    }
+
+    /**
+     * Generate crop-specific social sharing URL
+     */
+    generateSharingUrl(crop, platform = 'general') {
+        if (!crop) return this.baseUrl;
+        
+        const baseShareUrl = `${this.baseUrl}?crop=${encodeURIComponent(crop.id || crop.name)}`;
+        
+        switch (platform) {
+            case 'facebook':
+                return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(baseShareUrl)}`;
+            case 'twitter':
+                const twitterText = `Check out the ${crop.name} calculator on GAG Calculator! 🌱`;
+                return `https://twitter.com/intent/tweet?url=${encodeURIComponent(baseShareUrl)}&text=${encodeURIComponent(twitterText)}`;
+            case 'reddit':
+                const redditTitle = `${crop.name} Calculator - GAG Calculator`;
+                return `https://reddit.com/submit?url=${encodeURIComponent(baseShareUrl)}&title=${encodeURIComponent(redditTitle)}`;
+            default:
+                return baseShareUrl;
+        }
+    }
+
+    /**
+     * Format number for display
+     */
+    formatNumber(num) {
+        if (typeof num !== 'number') return 'N/A';
+        
+        if (num >= 1000000000) {
+            return (num / 1000000000).toFixed(1) + 'B';
+        } else if (num >= 1000000) {
+            return (num / 1000000).toFixed(1) + 'M';
+        } else if (num >= 1000) {
+            return (num / 1000).toFixed(1) + 'K';
+        } else {
+            return num.toLocaleString();
+        }
+    }
+
+    /**
+     * Update page URL without reloading (for better UX and analytics)
+     */
+    updateUrl(crop = null) {
+        if (!window.history || !window.history.pushState) return;
+        
+        try {
+            const newUrl = crop ? 
+                `${window.location.pathname}?crop=${encodeURIComponent(crop.id || crop.name)}` : 
+                window.location.pathname;
+            
+            // Only update if URL actually changed
+            if (window.location.href !== window.location.origin + newUrl) {
+                window.history.pushState(
+                    { crop: crop ? crop.id : null }, 
+                    document.title, 
+                    newUrl
+                );
+            }
+        } catch (error) {
+            console.warn('⚠️ Failed to update URL:', error);
+        }
+    }
+
+    /**
+     * Handle browser back/forward navigation
+     */
+    setupHistoryNavigation() {
+        window.addEventListener('popstate', (event) => {
+            const cropId = event.state?.crop;
+            if (cropId && window.app) {
+                // Trigger crop selection if app is available
+                console.log(`🔍 History navigation: selecting crop ${cropId}`);
+                // Note: This would need to be connected to the app's crop selection logic
+            } else {
+                // Reset to default if no crop specified
+                this.resetToDefaultMetaTags();
+            }
+        });
     }
 }
 
