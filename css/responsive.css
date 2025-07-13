@@ -350,6 +350,7 @@
     /* 特色功能超小屏适配 */
     .section-title {
         font-size: var(--text-2xl);
+        font-weight: 700;
     }
     
     .feature-card {
@@ -417,6 +418,7 @@
     
     .section-title {
         font-size: var(--text-base);
+        font-weight: 700;
         margin-bottom: var(--spacing-sm);
     }
     

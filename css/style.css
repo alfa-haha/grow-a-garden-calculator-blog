@@ -672,9 +672,9 @@ main {
 
 .hero-text h2 {
     font-size: var(--text-3xl);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
     text-align: center;
 }
 
@@ -932,6 +932,7 @@ main {
     
     .hero-text h2 {
         font-size: var(--text-2xl);
+        font-weight: 700;
         text-align: center;
     }
     
@@ -983,6 +984,7 @@ main {
     
     .hero-text h2 {
         font-size: var(--text-xl);
+        font-weight: 700;
         text-align: center;
     }
     
@@ -1083,4 +1085,12 @@ main {
     .email-link::after {
         display: none;
     }
+}
+
+@media (min-width: 1024px) {
+  .module-description {
+    max-width: 100%;
+    width: 100%;
+    white-space: nowrap;
+  }
 }

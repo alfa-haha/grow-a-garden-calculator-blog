@@ -3497,3 +3497,16 @@ section.features .features-grid {
 noscript .crop-grid-static {
     display: block;
 }
+
+@media (max-width: 480px) {
+  .category-filters {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .category-btn {
+    min-height: 36px;
+    font-size: 0.95rem;
+    padding: 0.25em 0;
+  }
+}

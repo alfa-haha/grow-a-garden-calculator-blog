@@ -4,6 +4,13 @@ Professional Grow A Garden calculator tool for Roblox, providing precise crop va
 
 ## 🚀 最新更新 (2025年1月)
 
+### 🔧 Google Search Console 结构化数据问题修复 (最新)
+- ✅ **修复严重问题**: 添加Product Schema的"image"字段
+- ✅ **修复非严重问题**: 添加"shippingDetails"字段到offers
+- ✅ **修复非严重问题**: 添加"hasMerchantReturnPolicy"字段到offers
+- ✅ **新增**: SEO验证工具 (seo_validation_check.js) 用于检测结构化数据问题
+- ✅ **优化**: 所有Product Schema现在符合Google商家信息要求
+
 ### SEO优化完成
 - ✅ 完整的结构化数据实现 (Schema.org)
 - ✅ 社交媒体优化 (Open Graph, Twitter Cards)
@@ -134,6 +141,86 @@ Total Value = Base Value × (1 + ΣMutations - Count) × Growth × Weight² × (
 - **样式框架**：自定义 CSS 变量系统
 - **部署平台**：GitHub Pages
 - **开发工具**：VS Code + Live Server
+
+## 🔧 Google Search Console 问题修复详情
+
+### 问题描述
+Google Search Console报告了3个商家信息结构化数据问题：
+1. **严重问题**: Product Schema缺少"image"字段
+2. **非严重问题**: offers中缺少"shippingDetails"字段  
+3. **非严重问题**: offers中缺少"hasMerchantReturnPolicy"字段
+
+### 修复方案
+
+#### 1. 添加Image字段
+```json
+"image": "https://growagardencalculator.blog/images/screenshots/calculator-interface.png"
+```
+
+#### 2. 添加ShippingDetails字段
+```json
+"shippingDetails": {
+    "@type": "OfferShippingDetails",
+    "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "USD"
+    },
+    "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 0,
+            "maxValue": 0,
+            "unitCode": "DAY"
+        },
+        "transitTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 0,
+            "maxValue": 0,
+            "unitCode": "DAY"
+        }
+    }
+}
+```
+
+#### 3. 添加MerchantReturnPolicy字段
+```json
+"hasMerchantReturnPolicy": {
+    "@type": "MerchantReturnPolicy",
+    "applicableCountry": "US",
+    "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+    "merchantReturnDays": 30,
+    "returnMethod": "https://schema.org/ReturnByMail",
+    "returnFees": "https://schema.org/FreeReturn"
+}
+```
+
+### 验证工具
+创建了`seo_validation_check.js`工具来自动检测结构化数据问题：
+- 自动验证Product Schema的必需字段
+- 检查image URL格式
+- 生成修复建议
+- 在浏览器控制台显示详细报告
+
+### 预期效果
+- ✅ 解决Google Search Console的所有报告问题
+- ✅ 提升网站在Google搜索结果中的显示质量
+- ✅ 符合Google商家信息结构化数据标准
+- ✅ 为未来的SEO优化提供自动化检测工具
+
+### 验证结果
+通过自动化测试验证，所有修复都已成功应用：
+- ✅ Product Schema包含image字段
+- ✅ offers包含shippingDetails字段
+- ✅ offers包含hasMerchantReturnPolicy字段
+- ✅ 所有字段格式符合Schema.org标准
+
+### 下一步建议
+1. 在Google Search Console中重新验证结构化数据
+2. 等待Google重新抓取页面（通常需要几天时间）
+3. 监控Search Console中的错误报告
+4. 使用seo_validation_check.js工具定期检查结构化数据
 
 ## 🥚 Eggs Database
 

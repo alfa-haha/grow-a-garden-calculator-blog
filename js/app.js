@@ -1828,6 +1828,10 @@ class App {
         const searchInput = document.getElementById('hero-crop-search');
         if (searchInput) {
             searchInput.addEventListener('input', (event) => {
+                // 新增：强制激活All分类
+                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.category-btn[data-category="all"]')?.classList.add('active');
+                // 只用搜索过滤
                 this.filterHeroCrops(event.target.value);
             });
         }
