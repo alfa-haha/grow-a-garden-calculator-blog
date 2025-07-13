@@ -76,6 +76,9 @@ class App {
             this.initialized = true;
             console.log('✅ Application initialization completed');
             
+            // Make app instance available globally
+            window.app = this;
+            
             // Trigger initialization completed event
             this.dispatchEvent('app:initialized');
             
@@ -173,6 +176,16 @@ class App {
                 const gears = this.dataManager.getGears();
                 console.log(`🔍 DataManager has ${gears ? gears.length : 0} gears`);
                 await this.initGearsPage();
+            }
+            
+            // Initialize mutations page UI
+            if (this.state.currentPage === 'mutations') {
+                console.log('🧬 Initializing mutations page UI...');
+                // 确保数据已加载
+                console.log('🔍 Checking DataManager mutations data before mutations page init...');
+                const mutations = this.dataManager.getMutations();
+                console.log(`🔍 DataManager has ${mutations && mutations.raw ? mutations.raw.length : 0} mutations`);
+                await this.initMutationsPage();
             }
             
             // Always check for hero calculator on index page
@@ -725,6 +738,60 @@ class App {
             console.log('✅ Gears page UI initialized');
         } catch (error) {
             console.error('❌ Gears page initialization failed:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Initialize mutations page UI
+     */
+    async initMutationsPage() {
+        if (this.state.currentPage !== 'mutations') return;
+        
+        try {
+            console.log('🧬 Initializing mutations page UI...');
+            
+            // Get mutations data from data manager
+            const mutations = this.dataManager.getMutations();
+            console.log(`🔍 Got ${mutations && mutations.raw ? mutations.raw.length : 0} mutations from DataManager`);
+            
+            // Check if mutations manager exists and its status
+            if (window.mutationsManager) {
+                if (window.mutationsManager.isInitialized) {
+                    console.log('🧬 MutationsManager already initialized, skipping...');
+                    return;
+                } else if (window.mutationsManager.isInitializing) {
+                    console.log('🧬 MutationsManager currently initializing, waiting...');
+                    // Wait for initialization to complete
+                    while (window.mutationsManager.isInitializing) {
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                    }
+                    console.log('🧬 MutationsManager initialization completed');
+                    return;
+                } else {
+                    console.log('🧬 MutationsManager found, initializing with data...');
+                    // 处理数据并设置
+                    const rawMutations = mutations.raw || [];
+                    if (typeof window.mutationsManager.processMutationsArray === 'function') {
+                        const processedMutations = window.mutationsManager.processMutationsArray(rawMutations);
+                        window.mutationsManager.mutations = processedMutations;
+                        window.mutationsManager.filteredMutations = [...processedMutations];
+                        console.log('🔍 Set MutationsManager.mutations length:', window.mutationsManager.mutations.length);
+                        console.log('🔍 Set MutationsManager.filteredMutations length:', window.mutationsManager.filteredMutations.length);
+                    } else {
+                        console.warn('⚠️ processMutationsArray method not found, using raw data');
+                        window.mutationsManager.mutations = rawMutations;
+                        window.mutationsManager.filteredMutations = [...rawMutations];
+                    }
+                    await window.mutationsManager.init();
+                }
+            } else {
+                console.log('🧬 MutationsManager not found, will be initialized by mutations.js');
+            }
+            
+            console.log('✅ Mutations page UI initialized');
+        } catch (error) {
+            console.error('❌ Mutations page initialization failed:', error);
             throw error;
         }
     }
