@@ -78,29 +78,9 @@ class MutationsManager {
                 }
                 
             } catch (error) {
-                console.warn('⚠️ Failed to load mutations.json, trying mutations(new).json:', error.message);
-                
-                // Fall back to mutations(new).json
-                try {
-                    const response = await fetch('data/mutations(new).json');
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-                    
-                    const data = await response.json();
-                    this.mutations = this.extractMutationsDataNew(data);
-                    
-                    if (this.mutations.length > 0) {
-                        console.log(`✅ Successfully loaded ${this.mutations.length} mutations from mutations(new).json`);
-                    } else {
-                        throw new Error('No mutations extracted from fallback data');
-                    }
-                    
-                } catch (fallbackError) {
-                    console.error('❌ All mutation data sources failed:', fallbackError.message);
-                    console.warn('🔄 Using default mutations as final fallback');
-                    this.mutations = this.getDefaultMutations();
-                }
+                console.error('❌ Failed to load mutations.json:', error.message);
+                console.warn('🔄 Using default mutations as fallback');
+                this.mutations = this.getDefaultMutations();
             }
             
             // Ensure we have mutations data

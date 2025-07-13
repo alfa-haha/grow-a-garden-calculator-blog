@@ -129,8 +129,8 @@ class DataManager {
      */
     async loadMutations() {
         try {
-            console.log('🌟 Loading mutations from data/mutations(new).json...');
-            const data = await this.loadJSON('data/mutations(new).json');
+            console.log('🌟 Loading mutations from data/mutations.json...');
+            const data = await this.loadJSON('data/mutations.json');
             
             // Process mutations array into structured format
             const mutationsByCategory = {};
