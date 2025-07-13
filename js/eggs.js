@@ -3,6 +3,56 @@
  * Responsible for eggs page functionality, data loading and display
  */
 
+// 立即注册 initializeEggsManager 函数，避免 DOMContentLoaded 时序问题
+console.log('🔧 Registering initializeEggsManager function...');
+window.initializeEggsManager = async function(eggsData = null) {
+    console.log('🔄 initializeEggsManager called with data:', eggsData ? eggsData.length : 0);
+    
+    // Prevent multiple initialization
+    if (window.eggsManager && (window.eggsManager.isInitialized || window.eggsManager.isInitializing)) {
+        console.log('🥚 EggsManager already exists and is initialized/initializing, skipping...');
+        return;
+    }
+    
+    console.log('🔄 Starting eggs manager initialization...');
+    
+    try {
+        // Create eggs manager instance
+        const eggsManager = new EggsManager();
+        
+        // Make it globally accessible
+        window.eggsManager = eggsManager;
+        
+        // Use provided data or try to get from app
+        let eggs = eggsData;
+        
+        if (!eggs && window.app && window.app.dataManager) {
+            console.log('✅ Getting eggs data from DataManager');
+            eggs = window.app.dataManager.getEggs();
+            console.log(`🔍 Got ${eggs ? eggs.length : 0} eggs from DataManager`);
+        }
+        
+        if (eggs && eggs.length > 0) {
+            // Set data directly to avoid waiting logic
+            eggsManager.eggs = eggs;
+            eggsManager.filteredEggs = [...eggs];
+            console.log(`🔍 Set eggs data: ${eggs.length} eggs`);
+            
+            // Initialize eggs manager
+            await eggsManager.init();
+            
+            console.log('✅ Eggs manager initialization complete');
+        } else {
+            console.error('❌ No eggs data available for initialization');
+        }
+    } catch (error) {
+        console.error('❌ Failed to initialize eggs manager:', error);
+    }
+};
+
+console.log('✅ initializeEggsManager function registered successfully');
+console.log('🔍 Function type:', typeof window.initializeEggsManager);
+
 class EggsManager {
     constructor() {
         this.eggs = [];
@@ -547,62 +597,30 @@ class EggsManager {
 
 // Initialize eggs manager when page loads
 document.addEventListener('DOMContentLoaded', async () => {
-    // Check if we're on the eggs page
-    if (!window.location.pathname.includes('eggs.html')) {
+    console.log('🥚 DOMContentLoaded event triggered in eggs.js');
+    console.log('🔍 Current pathname:', window.location.pathname);
+    
+    // Check if we're on the eggs page (support both eggs.html and /eggs paths)
+    const isEggsPage = window.location.pathname.includes('eggs.html') || 
+                      window.location.pathname.includes('/eggs') ||
+                      window.location.pathname.endsWith('/eggs');
+    
+    if (!isEggsPage) {
+        console.log('❌ Not on eggs page, skipping initialization');
         return;
     }
     
-    console.log('🥚 DOM loaded, setting up eggs manager...');
-    
-    // Global function to initialize eggs manager (called by main app)
-    window.initializeEggsManager = async (eggsData = null) => {
-        // Prevent multiple initialization
-        if (window.eggsManager && (window.eggsManager.isInitialized || window.eggsManager.isInitializing)) {
-            console.log('🥚 EggsManager already exists and is initialized/initializing, skipping...');
-            return;
-        }
-        
-        console.log('🔄 Starting eggs manager initialization...');
-        
-        try {
-            // Create eggs manager instance
-            const eggsManager = new EggsManager();
-            
-            // Make it globally accessible
-            window.eggsManager = eggsManager;
-            
-            // Use provided data or try to get from app
-            let eggs = eggsData;
-            
-            if (!eggs && window.app && window.app.dataManager) {
-                console.log('✅ Getting eggs data from DataManager');
-                eggs = window.app.dataManager.getEggs();
-                console.log(`🔍 Got ${eggs ? eggs.length : 0} eggs from DataManager`);
-            }
-            
-            if (eggs && eggs.length > 0) {
-                // Set data directly to avoid waiting logic
-                eggsManager.eggs = eggs;
-                eggsManager.filteredEggs = [...eggs];
-                console.log(`🔍 Set eggs data: ${eggs.length} eggs`);
-                
-                // Initialize eggs manager
-                await eggsManager.init();
-                
-                console.log('✅ Eggs manager initialization complete');
-            } else {
-                console.error('❌ No eggs data available for initialization');
-            }
-        } catch (error) {
-            console.error('❌ Failed to initialize eggs manager:', error);
-        }
-    };
-    
-    console.log('✅ EggsManager setup complete, ready for initialization');
+    console.log('🥚 DOM loaded, eggs manager setup complete');
+    console.log('✅ initializeEggsManager function is ready:', typeof window.initializeEggsManager);
 }); 
 
 document.addEventListener('app:initialized', async () => {
-    if (window.location.pathname.includes('eggs.html')) {
+    // Check if we're on the eggs page (support both eggs.html and /eggs paths)
+    const isEggsPage = window.location.pathname.includes('eggs.html') || 
+                      window.location.pathname.includes('/eggs') ||
+                      window.location.pathname.endsWith('/eggs');
+    
+    if (isEggsPage) {
         if (window.initializeEggsManager) {
             console.log('🚀 App initialized, calling initializeEggsManager...');
             // Get eggs data from app if available
