@@ -209,16 +209,21 @@ class DataManager {
         try {
             console.log('🥚 Starting to load eggs from data/eggs.json...');
             const data = await this.loadJSON('data/eggs.json');
-            
-            console.log('🔍 Raw egg data loaded:', data);
-            console.log('🔍 data.eggs type:', typeof data.eggs);
-            console.log('🔍 data.eggs is array:', Array.isArray(data.eggs));
-            console.log('🔍 data.eggs length:', data.eggs ? data.eggs.length : 'undefined');
-            
-            this.data.eggs = data.eggs || [];
-            
+
+            // 兼容两种格式：{ eggs: [...] } 或直接是数组
+            let eggsArray = [];
+            if (Array.isArray(data)) {
+                eggsArray = data;
+            } else if (Array.isArray(data.eggs)) {
+                eggsArray = data.eggs;
+            } else {
+                eggsArray = [];
+            }
+
+            this.data.eggs = eggsArray;
+
             console.log('🔍 Before processing, eggs count:', this.data.eggs.length);
-            
+
             // Data processing
             this.data.eggs = this.data.eggs.map(egg => ({
                 ...egg,
