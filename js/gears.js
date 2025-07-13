@@ -183,6 +183,12 @@ class GearsManager {
     handleSearch(query) {
         const searchTerm = query.toLowerCase().trim();
         console.log(`🔍 Searching for: "${searchTerm}"`);
+        
+        // 当用户开始搜索时，自动重置所有筛选器
+        if (searchTerm) {
+            this.resetFiltersForSearch();
+        }
+        
         this.currentSearchTerm = searchTerm;
         this.applyFilters();
     }
@@ -274,6 +280,31 @@ class GearsManager {
         if (gear.price.sheckles) return gear.price.sheckles;
         if (gear.price.robux) return gear.price.robux * 1000000; // Convert robux to comparable value
         return 0;
+    }
+
+    /**
+     * Reset filters for search (without clearing search input)
+     */
+    resetFiltersForSearch() {
+        console.log('🔄 Resetting filters for search...');
+        
+        // Reset filters
+        const tierFilter = document.getElementById('tier-filter');
+        if (tierFilter) {
+            tierFilter.value = '';
+        }
+        
+        const obtainableFilter = document.getElementById('obtainable-filter');
+        if (obtainableFilter) {
+            obtainableFilter.value = '';
+        }
+        
+        const sortFilter = document.getElementById('sort-filter');
+        if (sortFilter) {
+            sortFilter.value = 'name';
+        }
+        
+        console.log('✅ Filters reset for search');
     }
 
     /**

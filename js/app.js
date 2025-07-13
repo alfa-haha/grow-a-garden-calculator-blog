@@ -812,7 +812,12 @@ class App {
             }
             
             // Setup filters
-            // 删除category-filter相关代码
+            const categoryFilter = document.getElementById('category-filter');
+            if (categoryFilter) {
+                categoryFilter.addEventListener('change', () => {
+                    this.applyCropsFilters();
+                });
+            }
             
             const tierFilter = document.getElementById('tier-filter');
             if (tierFilter) {
@@ -867,6 +872,12 @@ class App {
      */
     filterCropsPage(query) {
         console.log(`🔍 Filtering crops with query: ${query}`);
+        
+        // 当用户开始搜索时，自动重置所有筛选器
+        if (query && query.trim()) {
+            this.resetFiltersForSearch();
+        }
+        
         this.applyCropsFilters();
     }
     
@@ -890,23 +901,40 @@ class App {
                 return;
             }
             
-            // 删除category filter设置代码
+            // Setup category filter
+            const categoryFilter = document.getElementById('category-filter');
+            if (categoryFilter && typeof this.dataManager.getUniqueCategories === 'function') {
+                const categories = this.dataManager.getUniqueCategories();
+                
+                // Clear existing options except the first one
+                while (categoryFilter.children.length > 1) {
+                    categoryFilter.removeChild(categoryFilter.lastChild);
+                }
+                
+                // Add options for each category
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category;
+                    categoryFilter.appendChild(option);
+                });
+            }
             
             // Setup tier filter
             const tierFilter = document.getElementById('tier-filter');
-            if (tierFilter && typeof this.dataManager.getUniqueRarities === 'function') {
-                const rarities = this.dataManager.getUniqueRarities();
+            if (tierFilter && typeof this.dataManager.getUniqueTiers === 'function') {
+                const tiers = this.dataManager.getUniqueTiers();
                 
                 // Clear existing options except the first one
                 while (tierFilter.children.length > 1) {
                     tierFilter.removeChild(tierFilter.lastChild);
                 }
                 
-                // Add options for each rarity
-                rarities.forEach(rarity => {
+                // Add options for each tier
+                tiers.forEach(tier => {
                     const option = document.createElement('option');
-                    option.value = rarity;
-                    option.textContent = rarity;
+                    option.value = tier;
+                    option.textContent = tier;
                     tierFilter.appendChild(option);
                 });
             }
@@ -943,6 +971,39 @@ class App {
     }
     
     /**
+     * Reset filters for search (without clearing search input)
+     */
+    resetFiltersForSearch() {
+        console.log('🔄 Resetting filters for search...');
+        
+        // Reset category filter
+        const categoryFilter = document.getElementById('category-filter');
+        if (categoryFilter) {
+            categoryFilter.value = '';
+        }
+        
+        // Reset tier filter
+        const tierFilter = document.getElementById('tier-filter');
+        if (tierFilter) {
+            tierFilter.value = '';
+        }
+        
+        // Reset harvest filter
+        const harvestFilter = document.getElementById('harvest-filter');
+        if (harvestFilter) {
+            harvestFilter.value = '';
+        }
+        
+        // Reset sort filter
+        const sortFilter = document.getElementById('sort-filter');
+        if (sortFilter) {
+            sortFilter.value = 'name';
+        }
+        
+        console.log('✅ Filters reset for search');
+    }
+
+    /**
      * Reset all filters
      */
     resetFilters() {
@@ -955,7 +1016,10 @@ class App {
         }
         
         // Reset filter selects
-        // 删除category-filter引用
+        const categoryFilter = document.getElementById('category-filter');
+        if (categoryFilter) {
+            categoryFilter.value = '';
+        }
         
         const tierFilter = document.getElementById('tier-filter');
         if (tierFilter) {
@@ -991,7 +1055,7 @@ class App {
             
             // Get filter values
             const searchQuery = document.getElementById('crops-search')?.value.toLowerCase() || '';
-            // 删除category-filter引用
+            const categoryFilter = document.getElementById('category-filter')?.value || '';
             const tierFilter = document.getElementById('tier-filter')?.value || '';
             const harvestFilter = document.getElementById('harvest-filter')?.value || '';
             const sortFilter = document.getElementById('sort-filter')?.value || 'name';
@@ -1009,12 +1073,15 @@ class App {
                 crops = crops.filter(crop => 
                     crop.name.toLowerCase().includes(searchQuery) ||
                     crop.category.toLowerCase().includes(searchQuery) ||
-                    crop.rarity.toLowerCase().includes(searchQuery) ||
+                    (crop.tier || crop.rarity).toLowerCase().includes(searchQuery) ||
                     (crop.description && crop.description.toLowerCase().includes(searchQuery))
                 );
             }
             
-            // 删除category过滤代码
+            // Apply category filter
+            if (categoryFilter) {
+                crops = crops.filter(crop => crop.category === categoryFilter);
+            }
             
             // Apply tier filter
             if (tierFilter) {
@@ -1413,8 +1480,12 @@ class App {
         const multiHarvest = crop.multiHarvest ? 'Yes' : 'No';
         const obtainable = crop.obtainable ? 'Yes' : 'No';
         
+        // Get tier and convert to lowercase for CSS class
+        const tier = crop.tier || crop.rarity || 'Common';
+        const tierClass = tier.toLowerCase();
+        
         return `
-            <tr data-crop-id="${crop.id}" data-rarity="${crop.tier || crop.rarity}" data-category="${crop.category}" data-harvest="${multiHarvest}" onclick="app.showCropDetails('${crop.id}')" style="cursor: pointer;">
+            <tr data-crop-id="${crop.id}" data-rarity="${tier}" data-category="${crop.category}" data-harvest="${multiHarvest}" onclick="app.showCropDetails('${crop.id}')" style="cursor: pointer;">
                 <td>
                     <div class="crop-cell">
                         <span class="crop-icon small">${crop.icon}</span>
@@ -1423,7 +1494,7 @@ class App {
                 </td>
                 <td>${crop.category}</td>
                 <td>
-                    <span class="badge rarity">${crop.tier || crop.rarity}</span>
+                    <span class="badge rarity ${tierClass}">${tier}</span>
                 </td>
                 <td>💰 ${crop.sheckle_price || crop.buyPrice || 'N/A'}</td>
                 <td>💎 ${crop.robux_price || 'N/A'}</td>

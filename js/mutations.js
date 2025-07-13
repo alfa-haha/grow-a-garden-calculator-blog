@@ -422,7 +422,26 @@ class MutationsManager {
      * Handle search input
      */
     handleSearch(query) {
+        // 当用户开始搜索时，自动重置所有筛选器
+        if (query && query.trim()) {
+            this.resetFiltersForSearch();
+        }
         this.applyFilters(query);
+    }
+
+    /**
+     * Reset filters for search (without clearing search input)
+     */
+    resetFiltersForSearch() {
+        console.log('🔄 Resetting filters for search...');
+        
+        // Reset category filter
+        const categoryFilter = document.getElementById('category-filter');
+        if (categoryFilter) {
+            categoryFilter.value = '';
+        }
+        
+        console.log('✅ Filters reset for search');
     }
 
     /**

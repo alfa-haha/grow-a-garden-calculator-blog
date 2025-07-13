@@ -234,6 +234,12 @@ class EggsManager {
     handleSearch(query) {
         const searchTerm = query.toLowerCase().trim();
         console.log(`🔍 Searching for: "${searchTerm}"`);
+        
+        // 当用户开始搜索时，自动重置所有筛选器
+        if (searchTerm) {
+            this.resetFiltersForSearch();
+        }
+        
         this.currentSearchTerm = searchTerm;
         this.applyFilters();
     }
@@ -345,6 +351,27 @@ class EggsManager {
         }
         
         return minutes;
+    }
+
+    /**
+     * Reset filters for search (without clearing search input)
+     */
+    resetFiltersForSearch() {
+        console.log('🔄 Resetting filters for search...');
+        
+        // Reset source filter
+        const sourceFilter = document.getElementById('source-filter');
+        if (sourceFilter) {
+            sourceFilter.value = '';
+        }
+        
+        // Reset sort filter
+        const sortFilter = document.getElementById('sort-filter');
+        if (sortFilter) {
+            sortFilter.value = 'name';
+        }
+        
+        console.log('✅ Filters reset for search');
     }
 
     /**

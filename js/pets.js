@@ -205,6 +205,12 @@ class PetsManager {
      */
     handleSearch(query) {
         console.log(`🔍 Searching pets: ${query}`);
+        
+        // 当用户开始搜索时，自动重置所有筛选器
+        if (query && query.trim()) {
+            this.resetFiltersForSearch();
+        }
+        
         this.applyFilters();
     }
 
@@ -298,6 +304,33 @@ class PetsManager {
             default:
                 return pets;
         }
+    }
+
+    /**
+     * Reset filters for search (without clearing search input)
+     */
+    resetFiltersForSearch() {
+        console.log('🔄 Resetting filters for search...');
+        
+        // Reset tier filter
+        const tierFilter = document.getElementById('rarity-filter');
+        if (tierFilter) {
+            tierFilter.value = '';
+        }
+        
+        // Reset source filter
+        const sourceFilter = document.getElementById('source-filter');
+        if (sourceFilter) {
+            sourceFilter.value = '';
+        }
+        
+        // Reset sort filter
+        const sortFilter = document.getElementById('sort-filter');
+        if (sortFilter) {
+            sortFilter.value = 'name';
+        }
+        
+        console.log('✅ Filters reset for search');
     }
 
     /**
