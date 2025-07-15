@@ -1,14 +1,24 @@
 User-agent: *
-Allow: /
+
+# 允许抓取所有主页面
+Allow: /index.html
+Allow: /crops.html
+Allow: /pets.html
+Allow: /eggs.html
+Allow: /gears.html
+Allow: /mutations.html
+Allow: /generator.html
+
+# 屏蔽静态资源目录，提升抓取效率
 Disallow: /js/
 Disallow: /css/
 Disallow: /data/
 Disallow: /docs/
 Disallow: /seo/
 
-# Allow important resources
+# 允许图片和icon资源
 Allow: /images/
 Allow: /icons/
 
-# Sitemap location
+# Sitemap 位置
 Sitemap: https://growagardencalculator.blog/sitemap.xml 
