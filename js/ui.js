@@ -20,6 +20,61 @@ class UIManager {
         this.setupGlobalEventListeners();
         this.initComponents();
         this.setupKeyboardShortcuts();
+        this.initValueToWeightModule(); // 新增
+    }
+
+    /**
+     * 初始化 Value to Weight 反推重量模块
+     */
+    initValueToWeightModule() {
+        const input = document.getElementById('target-value-input');
+        const btn = document.getElementById('calculate-weight-btn');
+        const resultDiv = document.getElementById('value-to-weight-result');
+        if (!input || !btn || !resultDiv) return;
+
+        // 计算并渲染结果
+        const calculateAndRender = () => {
+            const targetValue = parseFloat(input.value);
+            if (!targetValue || targetValue <= 0) {
+                resultDiv.innerHTML = '<div class="calc-row-compact" style="color:#FFD700;">Please enter a valid target value.</div>';
+                return;
+            }
+            try {
+                // 获取当前作物、变异、加成参数（与主计算器保持一致）
+                const crop = window.selectedCrop || null;
+                const mutations = window.selectedMutations || {};
+                const friendBoost = typeof window.selectedFriendBoost === 'number' ? window.selectedFriendBoost : 0;
+                const maxMutation = !!window.selectedMaxMutation;
+                if (!crop) {
+                    resultDiv.innerHTML = '<div class="calc-row-compact" style="color:#FFD700;">Please select a crop first.</div>';
+                    return;
+                }
+                // 计算
+                const { requiredWeight, details } = window.calculator.calculateWeightForTargetValue(
+                    crop, mutations, targetValue, null, friendBoost, maxMutation
+                );
+                // 渲染结果
+                resultDiv.innerHTML = `
+                    <div class="calc-row-compact final-value" style="font-size:1.2em;">
+                        <span class="calc-label">Required Weight:</span>
+                        <span class="calc-value-large">${requiredWeight.toFixed(2)} kg</span>
+                    </div>
+                    <div class="calc-row-compact"><span class="calc-label">Crop:</span><span class="calc-value">${details.cropName}</span></div>
+                    <div class="calc-row-compact"><span class="calc-label">Target Value:</span><span class="calc-value">${details.targetValue.toLocaleString()} Sheckles</span></div>
+                    <div class="calc-row-compact"><span class="calc-label">Base Weight:</span><span class="calc-value">${details.baseWeight} kg</span></div>
+                    <div class="calc-row-compact"><span class="calc-label">Weight Ratio:</span><span class="calc-value">${details.weightRatio.toFixed(2)}x</span></div>
+                    <div class="calc-row-compact"><span class="calc-label">Total Multiplier:</span><span class="calc-value">${details.multiplier.toFixed(2)}x</span></div>
+                `;
+            } catch (e) {
+                resultDiv.innerHTML = `<div class='calc-row-compact' style='color:#FFD700;'>${e.message}</div>`;
+            }
+        };
+        // 按钮点击
+        btn.addEventListener('click', calculateAndRender);
+        // 回车触发
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') calculateAndRender();
+        });
     }
 
     /**

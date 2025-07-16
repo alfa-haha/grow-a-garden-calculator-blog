@@ -1583,6 +1583,8 @@ class App {
             if (weightInput) {
                 weightInput.value = baseWeight;
             }
+            // 同步到window，供全局使用
+            window.selectedCrop = crop;
         }
 
         // Update calculation
@@ -1714,7 +1716,6 @@ class App {
         const temperatureMutations = document.querySelectorAll('#hero-temperature-mutations .mutation-option-compact.active');
         temperatureMutations.forEach(mutation => {
             const mutationId = mutation.dataset.mutation;
-            // 跳过normal_temp
             if (mutationId && mutationId !== 'normal_temp') {
                 mutations.environmental.push(mutationId);
             }
@@ -1728,12 +1729,12 @@ class App {
 
         // 🔍 调试输出：显示收集到的mutations
         console.log('🧬 Collected mutations:', {
-            maxMutation: maxMutation,
             growth: mutations.growth,
             environmental: mutations.environmental,
             total_environmental_count: mutations.environmental.length
         });
-
+        // 同步到window
+        window.selectedMutations = mutations;
         return mutations;
     }
 
@@ -2029,27 +2030,24 @@ class App {
     setupHeroMutationSelection(selector, mode) {
         const container = document.querySelector(selector);
         if (!container) return;
-
         container.addEventListener('click', (event) => {
             const option = event.target.closest('.mutation-option-compact');
             if (!option) return;
-
             if (mode === 'single') {
-                // Single selection mode
                 container.querySelectorAll('.mutation-option-compact').forEach(opt => {
                     opt.classList.remove('active');
                 });
                 option.classList.add('active');
             } else {
-                // Multiple selection mode
                 option.classList.toggle('active');
             }
-
             // Auto-update calculation if crop is selected
             const selectedCrop = document.querySelector('.crop-item-compact.selected');
             if (selectedCrop) {
                 this.updateHeroCalculation(selectedCrop.dataset.cropId);
             }
+            // 每次变异选择后同步到window
+            window.selectedMutations = this.getHeroMutations();
         });
     }
 
@@ -2108,7 +2106,13 @@ class App {
                 console.log('🔄 Max Mutation toggle changed:', maxMutationToggle.checked);
                 maxMutationLabel.textContent = maxMutationToggle.checked ? 'On' : 'Off';
                 this.handleMaxMutationToggle(maxMutationToggle.checked);
+                // 同步到window
+                window.selectedMaxMutation = maxMutationToggle.checked;
             });
+        }
+        // 同步初始max mutation
+        if (maxMutationToggle) {
+            window.selectedMaxMutation = maxMutationToggle.checked;
         }
     }
 
@@ -2192,6 +2196,16 @@ class App {
                 console.log('🧪 Testing initial sync...');
                 syncFriendBoost(0, 'initial');
             }, 100);
+            
+            // 在friend boost输入变化时同步到window
+            if (friendBoostInput) {
+                friendBoostInput.addEventListener('input', () => {
+                    const value = parseInt(friendBoostInput.value) || 0;
+                    window.selectedFriendBoost = value;
+                });
+                // 初始化同步
+                window.selectedFriendBoost = parseInt(friendBoostInput.value) || 0;
+            }
             
             console.log('✅ Friend Boost event listeners added successfully');
         } else {

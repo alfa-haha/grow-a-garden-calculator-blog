@@ -1094,3 +1094,11 @@ main {
     white-space: nowrap;
   }
 }
+
+.calc-section-title {
+  color: #1F2937;
+}
+
+body.dark-mode .calc-section-title {
+  color: #F9FAFB;
+}

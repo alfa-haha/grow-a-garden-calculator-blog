@@ -303,6 +303,49 @@ class GardenCalculator {
     }
 
     /**
+     * 反推重量：根据目标价值、作物、变异、好友加成等，计算所需重量
+     * @param {Object} crop - 作物对象
+     * @param {Object} mutations - 变异配置
+     * @param {number} targetValue - 目标价值
+     * @param {number} baseWeight - 基础重量（可选）
+     * @param {number} friendBoost - 好友加成百分比（可选）
+     * @param {boolean} maxMutation - 是否最大变异模式（可选）
+     * @returns {Object} 结果对象 { requiredWeight, details }
+     */
+    calculateWeightForTargetValue(crop, mutations = {}, targetValue, baseWeight = null, friendBoost = 0, maxMutation = false) {
+        if (!crop || !targetValue || targetValue <= 0) {
+            throw new Error('作物和目标价值必须有效');
+        }
+        const baseValue = crop.sellValue || crop.minimum_value || 0;
+        const cropBaseWeight = baseWeight !== null ? baseWeight : (crop.base_weight || null);
+        if (!baseValue || !cropBaseWeight) {
+            throw new Error('作物基础价值或基础重量无效');
+        }
+        // 复用applyMutations获取倍数
+        const mutationResult = this.applyMutations(baseValue, mutations, cropBaseWeight, cropBaseWeight, friendBoost, maxMutation, crop);
+        // 计算总倍数（去除weight影响）
+        let multiplier = mutationResult.environmentalFactor * mutationResult.growthMultiplier * mutationResult.friendBoostFactor;
+        if (maxMutation && mutationResult.maxMutationMultiplier) {
+            multiplier = mutationResult.friendBoostFactor * mutationResult.maxMutationMultiplier;
+        }
+        // 反推重量
+        const requiredWeight = cropBaseWeight * Math.sqrt(targetValue / (baseValue * multiplier));
+        // 计算weight ratio
+        const weightRatio = requiredWeight / cropBaseWeight;
+        // 结果详情
+        const details = {
+            cropName: crop.name,
+            targetValue,
+            baseValue,
+            baseWeight: cropBaseWeight,
+            multiplier,
+            weightRatio,
+            mutationResult
+        };
+        return { requiredWeight, details };
+    }
+
+    /**
      * Get mutation icon based on category
      * @param {string} category - Mutation category
      * @returns {string} Icon emoji
