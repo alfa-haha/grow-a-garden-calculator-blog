@@ -13,7 +13,7 @@
       "image": "Carrot.png",
       "icon": "🥕",
       "description": "Basic crop, perfect for beginners",
-      "basic_weight": "0.24"
+      "base_weight": "0.24"
     },
     {
       "id": "strawberry",
@@ -28,7 +28,7 @@
       "image": "Strawberry.png",
       "icon": "🍓",
       "description": "Common multi-harvest crop",
-      "basic_weight": "0.29"
+      "base_weight": "0.29"
     },
     {
       "id": "blueberry",
@@ -43,7 +43,7 @@
       "image": "Blueberry.png",
       "icon": "🫐",
       "description": "Uncommon multi-harvest berry",
-      "basic_weight": "0.17"
+      "base_weight": "0.17"
     },
     {
       "id": "orange_tulip",
@@ -58,7 +58,7 @@
       "image": "Orange-Tulip.png",
       "icon": "🌷",
       "description": "Beautiful orange flower",
-      "basic_weight": "0.05"
+      "base_weight": "0.05"
     },
     {
       "id": "tomato",
@@ -73,7 +73,7 @@
       "image": "Tomato.png",
       "icon": "🍅",
       "description": "Classic multi-harvest crop",
-      "basic_weight": "0.44"
+      "base_weight": "0.44"
     },
     {
       "id": "daffodil",
@@ -88,7 +88,7 @@
       "image": "Daffodil.png",
       "icon": "🌼",
       "description": "Spring flower with good value",
-      "basic_weight": "0.16"
+      "base_weight": "0.16"
     },
     {
       "id": "watermelon",
@@ -103,7 +103,7 @@
       "image": "Watermelon.png",
       "icon": "🍉",
       "description": "Large juicy fruit",
-      "basic_weight": "7.3"
+      "base_weight": "7.3"
     },
     {
       "id": "pumpkin",
@@ -118,7 +118,7 @@
       "image": "Pumpkin.png",
       "icon": "🎃",
       "description": "Halloween favorite",
-      "basic_weight": "6.9"
+      "base_weight": "6.9"
     },
     {
       "id": "apple",
@@ -133,7 +133,7 @@
       "image": "Apple.png",
       "icon": "🍎",
       "description": "Classic red apple",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "bamboo",
@@ -148,7 +148,7 @@
       "image": "Bamboo.png",
       "icon": "🎋",
       "description": "Fast-growing bamboo",
-      "basic_weight": "3.8"
+      "base_weight": "3.8"
     },
     {
       "id": "coconut",
@@ -163,7 +163,7 @@
       "image": "Coconut.png",
       "icon": "🥥",
       "description": "Tropical coconut fruit",
-      "basic_weight": "13.31"
+      "base_weight": "13.31"
     },
     {
       "id": "cactus",
@@ -178,7 +178,7 @@
       "image": "Cactus.png",
       "icon": "🌵",
       "description": "Desert plant with valuable fruit",
-      "basic_weight": "6.65"
+      "base_weight": "6.65"
     },
     {
       "id": "dragon_fruit",
@@ -193,7 +193,7 @@
       "image": "Dragon-Fruit.png",
       "icon": "🐉",
       "description": "Exotic dragon fruit",
-      "basic_weight": "11.38"
+      "base_weight": "11.38"
     },
     {
       "id": "mango",
@@ -208,7 +208,7 @@
       "image": "Mango.png",
       "icon": "🥭",
       "description": "Sweet tropical mango",
-      "basic_weight": "14.28"
+      "base_weight": "14.28"
     },
     {
       "id": "grape",
@@ -223,7 +223,7 @@
       "image": "Grape.png",
       "icon": "🍇",
       "description": "Cluster of divine grapes",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "mushroom",
@@ -238,7 +238,7 @@
       "image": "Mushroom.png",
       "icon": "🍄",
       "description": "Valuable fungus",
-      "basic_weight": "25.9"
+      "base_weight": "25.9"
     },
     {
       "id": "pepper",
@@ -253,7 +253,7 @@
       "image": "Pepper.png",
       "icon": "🌶️",
       "description": "Spicy divine pepper",
-      "basic_weight": "4.75"
+      "base_weight": "4.75"
     },
     {
       "id": "cacao",
@@ -268,7 +268,7 @@
       "image": "Cacao.png",
       "icon": "🍫",
       "description": "Source of chocolate",
-      "basic_weight": "7.6"
+      "base_weight": "7.6"
     },
     {
       "id": "beanstalk",
@@ -283,7 +283,7 @@
       "image": "Beanstalk.png",
       "icon": "🌱",
       "description": "Magical growing beanstalk",
-      "basic_weight": "9.5"
+      "base_weight": "9.5"
     },
     {
       "id": "ember_lily",
@@ -298,7 +298,7 @@
       "image": "Ember-Lily.png",
       "icon": "🔥",
       "description": "Fiery glowing lily",
-      "basic_weight": "11.4"
+      "base_weight": "11.4"
     },
     {
       "id": "sugar_apple",
@@ -313,7 +313,7 @@
       "image": "Sugar-Apple.png",
       "icon": "🍬",
       "description": "Sweet crystalline apple",
-      "basic_weight": "8.55"
+      "base_weight": "8.55"
     },
     {
       "id": "burning_bud",
@@ -328,7 +328,7 @@
       "image": "Burning-Bud.png",
       "icon": "🔥",
       "description": "Fiery plant bud",
-      "basic_weight": "11.4"
+      "base_weight": "11.4"
     },
     {
       "id": "cauliflower",
@@ -343,7 +343,7 @@
       "image": "Cauliflower.png",
       "icon": "🥦",
       "description": "Nutritious vegetable",
-      "basic_weight": "4.74"
+      "base_weight": "4.74"
     },
     {
       "id": "rafflesia",
@@ -358,7 +358,7 @@
       "image": "Rafflesia.png",
       "icon": "🌺",
       "description": "Giant flower with unique scent",
-      "basic_weight": "7.6"
+      "base_weight": "7.6"
     },
     {
       "id": "green_apple",
@@ -373,7 +373,7 @@
       "image": "Green-Apple.png",
       "icon": "🍏",
       "description": "Tart green apple",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "avocado",
@@ -388,7 +388,7 @@
       "image": "Avocado.png",
       "icon": "🥑",
       "description": "Creamy green fruit",
-      "basic_weight": "3.32"
+      "base_weight": "3.32"
     },
     {
       "id": "banana",
@@ -403,7 +403,7 @@
       "image": "Banana.png",
       "icon": "🍌",
       "description": "Yellow curved fruit",
-      "basic_weight": "1.42"
+      "base_weight": "1.42"
     },
     {
       "id": "pineapple",
@@ -418,7 +418,7 @@
       "image": "Pineapple.png",
       "icon": "🍍",
       "description": "Tropical spiky fruit",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "kiwi",
@@ -433,7 +433,7 @@
       "image": "Kiwi.png",
       "icon": "🥝",
       "description": "Fuzzy brown fruit with green interior",
-      "basic_weight": "4.75"
+      "base_weight": "4.75"
     },
     {
       "id": "bell_pepper",
@@ -448,7 +448,7 @@
       "image": "Bell-Pepper.png",
       "icon": "🫑",
       "description": "Colorful bell-shaped vegetable",
-      "basic_weight": "7.61"
+      "base_weight": "7.61"
     },
     {
       "id": "prickly_pear",
@@ -463,7 +463,7 @@
       "image": "Prickly-Pear.png",
       "icon": "🌵",
       "description": "Cactus fruit with spines",
-      "basic_weight": "6.65"
+      "base_weight": "6.65"
     },
     {
       "id": "loquat",
@@ -478,7 +478,7 @@
       "image": "Loquat.png",
       "icon": "🍊",
       "description": "Small orange-yellow fruit",
-      "basic_weight": "6.17"
+      "base_weight": "6.17"
     },
     {
       "id": "feijoa",
@@ -493,7 +493,7 @@
       "image": "Feijoa.png",
       "icon": "🥝",
       "description": "Green egg-shaped fruit",
-      "basic_weight": "9.5"
+      "base_weight": "9.5"
     },
     {
       "id": "pitcher_plant",
@@ -508,7 +508,7 @@
       "image": "Pitcher-Plant.png",
       "icon": "🪴",
       "description": "Carnivorous plant with pitcher-shaped leaves",
-      "basic_weight": "11.4"
+      "base_weight": "11.4"
     },
     {
       "id": "rose",
@@ -523,7 +523,7 @@
       "image": "Rose.png",
       "icon": "🌹",
       "description": "Classic romantic flower",
-      "basic_weight": "0.95"
+      "base_weight": "0.95"
     },
     {
       "id": "foxglove",
@@ -538,7 +538,7 @@
       "image": "Foxglove.png",
       "icon": "🌸",
       "description": "Tall flower with bell-shaped blooms",
-      "basic_weight": "1.9"
+      "base_weight": "1.9"
     },
     {
       "id": "lilac",
@@ -553,7 +553,7 @@
       "image": "Lilac.png",
       "icon": "💜",
       "description": "Fragrant purple flower clusters",
-      "basic_weight": "2.846"
+      "base_weight": "2.846"
     },
     {
       "id": "pink_lily",
@@ -568,7 +568,7 @@
       "image": "Pink-Lily.png",
       "icon": "🌸",
       "description": "Elegant pink lily flower",
-      "basic_weight": "5.699"
+      "base_weight": "5.699"
     },
     {
       "id": "purple_dahlia",
@@ -583,7 +583,7 @@
       "image": "Purple-Dahlia.png",
       "icon": "🌸",
       "description": "Vibrant purple dahlia flower",
-      "basic_weight": "11.4"
+      "base_weight": "11.4"
     },
     {
       "id": "sunflower",
@@ -598,7 +598,7 @@
       "image": "Sunflower.png",
       "icon": "🌻",
       "description": "Tall flower that follows the sun",
-      "basic_weight": "15.65"
+      "base_weight": "15.65"
     },
     {
       "id": "chocolate_carrot",
@@ -613,7 +613,7 @@
       "image": "Chocolate-Carrot.png",
       "icon": "🍫",
       "description": "Sweet chocolate-flavored carrot",
-      "basic_weight": "0.262"
+      "base_weight": "0.262"
     },
     {
       "id": "red_lollipop",
@@ -628,7 +628,7 @@
       "image": "Red-Lollipop.png",
       "icon": "🍭",
       "description": "Sweet red candy lollipop",
-      "basic_weight": "3.799"
+      "base_weight": "3.799"
     },
     {
       "id": "candy_sunflower",
@@ -643,7 +643,7 @@
       "image": "Candy-Sunflower.png",
       "icon": "🍬",
       "description": "Sweet candy version of a sunflower",
-      "basic_weight": "1.428"
+      "base_weight": "1.428"
     },
     {
       "id": "easter_egg",
@@ -658,7 +658,7 @@
       "image": "Easter-Egg.png",
       "icon": "🥚",
       "description": "Colorful Easter egg plant",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "candy_blossom",
@@ -673,7 +673,7 @@
       "image": "Candy-Blossom.png",
       "icon": "🍬",
       "description": "Sweet candy flower",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "celestiberry",
@@ -688,7 +688,7 @@
       "image": "Celestiberry.png",
       "icon": "✨",
       "description": "Cosmic glowing berry",
-      "basic_weight": "1.9"
+      "base_weight": "1.9"
     },
     {
       "id": "moon_mango",
@@ -703,7 +703,7 @@
       "image": "Moon-Mango.png",
       "icon": "🌙",
       "description": "Lunar-powered mango",
-      "basic_weight": "14.25"
+      "base_weight": "14.25"
     },
     {
       "id": "bone_blossom",
@@ -718,7 +718,7 @@
       "image": "Bone-Blossom.png",
       "icon": "💀",
       "description": "Skeletal flower of immense power",
-      "basic_weight": "8.00"
+      "base_weight": "8.00"
     },
     {
       "id": "lemon",
@@ -733,7 +733,7 @@
       "image": "Lemon.png",
       "icon": "🍋",
       "description": "Sour yellow citrus fruit",
-      "basic_weight": "1.00"
+      "base_weight": "1.00"
     },
     {
       "id": "cherry_blossom",
@@ -748,7 +748,7 @@
       "image": "Cherry-Blossom.png",
       "icon": "🌸",
       "description": "Beautiful pink spring flower",
-      "basic_weight": "3.00"
+      "base_weight": "3.00"
     },
     {
       "id": "pear",
@@ -763,7 +763,7 @@
       "image": "Pear.png",
       "icon": "🍐",
       "description": "Sweet pear fruit",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "raspberry",
@@ -778,7 +778,7 @@
       "image": "Raspberry.png",
       "icon": "🍓",
       "description": "Sweet red berry",
-      "basic_weight": "0.71"
+      "base_weight": "0.71"
     },
     {
       "id": "peach",
@@ -793,7 +793,7 @@
       "image": "Peach.png",
       "icon": "🍑",
       "description": "Juicy peach fruit",
-      "basic_weight": "1.9"
+      "base_weight": "1.9"
     },
     {
       "id": "papaya",
@@ -808,7 +808,7 @@
       "image": "Papaya.png",
       "icon": "🥭",
       "description": "Tropical papaya fruit",
-      "basic_weight": "2.86"
+      "base_weight": "2.86"
     },
     {
       "id": "passionfruit",
@@ -823,7 +823,7 @@
       "image": "Passionfruit.png",
       "icon": "🍈",
       "description": "Exotic passion fruit",
-      "basic_weight": "2.867"
+      "base_weight": "2.867"
     },
     {
       "id": "soul_fruit",
@@ -838,7 +838,7 @@
       "image": "Soul-Fruit.png",
       "icon": "✨",
       "description": "Mystical fruit with spiritual energy",
-      "basic_weight": "23.75"
+      "base_weight": "23.75"
     },
     {
       "id": "cursed_fruit",
@@ -853,7 +853,7 @@
       "image": "Cursed-Fruit.png",
       "icon": "☠️",
       "description": "Ominous fruit with dark energy",
-      "basic_weight": "22.9"
+      "base_weight": "22.9"
     },
     {
       "id": "stonebite",
@@ -868,7 +868,7 @@
       "image": "Stonebite.png",
       "icon": "🪨",
       "description": "Ancient stone-like crop",
-      "basic_weight": "0.94"
+      "base_weight": "0.94"
     },
     {
       "id": "paradise_petal",
@@ -883,7 +883,7 @@
       "image": "Paradise-Petal.png",
       "icon": "🌺",
       "description": "Beautiful flower from ancient times",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "horned_dinoshroom",
@@ -898,7 +898,7 @@
       "image": "Horned-Dinoshroom.png",
       "icon": "🦕",
       "description": "Prehistoric mushroom with horns",
-      "basic_weight": "4.94"
+      "base_weight": "4.94"
     },
     {
       "id": "boneboo",
@@ -913,7 +913,7 @@
       "image": "Boneboo.png",
       "icon": "🦴",
       "description": "Bamboo-like plant made of bones",
-      "basic_weight": "14.5"
+      "base_weight": "14.5"
     },
     {
       "id": "firefly_fern",
@@ -928,7 +928,7 @@
       "image": "Firefly-Fern.png",
       "icon": "🌿",
       "description": "Glowing fern that attracts fireflies",
-      "basic_weight": "4.77"
+      "base_weight": "4.77"
     },
     {
       "id": "fossilight_fruit",
@@ -943,7 +943,7 @@
       "image": "Fossilight-Fruit.png",
       "icon": "🌟",
       "description": "Fossilized fruit that emits light",
-      "basic_weight": "4.00"
+      "base_weight": "4.00"
     },
     {
       "id": "wild_carrot",
@@ -958,7 +958,7 @@
       "image": "Wild-Carrot.png",
       "icon": "🥕",
       "description": "Untamed variant of carrot",
-      "basic_weight": "0.286"
+      "base_weight": "0.286"
     },
     {
       "id": "cantaloupe",
@@ -973,7 +973,7 @@
       "image": "Cantaloupe.png",
       "icon": "🍈",
       "description": "Sweet summer melon",
-      "basic_weight": "5.22"
+      "base_weight": "5.22"
     },
     {
       "id": "parasol_flower",
@@ -988,7 +988,7 @@
       "image": "Parasol-Flower.png",
       "icon": "☂️",
       "description": "Umbrella-shaped flower that provides shade",
-      "basic_weight": "5.7"
+      "base_weight": "5.7"
     },
     {
       "id": "rosy_delight",
@@ -1003,7 +1003,7 @@
       "image": "Rosy-Delight.png",
       "icon": "🌹",
       "description": "Delightful rose with sweet aroma",
-      "basic_weight": "9.5"
+      "base_weight": "9.5"
     },
     {
       "id": "elephant_ears",
@@ -1018,7 +1018,7 @@
       "image": "Elephant-Ears.png",
       "icon": "🐘",
       "description": "Plant with enormous ear-shaped leaves",
-      "basic_weight": "17.1"
+      "base_weight": "17.1"
     },
     {
       "id": "crocus",
@@ -1033,7 +1033,7 @@
       "image": "Crocus.png",
       "icon": "🌷",
       "description": "Early spring flower",
-      "basic_weight": "0.285"
+      "base_weight": "0.285"
     },
     {
       "id": "succulent",
@@ -1048,7 +1048,7 @@
       "image": "Succulent.png",
       "icon": "🌵",
       "description": "Water-storing desert plant",
-      "basic_weight": "4.75"
+      "base_weight": "4.75"
     },
     {
       "id": "violet_corn",
@@ -1063,7 +1063,7 @@
       "image": "Violet-Corn.png",
       "icon": "🌽",
       "description": "Purple variant of corn",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "bendboo",
@@ -1078,7 +1078,7 @@
       "image": "Bendboo.png",
       "icon": "🎋",
       "description": "Flexible bamboo that can bend into shapes",
-      "basic_weight": "17.09"
+      "base_weight": "17.09"
     },
     {
       "id": "cocovine",
@@ -1093,7 +1093,7 @@
       "image": "Cocovine.png",
       "icon": "🥥",
       "description": "Vine that grows coconut-like fruits",
-      "basic_weight": "13.3"
+      "base_weight": "13.3"
     },
     {
       "id": "dragon_pepper",
@@ -1108,7 +1108,7 @@
       "image": "Dragon-Pepper.png",
       "icon": "🔥",
       "description": "Extremely spicy pepper that breathes fire",
-      "basic_weight": "5.69"
+      "base_weight": "5.69"
     },
     {
       "id": "cranberry",
@@ -1123,7 +1123,7 @@
       "image": "Cranberry.png",
       "icon": "🔴",
       "description": "Tart red berry",
-      "basic_weight": "0.95"
+      "base_weight": "0.95"
     },
     {
       "id": "durian",
@@ -1138,7 +1138,7 @@
       "image": "Durian.png",
       "icon": "🍈",
       "description": "Spiky fruit with strong odor",
-      "basic_weight": "7.6"
+      "base_weight": "7.6"
     },
     {
       "id": "eggplant",
@@ -1153,7 +1153,7 @@
       "image": "Eggplant.png",
       "icon": "🍆",
       "description": "Purple vegetable with glossy skin",
-      "basic_weight": "4.75"
+      "base_weight": "4.75"
     },
     {
       "id": "venus_fly_trap",
@@ -1168,7 +1168,7 @@
       "image": "Venus-Fly-Trap.png",
       "icon": "🪰",
       "description": "Carnivorous plant that catches insects",
-      "basic_weight": "9.5"
+      "base_weight": "9.5"
     },
     {
       "id": "lotus",
@@ -1183,7 +1183,7 @@
       "image": "Lotus.png",
       "icon": "🪷",
       "description": "Sacred aquatic flower",
-      "basic_weight": "18.99"
+      "base_weight": "18.99"
     },
     {
       "id": "nightshade",
@@ -1198,7 +1198,7 @@
       "image": "Nightshade.png",
       "icon": "🌑",
       "description": "Mysterious plant that blooms at night",
-      "basic_weight": "0.48"
+      "base_weight": "0.48"
     },
     {
       "id": "glowshroom",
@@ -1213,7 +1213,7 @@
       "image": "Glowshroom.png",
       "icon": "🍄",
       "description": "Luminescent mushroom that glows in the dark",
-      "basic_weight": "0.7"
+      "base_weight": "0.7"
     },
     {
       "id": "mint",
@@ -1228,7 +1228,7 @@
       "image": "Mint.png",
       "icon": "🌿",
       "description": "Refreshing aromatic herb",
-      "basic_weight": "0.95"
+      "base_weight": "0.95"
     },
     {
       "id": "moonflower",
@@ -1243,7 +1243,7 @@
       "image": "Moonflower.png",
       "icon": "🌙",
       "description": "Flower that only blooms under moonlight",
-      "basic_weight": "1.9"
+      "base_weight": "1.9"
     },
     {
       "id": "starfruit",
@@ -1258,7 +1258,7 @@
       "image": "Starfruit.png",
       "icon": "⭐",
       "description": "Star-shaped fruit with cosmic energy",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "moonglow",
@@ -1273,7 +1273,7 @@
       "image": "Moonglow.png",
       "icon": "✨",
       "description": "Ethereal plant that radiates moonlight",
-      "basic_weight": "6.65"
+      "base_weight": "6.65"
     },
     {
       "id": "moon_blossom",
@@ -1288,7 +1288,7 @@
       "image": "Moon-Blossom.png",
       "icon": "🌕",
       "description": "Divine flower blessed by lunar energy",
-      "basic_weight": "2.85"
+      "base_weight": "2.85"
     },
     {
       "id": "blood_banana",
@@ -1303,7 +1303,7 @@
       "image": "Blood-Banana.png",
       "icon": "🍌",
       "description": "Crimson banana with mysterious properties",
-      "basic_weight": "1.42"
+      "base_weight": "1.42"
     },
     {
       "id": "moon_melon",
@@ -1318,7 +1318,7 @@
       "image": "Moon-Melon.png",
       "icon": "🍈",
       "description": "Melon infused with lunar energy",
-      "basic_weight": "7.6"
+      "base_weight": "7.6"
     },
     {
       "id": "lavender",
@@ -1333,7 +1333,7 @@
       "image": "Lavender.png",
       "icon": "💜",
       "description": "Fragrant purple flower loved by bees",
-      "basic_weight": "0.25"
+      "base_weight": "0.25"
     },
     {
       "id": "nectarshade",
@@ -1348,7 +1348,7 @@
       "image": "Nectarshade.png",
       "icon": "🌸",
       "description": "Shadowy flower that produces sweet nectar",
-      "basic_weight": "0.75"
+      "base_weight": "0.75"
     },
     {
       "id": "nectarine",
@@ -1363,7 +1363,7 @@
       "image": "Nectarine.png",
       "icon": "🍑",
       "description": "Sweet fruit that attracts bees",
-      "basic_weight": "2.807"
+      "base_weight": "2.807"
     },
     {
       "id": "hive_fruit",
@@ -1378,7 +1378,7 @@
       "image": "Hive-Fruit.png",
       "icon": "🍯",
       "description": "Honeycomb-shaped fruit filled with royal jelly",
-      "basic_weight": "7.59"
+      "base_weight": "7.59"
     },
     {
       "id": "manuka_flower",
@@ -1393,7 +1393,7 @@
       "image": "Manuka-Flower.png",
       "icon": "🌼",
       "description": "Flower used to produce special honey",
-      "basic_weight": "0.30"
+      "base_weight": "0.30"
     },
     {
       "id": "bee_balm",
@@ -1408,7 +1408,7 @@
       "image": "Bee-Balm.png",
       "icon": "🐝",
       "description": "Medicinal plant that attracts bees",
-      "basic_weight": "1.00"
+      "base_weight": "1.00"
     },
     {
       "id": "peace_lily",
@@ -1423,7 +1423,7 @@
       "image": "Peace-Lily.png",
       "icon": "☮️",
       "description": "Elegant white flower symbolizing peace",
-      "basic_weight": "0.60"
+      "base_weight": "0.60"
     },
     {
       "id": "dandelion",
@@ -1438,7 +1438,7 @@
       "image": "Dandelion.png",
       "icon": "🌼",
       "description": "Common weed with fluffy seed heads",
-      "basic_weight": "4.00"
+      "base_weight": "4.00"
     },
     {
       "id": "aloe_vera",
@@ -1453,7 +1453,7 @@
       "image": "Aloe-Vera.png",
       "icon": "🌵",
       "description": "Succulent plant with healing properties",
-      "basic_weight": "5.50"
+      "base_weight": "5.50"
     },
     {
       "id": "lumira",
@@ -1468,7 +1468,7 @@
       "image": "Lumira.png",
       "icon": "💫",
       "description": "Radiant flower that emits soft light",
-      "basic_weight": "6.60"
+      "base_weight": "6.60"
     },
     {
       "id": "guanabana",
@@ -1483,7 +1483,7 @@
       "image": "Guanabana.png",
       "icon": "🍈",
       "description": "Spiky green fruit with creamy flesh",
-      "basic_weight": "4.00"
+      "base_weight": "4.00"
     },
     {
       "id": "honeysuckle",
@@ -1498,7 +1498,7 @@
       "image": "Honeysuckle.png",
       "icon": "🍯",
       "description": "Sweet-scented climbing vine",
-      "basic_weight": "12.00"
+      "base_weight": "12.00"
     },
     {
       "id": "suncoil",
@@ -1513,7 +1513,7 @@
       "image": "Suncoil.png",
       "icon": "☀️",
       "description": "Spiral plant that follows the sun",
-      "basic_weight": "10.00"
+      "base_weight": "10.00"
     },
     {
       "id": "delphinium",
@@ -1528,7 +1528,7 @@
       "image": "Delphinium.png",
       "icon": "🌿",
       "description": "Tall flower with blue-purple blooms",
-      "basic_weight": "0.285"
+      "base_weight": "0.285"
     },
     {
       "id": "lily_of_the_valley",
@@ -1543,7 +1543,7 @@
       "image": "Lily-Of-The-Valley.png",
       "icon": "🌱",
       "description": "Delicate white bell-shaped flowers",
-      "basic_weight": "5.69"
+      "base_weight": "5.69"
     },
     {
       "id": "travelers_fruit",
@@ -1558,7 +1558,7 @@
       "image": "Travelers-Fruit.png",
       "icon": "🧳",
       "description": "Fruit that grants energy for long journeys",
-      "basic_weight": "15"
+      "base_weight": "15"
     },
     {
       "id": "liberty_lily",
@@ -1573,7 +1573,7 @@
       "image": "Liberty-Lily.png",
       "icon": "🗽",
       "description": "Patriotic red, white, and blue flower",
-      "basic_weight": "6.176"
+      "base_weight": "6.176"
     },
     {
       "id": "firework_flower",
@@ -1588,7 +1588,7 @@
       "image": "Firework-Flower.png",
       "icon": "🎆",
       "description": "Flower that bursts with colorful sparks",
-      "basic_weight": "19"
+      "base_weight": "19"
     }
   ]
 }

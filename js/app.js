@@ -404,11 +404,7 @@ class App {
         const tempContainer = document.getElementById('hero-temperature-mutations');
         if (tempContainer) {
             tempContainer.innerHTML = `
-                <div class="mutation-option-compact active" data-mutation="normal_temp">
-                    <span class="mutation-name">Normal</span>
-                    <span class="mutation-effect">+0×</span>
-                </div>
-                <div class="mutation-option-compact" data-mutation="wet">
+                <div class="mutation-option-compact active" data-mutation="wet">
                     <span class="mutation-name">Wet</span>
                     <span class="mutation-effect">+2×</span>
                 </div>
@@ -464,16 +460,9 @@ class App {
         console.log('🔍 Growth mutations data:', growthMutations);
         console.log('🔍 Growth mutations count:', growthMutations.length);
         
-        let html = `
-            <div class="mutation-option-compact active" data-mutation="normal">
-                <span class="mutation-name">Normal</span>
-                <span class="mutation-effect">×1</span>
-            </div>
-        `;
-        
+        let html = '';
         growthMutations.forEach(mutation => {
             const mutationId = mutation.id.toLowerCase();
-            console.log('🔍 Processing growth mutation:', mutation.name, 'multiplier:', mutation.sheckles_multiplier);
             html += `
                 <div class="mutation-option-compact" data-mutation="${mutationId}">
                     <span class="mutation-name">${mutation.name}</span>
@@ -482,9 +471,8 @@ class App {
             `;
         });
         
-        console.log('🔍 Generated growth HTML length:', html.length);
         container.innerHTML = html;
-        console.log(`🌟 Rendered ${growthMutations.length + 1} growth mutations`);
+        console.log(`🌟 Rendered ${growthMutations.length} growth mutations`);
         console.log('🔍 Container children after render:', container.children.length);
     }
 
@@ -497,13 +485,7 @@ class App {
         
         const tempMutations = mutationsData.byCategory['Temperature Mutations'] || [];
         
-        let html = `
-            <div class="mutation-option-compact active" data-mutation="normal_temp">
-                <span class="mutation-name">Normal</span>
-                <span class="mutation-effect">+0×</span>
-            </div>
-        `;
-        
+        let html = '';
         tempMutations.forEach(mutation => {
             const mutationId = mutation.id.toLowerCase();
             html += `
@@ -515,7 +497,7 @@ class App {
         });
         
         container.innerHTML = html;
-        console.log(`🌡️ Rendered ${tempMutations.length + 1} temperature mutations`);
+        console.log(`🌡️ Rendered ${tempMutations.length} temperature mutations`);
     }
 
     /**
@@ -1594,39 +1576,18 @@ class App {
 
         // Get crop data and auto-update weight parameter
         const crop = this.dataManager.getCropById(cropId);
-        if (crop && crop.basic_weight) {
+        // 兼容base_weight和baseWeight
+        const baseWeight = parseFloat(crop.base_weight || crop.baseWeight || 2.85);
+        if (crop) {
             const weightInput = document.getElementById('hero-weight');
             if (weightInput) {
-                // Convert basic_weight from string to number and set it
-                // Handle special cases like "-" or invalid values
-                let basicWeight;
-                if (crop.basic_weight === "-" || crop.basic_weight === "" || crop.basic_weight === null) {
-                    // Use default weight for crops without specified basic_weight
-                    basicWeight = 2.85;
-                    console.log(`🔧 Using default weight for ${crop.name}: ${basicWeight}kg (basic_weight was "${crop.basic_weight}")`);
-                } else {
-                    basicWeight = parseFloat(crop.basic_weight);
-                    if (isNaN(basicWeight)) {
-                        // Fallback to default if parsing fails
-                        basicWeight = 2.85;
-                        console.log(`🔧 Using fallback weight for ${crop.name}: ${basicWeight}kg (could not parse "${crop.basic_weight}")`);
-                    } else {
-                        console.log(`🔧 Auto-updated weight for ${crop.name}: ${basicWeight}kg`);
-                    }
-                }
-                weightInput.value = basicWeight;
+                weightInput.value = baseWeight;
             }
-        }
-
-        // Check if Max Mutation is enabled and apply combination if needed
-        const maxMutationToggle = document.getElementById('hero-max-mutation');
-        if (maxMutationToggle && maxMutationToggle.checked) {
-            this.applyMaxMutationCombination(crop);
         }
 
         // Update calculation
         this.updateHeroCalculation(cropId);
-        
+
         // Update SEO meta tags for the selected crop
         if (this.seoManager && crop) {
             this.seoManager.updateMetaTags(crop);
@@ -1664,25 +1625,26 @@ class App {
 
         // Get current mutations (will be ignored if maxMutation is true)
         const mutations = this.getHeroMutations();
-        
+
         // Get parameters from UI
         const weightInput = document.getElementById('hero-weight');
         const quantityInput = document.getElementById('hero-quantity');
         const friendBoostInput = document.getElementById('hero-friend-boost-input');
-        
+
+        // 强制类型转换
         const weight = weightInput ? parseFloat(weightInput.value) || null : null;
         const quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1;
         const friendBoost = friendBoostInput ? parseInt(friendBoostInput.value) || 0 : 0;
-        
-        // Use crop's base weight if available
-        const baseWeight = crop.base_weight || 2.85; // Default base weight from UI
-        
+
+        // 兼容base_weight和baseWeight
+        const baseWeight = parseFloat(crop.base_weight || crop.baseWeight || 2.85);
+
         // Calculate with Max Mutation support
         const result = this.calculator.calculateCropValue(crop, mutations, quantity, weight, baseWeight, friendBoost, maxMutation);
-        
+
         // Update display
         this.updateHeroResultDisplay(result);
-        
+
         // Update SEO meta tags with calculation result
         if (this.seoManager && crop) {
             this.seoManager.updateMetaTags(crop, result);
