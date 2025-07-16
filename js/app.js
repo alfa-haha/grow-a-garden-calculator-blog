@@ -1834,7 +1834,14 @@ class App {
         const cropName = document.getElementById('hero-result-crop-name');
         const cropRarity = document.getElementById('hero-result-crop-rarity');
         
-        if (cropIcon) cropIcon.textContent = crop.icon;
+        if (cropIcon) {
+            // 渲染真实图片或icon
+            if (crop.image) {
+                cropIcon.innerHTML = `<img src="images/crops/${crop.image}" alt="${crop.name}" class="crop-image-compact" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;"><span class="crop-icon-fallback" style="display: none;">${crop.icon}</span>`;
+            } else {
+                cropIcon.textContent = crop.icon;
+            }
+        }
         if (cropName) cropName.textContent = crop.name;
         if (cropRarity) cropRarity.textContent = crop.rarity || crop.tier;
 
@@ -1847,7 +1854,6 @@ class App {
         if (multiplier) {
             // Show the total multiplier from new calculation
             multiplier.textContent = `×${calc.totalMultiplier.toFixed(2)}`;
-            
             // Apply special styling for Max Mutation multiplier
             if (isMaxMutation) {
                 multiplier.classList.add('max-mutation-multiplier');
@@ -1856,6 +1862,26 @@ class App {
             }
         }
         if (finalValue) finalValue.textContent = this.formatNumber(calc.finalValue);
+
+        // 新增：显示weight
+        let weightRow = document.getElementById('hero-weight-row');
+        if (!weightRow) {
+            // multiplier下方插入weight行
+            const multiplierElem = document.getElementById('hero-multiplier');
+            if (multiplierElem && multiplierElem.parentElement) {
+                weightRow = document.createElement('div');
+                weightRow.className = 'calc-row-compact';
+                weightRow.id = 'hero-weight-row';
+                multiplierElem.parentElement.insertAdjacentElement('afterend', weightRow);
+            }
+        }
+        if (weightRow) {
+            // 优先显示result.weight，否则显示crop.basic_weight，否则2.85
+            let weightValue = result.weight || crop.basic_weight || 2.85;
+            if (typeof weightValue === 'string') weightValue = parseFloat(weightValue);
+            if (isNaN(weightValue)) weightValue = 2.85;
+            weightRow.innerHTML = `<span class="calc-label">Weight:</span><span class="calc-value">${weightValue} kg</span>`;
+        }
         
         // Update additional information if elements exist
         const growthMultiplier = document.getElementById('hero-growth-multiplier');
