@@ -1405,7 +1405,16 @@ class App {
         
         return `
             <div class="crop-item-compact ${rarityClass}" data-crop-id="${crop.id}" data-rarity="${rarity.toLowerCase()}">
-                <div class="crop-icon">${crop.icon}</div>
+                <div class="crop-icon">
+                    ${crop.image ? `
+                        <img src="images/crops/${crop.image}"
+                             alt="${crop.name}"
+                             class="crop-image-compact"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+                             style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;">
+                        <span class="crop-icon-fallback" style="display: none;">${crop.icon}</span>
+                    ` : `<span class="crop-icon-fallback">${crop.icon}</span>`}
+                </div>
                 <div class="crop-name">${crop.name}</div>
                 <div class="crop-price">${displayPrice}</div>
                 <div class="crop-rarity">${rarity}</div>
@@ -1484,11 +1493,33 @@ class App {
         const tier = crop.tier || crop.rarity || 'Common';
         const tierClass = tier.toLowerCase();
         
+        // 构建图片路径 - 使用Web相对路径
+        const basePath = 'images/crops/';
+        const imageName = crop.image || null;
+        const fallbackIcon = crop.icon || '🌱';
+        
+        // 创建图片HTML
+        let imageHTML;
+        if (imageName) {
+            const imagePath = basePath + imageName;
+            imageHTML = `
+                <img src="${imagePath}" 
+                     alt="${crop.name}" 
+                     class="crop-image-small"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+                     style="width: 32px; height: 32px; border-radius: 4px; object-fit: cover;">
+                <span class="crop-icon small" style="display: none;">${fallbackIcon}</span>
+            `;
+        } else {
+            // 如果没有图片文件名，直接使用icon
+            imageHTML = `<span class="crop-icon small">${fallbackIcon}</span>`;
+        }
+        
         return `
             <tr data-crop-id="${crop.id}" data-rarity="${tier}" data-category="${crop.category}" data-harvest="${multiHarvest}" onclick="app.showCropDetails('${crop.id}')" style="cursor: pointer;">
                 <td>
                     <div class="crop-cell">
-                        <span class="crop-icon small">${crop.icon}</span>
+                        ${imageHTML}
                         <span class="crop-name">${crop.name}</span>
                     </div>
                 </td>

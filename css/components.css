@@ -1604,6 +1604,24 @@ section.features .features-grid {
     gap: var(--spacing-sm);
 }
 
+/* 作物表格中的小图片样式 */
+.crop-image-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.crop-image-small:hover {
+    transform: scale(1.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .crop-icon.small {
     font-size: var(--text-lg);
     width: 24px;
