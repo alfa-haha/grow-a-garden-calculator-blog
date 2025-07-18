@@ -1082,6 +1082,11 @@ class App {
             // Apply sorting
             crops = this.sortCropsArray(crops, sortFilter);
             
+            // Reset pagination to first page when filters change
+            if (this.cropsPagination) {
+                this.cropsPagination.currentPage = 1;
+            }
+            
             // Re-render table with filtered crops
             this.renderCropsTable(crops);
             
@@ -1424,10 +1429,13 @@ class App {
                 return;
             }
             
+            // Initialize pagination state
+            this.initializeCropsPagination(crops);
+            
             // Setup filter options after data is loaded
             this.setupFilterOptions();
             
-            // Render crops in table view only
+            // Render crops in table view with pagination
             await this.renderCropsTable(crops);
             
             // Update statistics
@@ -1440,10 +1448,24 @@ class App {
         }
     }
 
+    /**
+     * Initialize crops pagination
+     */
+    initializeCropsPagination(crops) {
+        this.cropsPagination = {
+            currentPage: 1,
+            itemsPerPage: 30,
+            totalItems: crops.length,
+            totalPages: Math.ceil(crops.length / 30),
+            filteredCrops: crops
+        };
+        console.log(`📄 Initialized pagination: ${this.cropsPagination.totalPages} pages, ${this.cropsPagination.itemsPerPage} items per page`);
+    }
+
     // Grid and list view rendering removed - only table view supported
 
     /**
-     * Render crops in table view
+     * Render crops in table view with pagination
      */
     async renderCropsTable(crops) {
         const cropsTableBody = document.getElementById('crops-table-body');
@@ -1453,13 +1475,150 @@ class App {
         }
         
         try {
-            const tableRows = crops.map(crop => this.createCropsTableRow(crop));
+            // Update pagination state with current crops
+            if (this.cropsPagination) {
+                this.cropsPagination.filteredCrops = crops;
+                this.cropsPagination.totalItems = crops.length;
+                this.cropsPagination.totalPages = Math.ceil(crops.length / this.cropsPagination.itemsPerPage);
+                
+                // Reset to first page if current page is out of range
+                if (this.cropsPagination.currentPage > this.cropsPagination.totalPages) {
+                    this.cropsPagination.currentPage = 1;
+                }
+            }
+            
+            // Get crops for current page
+            const paginatedCrops = this.getPaginatedCrops(crops);
+            
+            // Render table rows
+            const tableRows = paginatedCrops.map(crop => this.createCropsTableRow(crop));
             cropsTableBody.innerHTML = tableRows.join('');
             
-            console.log(`✅ Rendered ${crops.length} crops in table view`);
+            // Update pagination controls
+            this.updateCropsPagination();
+            
+            console.log(`✅ Rendered ${paginatedCrops.length} crops (page ${this.cropsPagination?.currentPage || 1} of ${this.cropsPagination?.totalPages || 1})`);
         } catch (error) {
             console.error('❌ Failed to render crops table:', error);
         }
+    }
+
+    /**
+     * Get crops for current page
+     */
+    getPaginatedCrops(crops) {
+        if (!this.cropsPagination) {
+            return crops;
+        }
+        
+        const startIndex = (this.cropsPagination.currentPage - 1) * this.cropsPagination.itemsPerPage;
+        const endIndex = startIndex + this.cropsPagination.itemsPerPage;
+        
+        return crops.slice(startIndex, endIndex);
+    }
+
+    /**
+     * Update pagination controls
+     */
+    updateCropsPagination() {
+        const paginationElement = document.getElementById('pagination');
+        if (!paginationElement || !this.cropsPagination) {
+            return;
+        }
+        
+        const { currentPage, totalPages, totalItems, itemsPerPage } = this.cropsPagination;
+        
+        // Hide pagination if only one page
+        if (totalPages <= 1) {
+            paginationElement.style.display = 'none';
+            return;
+        }
+        
+        paginationElement.style.display = 'flex';
+        
+        let paginationHTML = '';
+        
+        // Previous button
+        paginationHTML += `
+            <button class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="app.goToCropsPage(${currentPage - 1})">
+                ← Previous
+            </button>
+        `;
+        
+        // Page numbers
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, currentPage + 2);
+        
+        // First page
+        if (startPage > 1) {
+            paginationHTML += `<button class="pagination-btn" onclick="app.goToCropsPage(1)">1</button>`;
+            if (startPage > 2) {
+                paginationHTML += `<span class="pagination-ellipsis">...</span>`;
+            }
+        }
+        
+        // Page range
+        for (let i = startPage; i <= endPage; i++) {
+            paginationHTML += `
+                <button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="app.goToCropsPage(${i})">
+                    ${i}
+                </button>
+            `;
+        }
+        
+        // Last page
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                paginationHTML += `<span class="pagination-ellipsis">...</span>`;
+            }
+            paginationHTML += `<button class="pagination-btn" onclick="app.goToCropsPage(${totalPages})">${totalPages}</button>`;
+        }
+        
+        // Next button
+        paginationHTML += `
+            <button class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="app.goToCropsPage(${currentPage + 1})">
+                Next →
+            </button>
+        `;
+        
+        // Page info
+        const startItem = (currentPage - 1) * itemsPerPage + 1;
+        const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+        paginationHTML += `
+            <div class="pagination-info">
+                Showing ${startItem}-${endItem} of ${totalItems} crops
+            </div>
+        `;
+        
+        paginationElement.innerHTML = paginationHTML;
+    }
+
+    /**
+     * Go to specific crops page
+     */
+    goToCropsPage(pageNumber) {
+        if (!this.cropsPagination) return;
+        
+        const { totalPages } = this.cropsPagination;
+        
+        // Validate page number
+        if (pageNumber < 1 || pageNumber > totalPages) {
+            return;
+        }
+        
+        // Update current page
+        this.cropsPagination.currentPage = pageNumber;
+        
+        // Re-render table with current filtered crops
+        this.renderCropsTable(this.cropsPagination.filteredCrops);
+        
+        // Scroll to top of table
+        const cropsContainer = document.querySelector('.crops-container');
+        if (cropsContainer) {
+            cropsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        console.log(`📄 Navigated to crops page ${pageNumber}`);
     }
 
     // Crop card and list element creation removed - only table view supported

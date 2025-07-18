@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crops Pagination Test</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/crops-sticky.css">
+</head>
+<body>
+    <div class="container" style="padding: 20px;">
+        <h1>Crops Table Pagination Test</h1>
+        <p>测试分页功能：每页显示30行作物信息，总计106个作物应该分为4页。</p>
+        
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label class="filter-label">Search:</label>
+                    <input type="text" id="crops-search" placeholder="Search crops..." class="search-input">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Category:</label>
+                    <select id="category-filter" class="filter-select">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Sort:</label>
+                    <select id="sort-filter" class="filter-select">
+                        <option value="name">By Name</option>
+                        <option value="sellValue">By Value</option>
+                        <option value="rarity">By Rarity</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Statistics -->
+            <div class="filter-stats">
+                <span id="filter-results">Showing 0 results</span>
+                <span class="filter-divider">|</span>
+                <span id="total-crops">Total 0 crops</span>
+            </div>
+        </div>
+        
+        <!-- Crop Display Area -->
+        <div class="crops-container">
+            <!-- Table View -->
+            <div class="crops-table" id="crops-table">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Tier</th>
+                            <th>Sheckle Price</th>
+                            <th>Robux Price</th>
+                            <th>Minimum Value</th>
+                            <th>Multi-Harvest</th>
+                            <th>Obtainable</th>
+                        </tr>
+                    </thead>
+                    <tbody id="crops-table-body">
+                        <!-- Table rows will be generated dynamically via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <span class="empty-icon">🔍</span>
+                <h3>No matching crops found</h3>
+                <p>Try adjusting your filter criteria or search terms</p>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <!-- Pagination controls will be generated dynamically via JavaScript -->
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <p><strong>测试说明：</strong></p>
+            <ul>
+                <li>应该显示分页控件（如果数据超过30条）</li>
+                <li>第一页显示前30个作物</li>
+                <li>点击页码可以切换页面</li>
+                <li>分页信息显示当前页面范围</li>
+                <li>筛选后分页应该重置到第一页</li>
+                <li>第一列Name应该保持sticky固定</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/utils.js"></script>
+    <script src="js/data-manager.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script>
+        // 初始化应用并测试分页功能
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                console.log('🧪 Starting pagination test...');
+                
+                // 创建应用实例
+                window.app = new App();
+                
+                // 初始化应用
+                await window.app.init();
+                
+                // 渲染crops页面
+                await window.app.renderCropsPage();
+                
+                // 设置页面交互
+                window.app.setupCropsPageInteractions();
+                
+                console.log('✅ Pagination test initialized successfully');
+                
+                // 显示分页状态信息
+                setTimeout(() => {
+                    if (window.app.cropsPagination) {
+                        const { currentPage, totalPages, totalItems, itemsPerPage } = window.app.cropsPagination;
+                        console.log(`📄 Pagination Status:
+                            - Current Page: ${currentPage}
+                            - Total Pages: ${totalPages}
+                            - Total Items: ${totalItems}
+                            - Items Per Page: ${itemsPerPage}`);
+                    }
+                }, 1000);
+                
+            } catch (error) {
+                console.error('❌ Failed to initialize pagination test:', error);
+            }
+        });
+    </script>
+</body>
+</html>

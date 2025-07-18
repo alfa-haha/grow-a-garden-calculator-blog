@@ -1567,9 +1567,11 @@ section.features .features-grid {
 
 /* ===== 表格样式增强 ===== */
 .crops-table {
-    display: block;
     width: 100%;
     overflow-x: auto;
+    position: relative;
+    /* 确保sticky功能正常工作 */
+    contain: layout style paint;
 }
 
 .data-table {
@@ -1578,7 +1580,6 @@ section.features .features-grid {
     border-spacing: 0;
     background-color: var(--bg-card);
     border-radius: var(--radius);
-    overflow: hidden;
     box-shadow: var(--shadow);
     margin: 0;
 }
@@ -1668,6 +1669,155 @@ section.features .features-grid {
 .data-table tbody tr:hover {
     background-color: var(--bg-secondary);
     transform: scale(1.01);
+}
+
+/* Crops表格样式 */
+.crops-table .data-table {
+    table-layout: fixed;
+    width: 100%;
+    min-width: 1000px; /* 确保触发水平滚动 */
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+/* Sticky列样式 - Name列 (第一列) */
+.crops-table .data-table th:nth-child(1),
+.crops-table .data-table td:nth-child(1) {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    left: 0px !important;
+    background-color: var(--bg-card) !important;
+    z-index: 20 !important;
+    border-right: 2px solid var(--border-color) !important;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1) !important;
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+}
+
+/* Dark mode for Name column */
+[data-theme="dark"] .crops-table .data-table th:nth-child(1),
+[data-theme="dark"] .crops-table .data-table td:nth-child(1) {
+    background-color: #1f2937 !important;
+    border-right-color: #374151 !important;
+}
+
+/* 其他列的宽度设置 */
+.crops-table .data-table th:nth-child(2),
+.crops-table .data-table td:nth-child(2) {
+    width: 150px; /* Category列 */
+    text-align: center;
+}
+
+.crops-table .data-table th:nth-child(3),
+.crops-table .data-table td:nth-child(3) {
+    width: 120px; /* Tier列 */
+    text-align: center;
+}
+
+.crops-table .data-table th:nth-child(4),
+.crops-table .data-table td:nth-child(4) {
+    width: 150px; /* Sheckle Price列 */
+    text-align: center;
+}
+
+.crops-table .data-table th:nth-child(5),
+.crops-table .data-table td:nth-child(5) {
+    width: 150px; /* Robux Price列 */
+    text-align: center;
+}
+
+.crops-table .data-table th:nth-child(6),
+.crops-table .data-table td:nth-child(6) {
+    width: 150px; /* Minimum Value列 */
+    text-align: center;
+}
+
+.crops-table .data-table th:nth-child(7),
+.crops-table .data-table td:nth-child(7) {
+    width: 150px; /* Multi-Harvest列 */
+    text-align: center;
+}
+
+.crops-table .data-table th:nth-child(8),
+.crops-table .data-table td:nth-child(8) {
+    width: 120px; /* Obtainable列 */
+    text-align: center;
+}
+
+/* Sticky列在hover时的特殊处理 */
+.crops-table .data-table tr:hover th:nth-child(1),
+.crops-table .data-table tr:hover td:nth-child(1) {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* 表头的特殊样式 */
+.crops-table .data-table thead th:nth-child(1) {
+    background-color: var(--bg-secondary) !important;
+    font-weight: 700;
+    z-index: 21 !important;
+}
+
+/* 增强阴影效果 */
+.crops-table .data-table th:nth-child(1)::after,
+.crops-table .data-table td:nth-child(1)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -2px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.1), transparent);
+    pointer-events: none;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .crops-table .data-table {
+        min-width: 600px;
+    }
+    
+    .crops-table .data-table th:nth-child(1),
+    .crops-table .data-table td:nth-child(1) {
+        width: 150px;
+        min-width: 150px;
+        max-width: 150px;
+    }
+    
+    .crops-table .data-table th:nth-child(2),
+    .crops-table .data-table td:nth-child(2) {
+        width: 100px;
+    }
+    
+    .crops-table .data-table th:nth-child(3),
+    .crops-table .data-table td:nth-child(3) {
+        width: 80px;
+    }
+    
+    .crops-table .data-table th:nth-child(4),
+    .crops-table .data-table td:nth-child(4) {
+        width: 100px;
+    }
+    
+    .crops-table .data-table th:nth-child(5),
+    .crops-table .data-table td:nth-child(5) {
+        width: 100px;
+    }
+    
+    .crops-table .data-table th:nth-child(6),
+    .crops-table .data-table td:nth-child(6) {
+        width: 100px;
+    }
+    
+    .crops-table .data-table th:nth-child(7),
+    .crops-table .data-table td:nth-child(7) {
+        width: 100px;
+    }
+    
+    .crops-table .data-table th:nth-child(8),
+    .crops-table .data-table td:nth-child(8) {
+        width: 80px;
+    }
 }
 
 /* 响应式表格 */
@@ -2117,6 +2267,22 @@ section.features .features-grid {
 .pagination-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.pagination-ellipsis {
+    padding: var(--spacing-sm);
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+}
+
+.pagination-info {
+    padding: var(--spacing-sm) var(--spacing);
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius);
+    margin-left: var(--spacing);
+    white-space: nowrap;
 }
 
 /* ===== 加载状态 ===== */

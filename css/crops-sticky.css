@@ -1,0 +1,136 @@
+/* 专门为crops表格设计的sticky样式 */
+
+/* 重置所有可能影响sticky的样式 */
+.crops-table {
+    width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    position: relative !important;
+    display: block !important;
+    /* 确保滚动容器正确 */
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* 确保表格本身的样式正确 */
+.crops-table .data-table {
+    width: 100% !important;
+    min-width: 1200px !important; /* 强制触发水平滚动 */
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    table-layout: fixed !important;
+    position: relative !important;
+    background-color: var(--bg-card) !important;
+}
+
+/* 强制第一列sticky - 使用最高优先级 */
+.crops-table .data-table th:first-child,
+.crops-table .data-table td:first-child {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 100 !important;
+    background-color: var(--bg-card) !important;
+    border-right: 2px solid var(--border-color) !important;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1) !important;
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+}
+
+/* 深色模式支持 */
+[data-theme="dark"] .crops-table .data-table th:first-child,
+[data-theme="dark"] .crops-table .data-table td:first-child {
+    background-color: #1e293b !important;
+    border-right-color: var(--primary-color) !important;
+}
+
+/* 表头特殊处理 */
+.crops-table .data-table thead th:first-child {
+    z-index: 101 !important;
+    background-color: var(--bg-secondary) !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+}
+
+/* 其他列的基本样式 */
+.crops-table .data-table th:not(:first-child),
+.crops-table .data-table td:not(:first-child) {
+    width: 150px !important;
+    text-align: center !important;
+    padding: var(--spacing-sm) var(--spacing-xs) !important;
+}
+
+/* hover效果 */
+.crops-table .data-table tr:hover th:first-child,
+.crops-table .data-table tr:hover td:first-child {
+    background-color: #bfdbfe !important;
+}
+
+[data-theme="dark"] .crops-table .data-table tr:hover th:first-child,
+[data-theme="dark"] .crops-table .data-table tr:hover td:first-child {
+    background-color: #334155 !important;
+}
+
+/* 移动端优化 - 分层次调整宽度 */
+@media (max-width: 768px) {
+    .crops-table .data-table {
+        min-width: 800px !important;
+    }
+    
+    .crops-table .data-table th:first-child,
+    .crops-table .data-table td:first-child {
+        width: 120px !important;
+        min-width: 120px !important;
+        max-width: 120px !important;
+    }
+    
+    .crops-table .data-table th:not(:first-child),
+    .crops-table .data-table td:not(:first-child) {
+        width: 100px !important;
+    }
+}
+
+/* 小屏幕手机优化 */
+@media (max-width: 480px) {
+    .crops-table .data-table {
+        min-width: 700px !important;
+    }
+    
+    .crops-table .data-table th:first-child,
+    .crops-table .data-table td:first-child {
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+        padding: var(--spacing-xs) !important;
+    }
+    
+    .crops-table .data-table th:not(:first-child),
+    .crops-table .data-table td:not(:first-child) {
+        width: 90px !important;
+        padding: var(--spacing-xs) var(--spacing-xs) !important;
+    }
+}
+
+/* 超小屏幕手机优化 */
+@media (max-width: 375px) {
+    .crops-table .data-table th:first-child,
+    .crops-table .data-table td:first-child {
+        width: 90px !important;
+        min-width: 90px !important;
+        max-width: 90px !important;
+        font-size: 0.9em !important;
+    }
+}
+
+/* 增强阴影效果 */
+.crops-table .data-table th:first-child::after,
+.crops-table .data-table td:first-child::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -2px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.1), transparent);
+    pointer-events: none;
+}
