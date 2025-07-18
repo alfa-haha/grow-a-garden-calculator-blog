@@ -604,5 +604,31 @@
     <script src="js/utils.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/generator.js"></script>
+    
+    <!-- 修复移动端菜单按钮 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 修复：添加移动端菜单按钮事件处理
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            if (menuToggle && navMenu) {
+                // Toggle menu on button click
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 防止事件冒泡
+                    navMenu.classList.toggle('active');
+                    console.log('🔧 Menu toggle clicked, active:', navMenu.classList.contains('active'));
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && e.target !== menuToggle) {
+                        navMenu.classList.remove('active');
+                    }
+                });
+                
+                console.log('🔧 Mobile menu event handlers initialized');
+            }
+        });
+    </script>
 </body>
 </html> 
