@@ -691,7 +691,7 @@ class MutationsManager {
             {
                 id: 'normal',
                 name: 'Normal',
-                category: 'Growth Mutations',
+                category: 'Growth',
                 multiplier: 1,
                 effect: '×1',
                 description: 'Normal crop, no additional bonus',
@@ -704,7 +704,7 @@ class MutationsManager {
             {
                 id: 'golden',
                 name: 'Golden',
-                category: 'Growth Mutations',
+                category: 'Growth',
                 multiplier: 20,
                 effect: '×20',
                 description: 'Golden mutation, value x20',
@@ -717,7 +717,7 @@ class MutationsManager {
             {
                 id: 'rainbow',
                 name: 'Rainbow',
-                category: 'Growth Mutations',
+                category: 'Growth',
                 multiplier: 50,
                 effect: '×50',
                 description: 'Rainbow mutation, value x50',

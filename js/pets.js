@@ -461,9 +461,11 @@ class PetsManager {
         
         const row = document.createElement('tr');
         
-        // Image cell
-        const imageCell = document.createElement('td');
-        imageCell.className = 'pet-cell';
+        // Name cell with image and name combined
+        const nameCell = document.createElement('td');
+        nameCell.className = 'pet-name-cell';
+        
+        // Image container
         const imageContainer = document.createElement('div');
         imageContainer.className = 'pet-image-container';
         const image = document.createElement('img');
@@ -500,12 +502,14 @@ class PetsManager {
         };
         
         imageContainer.appendChild(image);
-        imageCell.appendChild(imageContainer);
-        row.appendChild(imageCell);
+        nameCell.appendChild(imageContainer);
         
-        // Name cell
-        const nameCell = document.createElement('td');
-        nameCell.textContent = pet.name || 'Unknown';
+        // Name text
+        const nameText = document.createElement('div');
+        nameText.className = 'pet-name-text';
+        nameText.textContent = pet.name || 'Unknown';
+        nameCell.appendChild(nameText);
+        
         row.appendChild(nameCell);
         
         // Tier cell - 使用正确的属性名

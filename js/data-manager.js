@@ -396,7 +396,7 @@ class DataManager {
      * @returns {Object} Growth mutation object in old format
      */
     getGrowthMutations() {
-        const growthMutations = this.getMutationsByCategory('Growth Mutations');
+        const growthMutations = this.getMutationsByCategory('Growth');
         const types = {};
         
         growthMutations.forEach(mutation => {
@@ -423,8 +423,8 @@ class DataManager {
      * @returns {Object} Environmental mutation object in old format
      */
     getEnvironmentalMutations() {
-        const envMutations = this.getMutationsByCategory('Environmental Mutations');
-        const tempMutations = this.getMutationsByCategory('Temperature Mutations');
+        const envMutations = this.getMutationsByCategory('Environmental');
+        const tempMutations = this.getMutationsByCategory('Temperature');
         const allEnvMutations = [...envMutations, ...tempMutations];
         
         const types = {};
@@ -707,7 +707,7 @@ class DataManager {
     getDefaultMutations() {
         return {
             growth: {
-                category: 'Growth Mutations',
+                category: 'Growth',
                 description: 'Basic growth mutations, mutually exclusive',
                 color: '#FBBF24',
                 types: {
@@ -738,7 +738,7 @@ class DataManager {
                 }
             },
             environmental: {
-                category: 'Environmental Mutations',
+                category: 'Environmental',
                 description: 'Environmental mutations, can stack',
                 color: '#06B6D4',
                 types: {

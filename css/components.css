@@ -2829,10 +2829,51 @@ section.features .features-grid {
     vertical-align: middle;
 }
 
+/* 合并后的name单元格样式 */
+.pet-name-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    padding: var(--spacing-sm);
+    gap: var(--spacing-xs);
+}
+
+.pet-image-container {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-xs);
+}
+
+.pet-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.pet-name-text {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    line-height: 1.2;
+    word-break: break-word;
+    max-width: 100%;
+}
+
 .trait-cell {
     vertical-align: top;
     padding-top: var(--spacing-sm);
     padding-bottom: var(--spacing-sm);
+    font-size: 12px; /* 将字体大小从14px改为12px */
+    line-height: 1.4;
 }
 
 .hatch-chance-cell {

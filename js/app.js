@@ -326,9 +326,9 @@ class App {
             
             // 检查具体的category数据
             console.log('🔍 Available categories:', Object.keys(mutationsData.byCategory));
-            console.log('🔍 Growth Mutations:', mutationsData.byCategory['Growth Mutations']);
-            console.log('🔍 Temperature Mutations:', mutationsData.byCategory['Temperature Mutations']);
-            console.log('🔍 Environmental Mutations:', mutationsData.byCategory['Environmental Mutations']);
+            console.log('🔍 Growth Mutations:', mutationsData.byCategory['Growth']);
+            console.log('🔍 Temperature Mutations:', mutationsData.byCategory['Temperature']);
+            console.log('🔍 Environmental Mutations:', mutationsData.byCategory['Environmental']);
             
             // 渲染Growth Mutations
             this.renderHeroGrowthMutations(mutationsData);
@@ -456,7 +456,7 @@ class App {
             return;
         }
         
-        const growthMutations = mutationsData.byCategory['Growth Mutations'] || [];
+        const growthMutations = mutationsData.byCategory['Growth'] || [];
         console.log('🔍 Growth mutations data:', growthMutations);
         console.log('🔍 Growth mutations count:', growthMutations.length);
         
@@ -483,7 +483,7 @@ class App {
         const container = document.getElementById('hero-temperature-mutations');
         if (!container) return;
         
-        const tempMutations = mutationsData.byCategory['Temperature Mutations'] || [];
+        const tempMutations = mutationsData.byCategory['Temperature'] || [];
         
         let html = '';
         tempMutations.forEach(mutation => {
@@ -507,7 +507,7 @@ class App {
         const container = document.getElementById('hero-environmental-mutations');
         if (!container) return;
         
-        const envMutations = mutationsData.byCategory['Environmental Mutations'] || [];
+        const envMutations = mutationsData.byCategory['Environmental'] || [];
         
         let html = '';
         envMutations.forEach(mutation => {

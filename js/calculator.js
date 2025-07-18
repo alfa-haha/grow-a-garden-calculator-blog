@@ -352,9 +352,9 @@ class GardenCalculator {
      */
     getMutationIcon(category) {
         const iconMap = {
-            'Growth Mutations': '🌟',
-            'Environmental Mutations': '🌍',
-            'Temperature Mutations': '🌡️'
+            'Growth': '🌟',
+            'Environmental': '🌍',
+            'Temperature': '🌡️'
         };
         return iconMap[category] || '💫';
     }
@@ -366,9 +366,9 @@ class GardenCalculator {
      */
     getMutationColor(category) {
         const colorMap = {
-            'Growth Mutations': '#F59E0B',
-            'Environmental Mutations': '#10B981',
-            'Temperature Mutations': '#06B6D4'
+            'Growth': '#F59E0B',
+            'Environmental': '#10B981',
+            'Temperature': '#06B6D4'
         };
         return colorMap[category] || '#8B5CF6';
     }
@@ -390,7 +390,7 @@ class GardenCalculator {
         // Rule 1: Only one growth mutation (Golden or Rainbow)
         if (validatedMutations.growth) {
             const growthMutation = dataManager.getMutationById(validatedMutations.growth);
-            if (!growthMutation || growthMutation.category !== 'Growth Mutations') {
+            if (!growthMutation || growthMutation.category !== 'Growth') {
                 warnings.push(`Invalid growth mutation: ${validatedMutations.growth}`);
                 validatedMutations.growth = 'normal';
             }

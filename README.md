@@ -4,7 +4,37 @@ Professional Grow A Garden calculator tool for Roblox, providing precise crop va
 
 ## 🚀 最新更新 (2025年1月)
 
-### 🔧 Google Search Console 结构化数据问题修复 (最新)
+### 🐛 **首页Calculator模块Mutations选项不显示问题修复** (最新紧急修复)
+
+**问题描述**: 前端测试发现首页calculator模块中的GAG Mutations选项全部不显示，导致用户无法选择mutations。
+
+**根本原因**: 数据格式不匹配问题
+- **数据文件中的category字段**: "Growth", "Temperature", "Environmental"  
+- **代码中查找的category字段**: "Growth Mutations", "Temperature Mutations", "Environmental Mutations"
+
+**修复内容**:
+1. ✅ **修复app.js中的renderHeroMutations方法**: 更新category查找逻辑
+2. ✅ **修复data-manager.js中的getGrowthMutations方法**: 使用正确的category名称
+3. ✅ **修复data-manager.js中的getEnvironmentalMutations方法**: 使用正确的category名称  
+4. ✅ **修复calculator.js中的分类映射**: 更新getMutationIcon和getMutationColor方法
+5. ✅ **修复默认数据中的分类名称**: 确保fallback数据使用正确的category
+6. ✅ **修复mutations.js中的默认数据**: 更新getDefaultMutations方法
+
+**技术细节**:
+```javascript
+// 修复前 (错误)
+const growthMutations = mutationsData.byCategory['Growth Mutations'] || [];
+
+// 修复后 (正确)  
+const growthMutations = mutationsData.byCategory['Growth'] || [];
+```
+
+**测试验证**:
+- ✅ 创建了test_mutations_fix.html测试页面
+- ✅ 验证了数据加载和分类查找功能
+- ✅ 确认了backward compatibility方法正常工作
+
+### 🔧 Google Search Console 结构化数据问题修复
 - ✅ **修复严重问题**: 添加Product Schema的"image"字段
 - ✅ **修复非严重问题**: 添加"shippingDetails"字段到offers
 - ✅ **修复非严重问题**: 添加"hasMerchantReturnPolicy"字段到offers
