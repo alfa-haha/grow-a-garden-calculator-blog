@@ -3,7 +3,7 @@
     {
       "id": "Ripe",
       "name": "Ripe",
-      "category": "Growth Mutations",
+      "category": "Growth",
       "sheckles_multiplier": 1,
       "stack_bonus": false,
       "appearance": "Placeholder.png",
@@ -13,7 +13,7 @@
     {
       "id": "Gold",
       "name": "Gold",
-      "category": "Growth Mutations",
+      "category": "Growth",
       "sheckles_multiplier": 20,
       "stack_bonus": false,
       "appearance": "GoldenMutation.png",
@@ -23,7 +23,7 @@
     {
       "id": "Rainbow",
       "name": "Rainbow",
-      "category": "Growth Mutations",
+      "category": "Growth",
       "sheckles_multiplier": 50,
       "stack_bonus": false,
       "appearance": "Tomato_Rainbow.png",
@@ -33,7 +33,7 @@
     {
       "id": "Wet",
       "name": "Wet",
-      "category": "Temperature Mutations",
+      "category": "Temperature",
       "sheckles_multiplier": 2,
       "stack_bonus": true,
       "appearance": "WetMutation.png",
@@ -43,7 +43,7 @@
     {
       "id": "Windstruck",
       "name": "Windstruck",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 2,
       "stack_bonus": true,
       "appearance": "WindstruckDr.png",
@@ -53,7 +53,7 @@
     {
       "id": "Moonlit",
       "name": "Moonlit",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 2,
       "stack_bonus": true,
       "appearance": "Strawberry_Moonlit.png",
@@ -63,7 +63,7 @@
     {
       "id": "Clay",
       "name": "Clay",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 3,
       "stack_bonus": true,
       "appearance": "Rosy_Delight_Clay_Mutation.png",
@@ -73,7 +73,7 @@
     {
       "id": "Chilled",
       "name": "Chilled",
-      "category": "Temperature Mutations",
+      "category": "Temperature",
       "sheckles_multiplier": 2,
       "stack_bonus": true,
       "appearance": "(Chilled).png",
@@ -83,7 +83,7 @@
     {
       "id": "Choc",
       "name": "Choc",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 2,
       "stack_bonus": true,
       "appearance": "Strawberry_Choc.png",
@@ -93,7 +93,7 @@
     {
       "id": "Sandy",
       "name": "Sandy",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 3,
       "stack_bonus": true,
       "appearance": "Sandy_Tomato.png",
@@ -103,7 +103,7 @@
     {
       "id": "Bloodlit",
       "name": "Bloodlit",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 4,
       "stack_bonus": true,
       "appearance": "Bloodlitdragonfruit_png.png",
@@ -113,7 +113,7 @@
     {
       "id": "Twisted",
       "name": "Twisted",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 5,
       "stack_bonus": true,
       "appearance": "Twistedcocovineba.png",
@@ -123,7 +123,7 @@
     {
       "id": "Drenched",
       "name": "Drenched",
-      "category": "Temperature Mutations",
+      "category": "Temperature",
       "sheckles_multiplier": 5,
       "stack_bonus": true,
       "appearance": "Drenched_Tomato.png",
@@ -133,7 +133,7 @@
     {
       "id": "Cloudtouched",
       "name": "Cloudtouched",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 5,
       "stack_bonus": true,
       "appearance": "CloudtouchedPricklyPear.png",
@@ -143,7 +143,7 @@
     {
       "id": "Frozen",
       "name": "Frozen",
-      "category": "Temperature Mutations",
+      "category": "Temperature",
       "sheckles_multiplier": 10,
       "stack_bonus": true,
       "appearance": "Mango_Frozen.png",
@@ -153,7 +153,7 @@
     {
       "id": "Aurora",
       "name": "Aurora",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 90,
       "stack_bonus": true,
       "appearance": "Aurora_gif.png",
@@ -163,7 +163,7 @@
     {
       "id": "Shocked",
       "name": "Shocked",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 100,
       "stack_bonus": true,
       "appearance": "ShockedMutation.png",
@@ -173,7 +173,7 @@
     {
       "id": "Celestial",
       "name": "Celestial",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 120,
       "stack_bonus": true,
       "appearance": "Strawberry_Celestial.png",
@@ -183,7 +183,7 @@
     {
       "id": "Pollinated",
       "name": "Pollinated",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 3,
       "stack_bonus": true,
       "appearance": "Pollinated_Banana.png",
@@ -193,7 +193,7 @@
     {
       "id": "Burnt",
       "name": "Burnt",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 4,
       "stack_bonus": true,
       "appearance": "Obraz_2025-06-07_173233267.png",
@@ -203,7 +203,7 @@
     {
       "id": "Verdant",
       "name": "Verdant",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 4,
       "stack_bonus": true,
       "appearance": "Pineapple_verdant.png",
@@ -213,7 +213,7 @@
     {
       "id": "Wiltproof",
       "name": "Wiltproof",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 4,
       "stack_bonus": true,
       "appearance": "Placeholder.png",
@@ -223,7 +223,7 @@
     {
       "id": "Plasma",
       "name": "Plasma",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 5,
       "stack_bonus": true,
       "appearance": "Plasma_tomato.png",
@@ -233,7 +233,7 @@
     {
       "id": "HoneyGlazed",
       "name": "HoneyGlazed",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 5,
       "stack_bonus": true,
       "appearance": "Honeyglazed_template_fr2.png",
@@ -243,7 +243,7 @@
     {
       "id": "Heavenly",
       "name": "Heavenly",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 5,
       "stack_bonus": true,
       "appearance": "Heavenly.png",
@@ -253,7 +253,7 @@
     {
       "id": "Fried",
       "name": "Fried",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 8,
       "stack_bonus": true,
       "appearance": "Fried_tomato2.png",
@@ -263,7 +263,7 @@
     {
       "id": "Amber",
       "name": "Amber",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 10,
       "stack_bonus": true,
       "appearance": "Amber.png",
@@ -273,7 +273,7 @@
     {
       "id": "Cooked",
       "name": "Cooked",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 10,
       "stack_bonus": true,
       "appearance": "Ember_Lily_Cooked.PNG.png",
@@ -283,7 +283,7 @@
     {
       "id": "OldAmber",
       "name": "OldAmber",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 20,
       "stack_bonus": true,
       "appearance": "OldAmberSunflower.png",
@@ -293,7 +293,7 @@
     {
       "id": "Zombified",
       "name": "Zombified",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 25,
       "stack_bonus": true,
       "appearance": "Cactus_Zombified.png",
@@ -303,7 +303,7 @@
     {
       "id": "Molten",
       "name": "Molten",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 25,
       "stack_bonus": true,
       "appearance": "Nectarine_Molten.png",
@@ -313,7 +313,7 @@
     {
       "id": "Ceramic",
       "name": "Ceramic",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 30,
       "stack_bonus": true,
       "appearance": "Mango_Ceramic.png",
@@ -323,7 +323,7 @@
     {
       "id": "AncientAmber",
       "name": "AncientAmber",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 50,
       "stack_bonus": true,
       "appearance": "Placeholder.png",
@@ -333,7 +333,7 @@
     {
       "id": "Sundried",
       "name": "Sundried",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 85,
       "stack_bonus": true,
       "appearance": "Sundriedbeans.png",
@@ -343,7 +343,7 @@
     {
       "id": "Paradisal",
       "name": "Paradisal",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 100,
       "stack_bonus": true,
       "appearance": "Moon_Mango_Paradisal.png",
@@ -353,7 +353,7 @@
     {
       "id": "Alien",
       "name": "Alienlike",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 100,
       "stack_bonus": true,
       "appearance": "Alienlikegif.png",
@@ -363,7 +363,7 @@
     {
       "id": "Galactic",
       "name": "Galactic",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 120,
       "stack_bonus": true,
       "appearance": "GalacticBeanstalk.png",
@@ -373,7 +373,7 @@
     {
       "id": "Disco",
       "name": "Disco",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 125,
       "stack_bonus": true,
       "appearance": "Disco_Mutation.png",
@@ -383,7 +383,7 @@
     {
       "id": "Meteoric",
       "name": "Meteoric",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 125,
       "stack_bonus": true,
       "appearance": "Meteoric_mutation.png",
@@ -393,7 +393,7 @@
     {
       "id": "Voidtouched",
       "name": "Voidtouched",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 135,
       "stack_bonus": true,
       "appearance": "Voidblueberrry.png",
@@ -403,7 +403,7 @@
     {
       "id": "Dawnbound",
       "name": "Dawnbound",
-      "category": "Environmental Mutations",
+      "category": "Environmental",
       "sheckles_multiplier": 150,
       "stack_bonus": true,
       "appearance": "Dawnbound_Sunflower.png",

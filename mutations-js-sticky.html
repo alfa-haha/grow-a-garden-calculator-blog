@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutation Database - JS Sticky</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f9fafb;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .table-tip {
+            background-color: #dbeafe;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 1rem;
+            color: #1e40af;
+            text-align: center;
+        }
+        
+        /* 表格容器 */
+        .js-table-container {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            height: 600px;
+        }
+        
+        /* 固定列容器 */
+        .fixed-columns {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 230px; /* 80px + 150px */
+            background-color: white;
+            border-right: 2px solid #d1d5db;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            overflow: hidden;
+        }
+        
+        /* 滚动列容器 */
+        .scroll-columns {
+            position: absolute;
+            left: 230px;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+        
+        /* 表格样式 */
+        .js-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .scroll-table {
+            width: 100%;
+            min-width: 870px; /* 120+100+300+350 */
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        /* 单元格样式 */
+        .js-table th,
+        .js-table td,
+        .scroll-table th,
+        .scroll-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+            height: 60px;
+        }
+        
+        /* 表头样式 */
+        .js-table th,
+        .scroll-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        /* 固定列宽度 */
+        .fixed-col-1 { width: 80px; text-align: center; }
+        .fixed-col-2 { width: 150px; }
+        
+        /* 滚动列宽度 */
+        .scroll-col-1 { width: 120px; text-align: center; }
+        .scroll-col-2 { width: 100px; text-align: center; }
+        .scroll-col-3 { width: 300px; }
+        .scroll-col-4 { width: 350px; }
+        
+        /* 内容区域 */
+        .fixed-content,
+        .scroll-content {
+            height: calc(100% - 60px);
+            overflow-y: auto;
+        }
+        
+        /* 图片样式 */
+        .mutation-image {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        /* 类别徽章样式 */
+        .category-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .category-growth {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+        }
+        
+        .category-temperature {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+        
+        .category-environmental {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        
+        /* 行hover效果 */
+        .js-table tbody tr:hover,
+        .scroll-table tbody tr:hover {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>🧬 Mutation Database (JS Sticky)</h1>
+            <p>JavaScript-powered sticky columns</p>
+        </div>
+        
+        <div class="table-tip">
+            💡 This uses JavaScript to simulate sticky columns. Should work in all browsers.
+        </div>
+        
+        <div class="js-table-container">
+            <!-- 固定列 -->
+            <div class="fixed-columns">
+                <table class="js-table">
+                    <thead>
+                        <tr>
+                            <th class="fixed-col-1">Image</th>
+                            <th class="fixed-col-2">Name</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="fixed-content">
+                    <table class="js-table">
+                        <tbody id="fixed-tbody">
+                            <!-- 固定列数据 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- 滚动列 -->
+            <div class="scroll-columns">
+                <table class="scroll-table">
+                    <thead>
+                        <tr>
+                            <th class="scroll-col-1">Category</th>
+                            <th class="scroll-col-2">Multiplier</th>
+                            <th class="scroll-col-3">Obtainment</th>
+                            <th class="scroll-col-4">Description</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="scroll-content">
+                    <table class="scroll-table">
+                        <tbody id="scroll-tbody">
+                            <!-- 滚动列数据 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟mutations数据
+        const mutations = [
+            {
+                name: "Gold",
+                category: "Growth",
+                multiplier: 20,
+                appearance: "GoldenMutation.png",
+                obtainment: "1% chance to grow replacing the normal variant. Can be applied by the Dragonfly pet.",
+                description: "Shining, Golden in color, Will emit a shimmering sound"
+            },
+            {
+                name: "Rainbow",
+                category: "Growth",
+                multiplier: 50,
+                appearance: "Tomato_Rainbow.png",
+                obtainment: "0.1% chance to grow replacing the normal variant.",
+                description: "Continuously changes color, Emits yellow particles and a rainbow above it"
+            },
+            {
+                name: "Wet",
+                category: "Temperature",
+                multiplier: 2,
+                appearance: "WetMutation.png",
+                obtainment: "During Rain. During Thunderstorm. Small chance from sprinklers.",
+                description: "Dripping with water particles."
+            },
+            {
+                name: "Shocked",
+                category: "Environmental",
+                multiplier: 100,
+                appearance: "ShockedMutation.png",
+                obtainment: "When a crop is struck during a Thunderstorm or a Jandel Storm.",
+                description: "Has a neon glow"
+            }
+        ];
+
+        function getCategoryClass(category) {
+            switch(category.toLowerCase()) {
+                case 'growth': return 'category-growth';
+                case 'temperature': return 'category-temperature';
+                case 'environmental': return 'category-environmental';
+                default: return 'category-growth';
+            }
+        }
+
+        function renderMutations() {
+            const fixedTbody = document.getElementById('fixed-tbody');
+            const scrollTbody = document.getElementById('scroll-tbody');
+            
+            fixedTbody.innerHTML = '';
+            scrollTbody.innerHTML = '';
+
+            mutations.forEach(mutation => {
+                // 固定列行
+                const fixedRow = document.createElement('tr');
+                fixedRow.innerHTML = `
+                    <td class="fixed-col-1">
+                        <img src="images/mutations/${mutation.appearance}" 
+                             alt="${mutation.name}" 
+                             class="mutation-image" 
+                             onerror="this.onerror=null;this.src='images/mutations/Placeholder.png';">
+                    </td>
+                    <td class="fixed-col-2">
+                        <strong>${mutation.name}</strong>
+                    </td>
+                `;
+                
+                // 滚动列行
+                const scrollRow = document.createElement('tr');
+                scrollRow.innerHTML = `
+                    <td class="scroll-col-1">
+                        <span class="category-badge ${getCategoryClass(mutation.category)}">
+                            ${mutation.category}
+                        </span>
+                    </td>
+                    <td class="scroll-col-2">
+                        <strong>×${mutation.multiplier}</strong>
+                    </td>
+                    <td class="scroll-col-3">
+                        ${mutation.obtainment}
+                    </td>
+                    <td class="scroll-col-4">
+                        ${mutation.description}
+                    </td>
+                `;
+                
+                fixedTbody.appendChild(fixedRow);
+                scrollTbody.appendChild(scrollRow);
+            });
+            
+            // 同步滚动
+            const fixedContent = document.querySelector('.fixed-content');
+            const scrollContent = document.querySelector('.scroll-content');
+            
+            scrollContent.addEventListener('scroll', () => {
+                fixedContent.scrollTop = scrollContent.scrollTop;
+            });
+            
+            fixedContent.addEventListener('scroll', () => {
+                scrollContent.scrollTop = fixedContent.scrollTop;
+            });
+        }
+
+        // 页面加载完成后渲染数据
+        document.addEventListener('DOMContentLoaded', renderMutations);
+    </script>
+</body>
+</html>

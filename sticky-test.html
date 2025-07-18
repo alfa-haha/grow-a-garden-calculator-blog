@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-container {
+            border: 2px solid #333;
+            overflow-x: auto;
+            max-width: 600px;
+            margin: 20px 0;
+        }
+        
+        .test-table {
+            width: 100%;
+            min-width: 1000px;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .test-table th,
+        .test-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .test-table th:nth-child(1),
+        .test-table td:nth-child(1) {
+            position: sticky;
+            left: 0;
+            background-color: #f0f0f0;
+            z-index: 10;
+            border-right: 3px solid #333;
+        }
+        
+        .test-table th:nth-child(2),
+        .test-table td:nth-child(2) {
+            position: sticky;
+            left: 100px;
+            background-color: #e0e0e0;
+            z-index: 9;
+            border-right: 3px solid #333;
+        }
+        
+        .test-table th {
+            background-color: #ccc;
+        }
+        
+        .wide-column {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sticky Table Test</h1>
+    <p>如果sticky功能正常，前两列应该在水平滚动时保持固定。</p>
+    
+    <div class="test-container">
+        <table class="test-table">
+            <thead>
+                <tr>
+                    <th>Sticky 1</th>
+                    <th>Sticky 2</th>
+                    <th class="wide-column">Column 3</th>
+                    <th class="wide-column">Column 4</th>
+                    <th class="wide-column">Column 5</th>
+                    <th class="wide-column">Column 6</th>
+                    <th class="wide-column">Column 7</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Fixed 1</td>
+                    <td>Fixed 2</td>
+                    <td>Data 3</td>
+                    <td>Data 4</td>
+                    <td>Data 5</td>
+                    <td>Data 6</td>
+                    <td>Data 7</td>
+                </tr>
+                <tr>
+                    <td>Fixed 1</td>
+                    <td>Fixed 2</td>
+                    <td>Data 3</td>
+                    <td>Data 4</td>
+                    <td>Data 5</td>
+                    <td>Data 6</td>
+                    <td>Data 7</td>
+                </tr>
+                <tr>
+                    <td>Fixed 1</td>
+                    <td>Fixed 2</td>
+                    <td>Data 3</td>
+                    <td>Data 4</td>
+                    <td>Data 5</td>
+                    <td>Data 6</td>
+                    <td>Data 7</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <h2>Mutations Table Test</h2>
+    <p>这是简化版的mutations表格测试：</p>
+    
+    <div class="mutations-table" style="position: relative; overflow-x: auto; border: 1px solid #ddd; max-width: 100%;">
+        <table style="table-layout: fixed; width: 100%; min-width: 1200px; border-collapse: separate; border-spacing: 0;">
+            <thead>
+                <tr>
+                    <th style="position: sticky; left: 0; z-index: 10; background: white; width: 80px; border-right: 2px solid #ddd;">Image</th>
+                    <th style="position: sticky; left: 80px; z-index: 9; background: white; width: 150px; border-right: 2px solid #ddd;">Name</th>
+                    <th style="width: 120px;">Category</th>
+                    <th style="width: 100px;">Multiplier</th>
+                    <th style="width: 300px;">Obtainment</th>
+                    <th style="width: 350px;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="position: sticky; left: 0; z-index: 10; background: white; width: 80px; border-right: 2px solid #ddd; text-align: center;">🧬</td>
+                    <td style="position: sticky; left: 80px; z-index: 9; background: white; width: 150px; border-right: 2px solid #ddd;">Gold</td>
+                    <td>Growth</td>
+                    <td>×20</td>
+                    <td>1% chance to grow replacing the normal variant</td>
+                    <td>Shining, Golden in color, Will emit a shimmering sound</td>
+                </tr>
+                <tr>
+                    <td style="position: sticky; left: 0; z-index: 10; background: white; width: 80px; border-right: 2px solid #ddd; text-align: center;">🌈</td>
+                    <td style="position: sticky; left: 80px; z-index: 9; background: white; width: 150px; border-right: 2px solid #ddd;">Rainbow</td>
+                    <td>Growth</td>
+                    <td>×50</td>
+                    <td>0.1% chance to grow replacing the normal variant</td>
+                    <td>Continuously changes color, Emits yellow particles and a rainbow above it</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

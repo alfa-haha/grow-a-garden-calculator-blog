@@ -595,26 +595,30 @@ class MutationsManager {
             `<img src="images/mutations/${mutation.appearance}" alt="${mutation.name}" class="mutation-image" onerror="this.onerror=null;this.src='images/mutations/placeholder.png';">` :
             `<span class="mutation-icon" style="color: ${mutation.color}">${mutation.icon}</span>`;
         
+        // 检测当前主题
+        const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+        const textColor = isDarkMode ? '#f9fafb' : '#111827'; // 深色模式用浅色文字，浅色模式用深色文字
+        
         row.innerHTML = `
-            <td class="icon-cell">
+            <td>
                 ${imageContent}
             </td>
-            <td class="name-cell">
-                <span class="mutation-name">${mutation.name}</span>
+            <td>
+                <strong style="color: ${textColor};">${mutation.name}</strong>
             </td>
-            <td class="category-cell">
+            <td>
                 <span class="mutation-category-badge" style="background-color: ${mutation.color}20; border: 1px solid ${mutation.color}; color: ${mutation.color}">
-                    ${mutation.category}
+                    ${mutation.category.replace(' Mutations', '')}
                 </span>
             </td>
-            <td class="multiplier-cell">
+            <td>
                 <span class="mutation-effect" style="color: ${mutation.color}">×${mutation.multiplier}</span>
             </td>
-            <td class="obtainment-cell">
-                <span class="obtainment-method">${mutation.obtainment}</span>
+            <td>
+                <span class="obtainment-method" style="color: ${textColor};">${mutation.obtainment}</span>
             </td>
-            <td class="description-cell">
-                <span class="mutation-description">${mutation.description}</span>
+            <td>
+                <span class="mutation-description" style="color: ${textColor};">${mutation.description}</span>
             </td>
         `;
         
@@ -646,10 +650,10 @@ class MutationsManager {
             }
         }
         if (modalCategory) {
-            modalCategory.textContent = mutation.category;
+            modalCategory.textContent = mutation.category.replace(' Mutations', '');
             modalCategory.style.backgroundColor = mutation.color;
         }
-        if (modalCategoryText) modalCategoryText.textContent = mutation.category;
+        if (modalCategoryText) modalCategoryText.textContent = mutation.category.replace(' Mutations', '');
         if (modalEffectType) modalEffectType.textContent = this.getEffectType(mutation);
         if (modalMultiplier) modalMultiplier.textContent = `×${mutation.multiplier}`;
         if (modalStackType) modalStackType.textContent = mutation.stack_bonus ? 'Stackable' : 'Exclusive';

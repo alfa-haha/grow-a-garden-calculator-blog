@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutation Database - Fixed Sticky</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f9fafb;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        
+        .table-tip {
+            background-color: #dbeafe;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 1rem;
+            color: #1e40af;
+            text-align: center;
+        }
+        
+        /* 关键：表格容器样式 */
+        .sticky-table-container {
+            position: relative;
+            overflow-x: auto;
+            overflow-y: visible;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+        }
+        
+        /* 关键：表格基础样式 */
+        .sticky-table {
+            width: 100%;
+            min-width: 1000px; /* 确保触发水平滚动 */
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: white;
+        }
+        
+        /* 关键：所有单元格基础样式 */
+        .sticky-table th,
+        .sticky-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+        }
+        
+        /* 关键：表头样式 */
+        .sticky-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        /* 关键：第一列（Image）sticky样式 */
+        .sticky-table th:first-child,
+        .sticky-table td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            background-color: white;
+            border-right: 2px solid #d1d5db;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            width: 80px;
+            min-width: 80px;
+            max-width: 80px;
+            text-align: center;
+        }
+        
+        /* 关键：表头第一列特殊背景 */
+        .sticky-table th:first-child {
+            background-color: #f9fafb;
+        }
+        
+        /* 关键：第二列（Name）sticky样式 */
+        .sticky-table th:nth-child(2),
+        .sticky-table td:nth-child(2) {
+            position: sticky;
+            left: 80px;
+            z-index: 9;
+            background-color: white;
+            border-right: 2px solid #d1d5db;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            width: 150px;
+            min-width: 150px;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* 关键：表头第二列特殊背景 */
+        .sticky-table th:nth-child(2) {
+            background-color: #f9fafb;
+        }
+        
+        /* 其他列样式 */
+        .sticky-table th:nth-child(3),
+        .sticky-table td:nth-child(3) {
+            width: 120px;
+            text-align: center;
+        }
+        
+        .sticky-table th:nth-child(4),
+        .sticky-table td:nth-child(4) {
+            width: 100px;
+            text-align: center;
+        }
+        
+        .sticky-table th:nth-child(5),
+        .sticky-table td:nth-child(5) {
+            width: 300px;
+        }
+        
+        .sticky-table th:nth-child(6),
+        .sticky-table td:nth-child(6) {
+            width: 350px;
+        }
+        
+        /* 行hover效果 */
+        .sticky-table tbody tr:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .sticky-table tbody tr:hover td:first-child,
+        .sticky-table tbody tr:hover td:nth-child(2) {
+            background-color: #f3f4f6;
+        }
+        
+        /* 图片样式 */
+        .mutation-image {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        /* 类别徽章样式 */
+        .category-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .category-growth {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+        }
+        
+        .category-temperature {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+        
+        .category-environmental {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        
+        /* 滚动条样式 */
+        .sticky-table-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .sticky-table-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        
+        .sticky-table-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        
+        .sticky-table-container::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">🧬 Mutation Database (Fixed Sticky)</h1>
+            <p>Complete mutation database with sticky Image and Name columns</p>
+        </div>
+        
+        <div class="table-tip">
+            💡 Tip: Scroll horizontally to view all mutation details. Image and Name columns stay fixed for easy reference.
+        </div>
+        
+        <div class="sticky-table-container">
+            <table class="sticky-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Multiplier</th>
+                        <th>Obtainment</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody id="mutations-tbody">
+                    <!-- 数据将通过JavaScript加载 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 模拟mutations数据
+        const mutations = [
+            {
+                name: "Ripe",
+                category: "Growth",
+                multiplier: 1,
+                appearance: "Placeholder.png",
+                obtainment: "This mutation can only be added to Sugar Apple.",
+                description: "Magenta in color"
+            },
+            {
+                name: "Gold",
+                category: "Growth",
+                multiplier: 20,
+                appearance: "GoldenMutation.png",
+                obtainment: "1% chance to grow replacing the normal variant. Can be applied by the Dragonfly pet.",
+                description: "Shining, Golden in color, Will emit a shimmering sound"
+            },
+            {
+                name: "Rainbow",
+                category: "Growth",
+                multiplier: 50,
+                appearance: "Tomato_Rainbow.png",
+                obtainment: "0.1% chance to grow replacing the normal variant. Can be applied by the Butterfly pet when a crop has 5+ mutations, and all previous mutations will be removed.",
+                description: "Continuously changes color, Emits yellow particles and a rainbow above it"
+            },
+            {
+                name: "Wet",
+                category: "Temperature",
+                multiplier: 2,
+                appearance: "WetMutation.png",
+                obtainment: "During Rain. During Thunderstorm. Small chance from sprinklers. Can be applied by Sea Turtle. During admin event Under The Sea.",
+                description: "Dripping with water particles."
+            },
+            {
+                name: "Windstruck",
+                category: "Environmental",
+                multiplier: 2,
+                appearance: "WindstruckDr.png",
+                obtainment: "During Windy. During Gale.",
+                description: "Has wind gusts swoop around the crop"
+            },
+            {
+                name: "Moonlit",
+                category: "Environmental",
+                multiplier: 2,
+                appearance: "Strawberry_Moonlit.png",
+                obtainment: "During Night, with a max of 6 plants being moonlit every 2 minutes during the duration of the Night.",
+                description: "Glowing, purple aroma, Purple in color"
+            },
+            {
+                name: "Chilled",
+                category: "Temperature",
+                multiplier: 2,
+                appearance: "(Chilled).png",
+                obtainment: "During Frost. Can be applied by the Polar Bear. Can be applied by using a Mutation Spray Chilled on a crop.",
+                description: "Slightly bluish in color, Emits frost particles"
+            },
+            {
+                name: "Shocked",
+                category: "Environmental",
+                multiplier: 100,
+                appearance: "ShockedMutation.png",
+                obtainment: "When a crop is struck during a Thunderstorm or a Jandel Storm. Using a Mutation Spray Shocked on a crop.",
+                description: "Has a neon glow"
+            }
+        ];
+
+        function getCategoryClass(category) {
+            switch(category.toLowerCase()) {
+                case 'growth': return 'category-growth';
+                case 'temperature': return 'category-temperature';
+                case 'environmental': return 'category-environmental';
+                default: return 'category-growth';
+            }
+        }
+
+        function renderMutations() {
+            const tbody = document.getElementById('mutations-tbody');
+            tbody.innerHTML = '';
+
+            mutations.forEach(mutation => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>
+                        <img src="images/mutations/${mutation.appearance}" 
+                             alt="${mutation.name}" 
+                             class="mutation-image" 
+                             onerror="this.onerror=null;this.src='images/mutations/Placeholder.png';">
+                    </td>
+                    <td>
+                        <strong>${mutation.name}</strong>
+                    </td>
+                    <td>
+                        <span class="category-badge ${getCategoryClass(mutation.category)}">
+                            ${mutation.category}
+                        </span>
+                    </td>
+                    <td>
+                        <strong>×${mutation.multiplier}</strong>
+                    </td>
+                    <td>
+                        ${mutation.obtainment}
+                    </td>
+                    <td>
+                        ${mutation.description}
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // 页面加载完成后渲染数据
+        document.addEventListener('DOMContentLoaded', renderMutations);
+    </script>
+</body>
+</html>

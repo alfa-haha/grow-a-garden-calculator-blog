@@ -67,9 +67,9 @@
                             <label class="filter-label">Category:</label>
                             <select id="category-filter" class="filter-select">
                                 <option value="">All Categories</option>
-                                <option value="Growth Mutations">Growth Mutations</option>
-                                <option value="Temperature Mutations">Temperature Mutations</option>
-                                <option value="Environmental Mutations">Environmental Mutations</option>
+                                <option value="Growth">Growth</option>
+                                <option value="Temperature">Temperature</option>
+                                <option value="Environmental">Environmental</option>
                             </select>
                         </div>
                     </div>
@@ -85,9 +85,14 @@
 
             <!-- Mutation Display Area -->
             <div class="mutations-container">
+                <!-- Table Tip -->
+                <div class="table-tip" style="position: sticky; left: 0; z-index: 20; font-size: 12px;">
+                    💡 Tip: Scroll horizontally to view all mutation details.
+                </div>
+                
                 <!-- Table View -->
-                <div class="mutations-table" id="mutations-table" style="display: block;">
-                    <table class="data-table">
+                <div class="sticky-table-container" id="mutations-table" style="display: block;">
+                    <table class="sticky-table">
                         <thead>
                             <tr>
                                 <th>Image</th>

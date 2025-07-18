@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutation Database - Grid Layout</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f9fafb;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        
+        .table-tip {
+            background-color: #dbeafe;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 1rem;
+            color: #1e40af;
+            text-align: center;
+        }
+        
+        /* Grid布局容器 */
+        .grid-table-container {
+            position: relative;
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Grid表格 */
+        .grid-table {
+            display: grid;
+            grid-template-columns: 80px 150px 120px 100px 300px 350px;
+            min-width: 1100px;
+            background-color: white;
+        }
+        
+        /* 固定列容器 */
+        .fixed-columns {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: 80px 150px;
+            background-color: white;
+            border-right: 2px solid #d1d5db;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 滚动列容器 */
+        .scroll-columns {
+            display: grid;
+            grid-template-columns: 120px 100px 300px 350px;
+            margin-left: 230px; /* 80px + 150px */
+        }
+        
+        /* 单元格基础样式 */
+        .grid-cell {
+            padding: 12px 8px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            min-height: 60px;
+        }
+        
+        /* 表头样式 */
+        .grid-header {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        /* 图片列样式 */
+        .image-cell {
+            justify-content: center;
+            text-align: center;
+        }
+        
+        /* 名称列样式 */
+        .name-cell {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* 类别列样式 */
+        .category-cell {
+            justify-content: center;
+            text-align: center;
+        }
+        
+        /* 倍数列样式 */
+        .multiplier-cell {
+            justify-content: center;
+            text-align: center;
+        }
+        
+        /* 图片样式 */
+        .mutation-image {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        /* 类别徽章样式 */
+        .category-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .category-growth {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+        }
+        
+        .category-temperature {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+        
+        .category-environmental {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        
+        /* 行hover效果 */
+        .grid-row:hover .grid-cell {
+            background-color: #f3f4f6;
+        }
+        
+        /* 滚动条样式 */
+        .grid-table-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .grid-table-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        
+        .grid-table-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        
+        .grid-table-container::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">🧬 Mutation Database (Grid Layout)</h1>
+            <p>Alternative layout with fixed columns using CSS Grid</p>
+        </div>
+        
+        <div class="table-tip">
+            💡 Tip: This uses CSS Grid instead of sticky positioning. Image and Name columns should stay fixed.
+        </div>
+        
+        <div class="grid-table-container">
+            <!-- 表头 -->
+            <div class="grid-table">
+                <div class="grid-cell grid-header image-cell">Image</div>
+                <div class="grid-cell grid-header name-cell">Name</div>
+                <div class="grid-cell grid-header category-cell">Category</div>
+                <div class="grid-cell grid-header multiplier-cell">Multiplier</div>
+                <div class="grid-cell grid-header">Obtainment</div>
+                <div class="grid-cell grid-header">Description</div>
+            </div>
+            
+            <!-- 数据行容器 -->
+            <div id="grid-data">
+                <!-- 数据将通过JavaScript加载 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟mutations数据
+        const mutations = [
+            {
+                name: "Gold",
+                category: "Growth",
+                multiplier: 20,
+                appearance: "GoldenMutation.png",
+                obtainment: "1% chance to grow replacing the normal variant. Can be applied by the Dragonfly pet.",
+                description: "Shining, Golden in color, Will emit a shimmering sound"
+            },
+            {
+                name: "Rainbow",
+                category: "Growth",
+                multiplier: 50,
+                appearance: "Tomato_Rainbow.png",
+                obtainment: "0.1% chance to grow replacing the normal variant.",
+                description: "Continuously changes color, Emits yellow particles and a rainbow above it"
+            },
+            {
+                name: "Wet",
+                category: "Temperature",
+                multiplier: 2,
+                appearance: "WetMutation.png",
+                obtainment: "During Rain. During Thunderstorm. Small chance from sprinklers.",
+                description: "Dripping with water particles."
+            },
+            {
+                name: "Shocked",
+                category: "Environmental",
+                multiplier: 100,
+                appearance: "ShockedMutation.png",
+                obtainment: "When a crop is struck during a Thunderstorm or a Jandel Storm.",
+                description: "Has a neon glow"
+            }
+        ];
+
+        function getCategoryClass(category) {
+            switch(category.toLowerCase()) {
+                case 'growth': return 'category-growth';
+                case 'temperature': return 'category-temperature';
+                case 'environmental': return 'category-environmental';
+                default: return 'category-growth';
+            }
+        }
+
+        function renderMutations() {
+            const container = document.getElementById('grid-data');
+            container.innerHTML = '';
+
+            mutations.forEach(mutation => {
+                const row = document.createElement('div');
+                row.className = 'grid-table grid-row';
+                
+                row.innerHTML = `
+                    <div class="grid-cell image-cell">
+                        <img src="images/mutations/${mutation.appearance}" 
+                             alt="${mutation.name}" 
+                             class="mutation-image" 
+                             onerror="this.onerror=null;this.src='images/mutations/Placeholder.png';">
+                    </div>
+                    <div class="grid-cell name-cell">
+                        <strong>${mutation.name}</strong>
+                    </div>
+                    <div class="grid-cell category-cell">
+                        <span class="category-badge ${getCategoryClass(mutation.category)}">
+                            ${mutation.category}
+                        </span>
+                    </div>
+                    <div class="grid-cell multiplier-cell">
+                        <strong>×${mutation.multiplier}</strong>
+                    </div>
+                    <div class="grid-cell">
+                        ${mutation.obtainment}
+                    </div>
+                    <div class="grid-cell">
+                        ${mutation.description}
+                    </div>
+                `;
+                
+                container.appendChild(row);
+            });
+        }
+
+        // 页面加载完成后渲染数据
+        document.addEventListener('DOMContentLoaded', renderMutations);
+    </script>
+</body>
+</html>

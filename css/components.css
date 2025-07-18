@@ -102,6 +102,12 @@
     color: var(--text-secondary);
     text-align: center;
     padding: var(--spacing-sm) 0;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    margin-bottom: var(--spacing);
+    position: relative;
+    z-index: 15;
 }
 
 /* 响应式样式调整 */
@@ -1568,7 +1574,8 @@ section.features .features-grid {
 
 .data-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     background-color: var(--bg-card);
     border-radius: var(--radius);
     overflow: hidden;
@@ -2358,6 +2365,247 @@ section.features .features-grid {
     color: var(--text-secondary);
 }
 
+/* ===== Mutations表格专门样式 ===== */
+/* Mutations表格容器 - 支持水平滚动 */
+.mutations-table {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: visible;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Dark mode support */
+[data-theme="dark"] .mutations-table {
+    border-color: #374151;
+    background-color: #1f2937;
+}
+
+/* Mutations表格样式 */
+.mutations-table .data-table {
+    table-layout: fixed;
+    width: 100%;
+    min-width: 1200px;
+    position: relative;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* Sticky列样式 - Image列 */
+.mutations-table .data-table th:nth-child(1),
+.mutations-table .data-table td:nth-child(1) {
+    position: sticky !important;
+    left: 0px !important;
+    z-index: 30 !important;
+    background-color: #ffffff !important;
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    text-align: center !important;
+    border-right: 2px solid #e5e7eb !important;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Dark mode for Image column */
+[data-theme="dark"] .mutations-table .data-table th:nth-child(1),
+[data-theme="dark"] .mutations-table .data-table td:nth-child(1) {
+    background-color: #1f2937 !important;
+    border-right-color: #374151 !important;
+}
+
+/* Sticky列样式 - Name列 */
+.mutations-table .data-table th:nth-child(2),
+.mutations-table .data-table td:nth-child(2) {
+    position: sticky !important;
+    left: 80px !important;
+    z-index: 29 !important;
+    background-color: #ffffff !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    white-space: nowrap !important;
+    border-right: 2px solid #e5e7eb !important;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Dark mode for Name column */
+[data-theme="dark"] .mutations-table .data-table th:nth-child(2),
+[data-theme="dark"] .mutations-table .data-table td:nth-child(2) {
+    background-color: #1f2937 !important;
+    border-right-color: #374151 !important;
+}
+
+/* 其他列的宽度设置 */
+.mutations-table .data-table th:nth-child(3),
+.mutations-table .data-table td:nth-child(3) {
+    width: 180px; /* Category列 */
+    text-align: center;
+}
+
+.mutations-table .data-table th:nth-child(4),
+.mutations-table .data-table td:nth-child(4) {
+    width: 120px; /* Multiplier列 */
+    text-align: center;
+}
+
+.mutations-table .data-table th:nth-child(5),
+.mutations-table .data-table td:nth-child(5) {
+    width: 300px; /* Obtainment列 */
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.mutations-table .data-table th:nth-child(6),
+.mutations-table .data-table td:nth-child(6) {
+    width: 350px; /* Description列 */
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+/* Sticky列在hover时的特殊处理 */
+.mutations-table .data-table tr:hover th:nth-child(1),
+.mutations-table .data-table tr:hover td:nth-child(1),
+.mutations-table .data-table tr:hover th:nth-child(2),
+.mutations-table .data-table tr:hover td:nth-child(2) {
+    background-color: var(--bg-secondary);
+}
+
+/* 表头的特殊样式 */
+.mutations-table .data-table thead th:nth-child(1),
+.mutations-table .data-table thead th:nth-child(2) {
+    background-color: var(--bg-secondary);
+    font-weight: 700;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+}
+
+/* 增强阴影效果 */
+.mutations-table .data-table th:nth-child(1)::after,
+.mutations-table .data-table td:nth-child(1)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -2px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.1), transparent);
+    pointer-events: none;
+}
+
+.mutations-table .data-table th:nth-child(2)::after,
+.mutations-table .data-table td:nth-child(2)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -2px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.15), transparent);
+    pointer-events: none;
+}
+
+/* 滚动条样式 */
+.mutations-table::-webkit-scrollbar {
+    height: 8px;
+}
+
+.mutations-table::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+}
+
+.mutations-table::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: var(--radius);
+}
+
+.mutations-table::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .mutations-table .data-table {
+        min-width: 600px;
+    }
+    
+    .mutations-table .data-table th:nth-child(1),
+    .mutations-table .data-table td:nth-child(1) {
+        width: 60px;
+    }
+    
+    .mutations-table .data-table th:nth-child(2),
+    .mutations-table .data-table td:nth-child(2) {
+        left: 60px;
+        width: 120px;
+    }
+    
+    .mutations-table .data-table th:nth-child(3),
+    .mutations-table .data-table td:nth-child(3) {
+        width: 150px;
+    }
+    
+    .mutations-table .data-table th:nth-child(4),
+    .mutations-table .data-table td:nth-child(4) {
+        width: 100px;
+    }
+    
+    .mutations-table .data-table th:nth-child(5),
+    .mutations-table .data-table td:nth-child(5) {
+        width: 250px;
+    }
+    
+    .mutations-table .data-table th:nth-child(6),
+    .mutations-table .data-table td:nth-child(6) {
+        width: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mutations-table .data-table {
+        min-width: 500px;
+    }
+    
+    .mutations-table .data-table th:nth-child(1),
+    .mutations-table .data-table td:nth-child(1) {
+        width: 50px;
+    }
+    
+    .mutations-table .data-table th:nth-child(2),
+    .mutations-table .data-table td:nth-child(2) {
+        left: 50px;
+        width: 100px;
+        font-size: var(--text-sm);
+    }
+    
+    .mutations-table .data-table th:nth-child(3),
+    .mutations-table .data-table td:nth-child(3) {
+        width: 120px;
+        font-size: var(--text-sm);
+    }
+    
+    .mutations-table .data-table th:nth-child(4),
+    .mutations-table .data-table td:nth-child(4) {
+        width: 80px;
+        font-size: var(--text-sm);
+    }
+    
+    .mutations-table .data-table th:nth-child(5),
+    .mutations-table .data-table td:nth-child(5) {
+        width: 200px;
+        font-size: var(--text-sm);
+    }
+    
+    .mutations-table .data-table td:nth-child(6) {
+        width: 220px;
+        font-size: var(--text-sm);
+    }
+}
+
 /* ===== Pets表格专门样式 ===== */
 /* 设置pets表格的列宽度分配 */
 .pets-table .data-table {
@@ -2743,7 +2991,8 @@ section.features .features-grid {
     width: 100% !important; /* 使用100%宽度充分利用容器空间 */
     min-width: 1000px !important; /* 设置合理的最小宽度确保所有列都有足够空间 */
     max-width: none !important; /* 移除最大宽度限制 */
-    border-collapse: collapse !important; /* 恢复边框合并 */
+    border-collapse: separate !important; /* 修复sticky兼容性 */
+    border-spacing: 0 !important;
     display: table !important; /* 强制表格显示 */
     box-sizing: border-box !important; /* 确保宽度计算包含边框 */
 }
@@ -4271,5 +4520,503 @@ noscript .crop-grid-static {
     
     .truth-actions .btn {
         width: 100%;
+    }
+}
+
+/* ===== 强制Sticky列样式 - 修复版本 ===== */
+/* 确保mutations表格容器正确设置 */
+.mutations-container .mutations-table {
+    position: relative !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* 强制设置表格样式 */
+.mutations-container .mutations-table .data-table {
+    table-layout: fixed !important;
+    width: 100% !important;
+    min-width: 1200px !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    position: relative !important;
+}
+
+/* 强制Image列sticky */
+.mutations-container .mutations-table .data-table th:nth-child(1),
+.mutations-container .mutations-table .data-table td:nth-child(1) {
+    position: sticky !important;
+    left: 0px !important;
+    z-index: 100 !important;
+    background-color: #ffffff !important;
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    text-align: center !important;
+    border-right: 2px solid #e5e7eb !important;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 强制Name列sticky */
+.mutations-container .mutations-table .data-table th:nth-child(2),
+.mutations-container .mutations-table .data-table td:nth-child(2) {
+    position: sticky !important;
+    left: 80px !important;
+    z-index: 99 !important;
+    background-color: #ffffff !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    white-space: nowrap !important;
+    border-right: 2px solid #e5e7eb !important;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Dark mode强制样式 */
+[data-theme="dark"] .mutations-container .mutations-table .data-table th:nth-child(1),
+[data-theme="dark"] .mutations-container .mutations-table .data-table td:nth-child(1) {
+    background-color: #1f2937 !important;
+    border-right-color: #374151 !important;
+}
+
+[data-theme="dark"] .mutations-container .mutations-table .data-table th:nth-child(2),
+[data-theme="dark"] .mutations-container .mutations-table .data-table td:nth-child(2) {
+    background-color: #1f2937 !important;
+    border-right-color: #374151 !important;
+}
+
+/* 确保其他列不会干扰sticky列 */
+.mutations-container .mutations-table .data-table th:nth-child(3),
+.mutations-container .mutations-table .data-table td:nth-child(3) {
+    width: 120px !important;
+    text-align: center !important;
+}
+
+.mutations-container .mutations-table .data-table th:nth-child(4),
+.mutations-container .mutations-table .data-table td:nth-child(4) {
+    width: 100px !important;
+    text-align: center !important;
+}
+
+.mutations-container .mutations-table .data-table th:nth-child(5),
+.mutations-container .mutations-table .data-table td:nth-child(5) {
+    width: 300px !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+}
+
+.mutations-container .mutations-table .data-table th:nth-child(6),
+.mutations-container .mutations-table .data-table td:nth-child(6) {
+    width: 350px !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+}
+
+/* Hover效果 */
+.mutations-container .mutations-table .data-table tr:hover th:nth-child(1),
+.mutations-container .mutations-table .data-table tr:hover td:nth-child(1),
+.mutations-container .mutations-table .data-table tr:hover th:nth-child(2),
+.mutations-container .mutations-table .data-table tr:hover td:nth-child(2) {
+    background-color: #f3f4f6 !important;
+}
+
+[data-theme="dark"] .mutations-container .mutations-table .data-table tr:hover th:nth-child(1),
+[data-theme="dark"] .mutations-container .mutations-table .data-table tr:hover td:nth-child(1),
+[data-theme="dark"] .mutations-container .mutations-table .data-table tr:hover th:nth-child(2),
+[data-theme="dark"] .mutations-container .mutations-table .data-table tr:hover td:nth-child(2) {
+    background-color: #374151 !important;
+}
+
+/* 滚动条样式 */
+.mutations-container .mutations-table::-webkit-scrollbar {
+    height: 8px !important;
+}
+
+.mutations-container .mutations-table::-webkit-scrollbar-track {
+    background: #f3f4f6 !important;
+    border-radius: 4px !important;
+}
+
+.mutations-container .mutations-table::-webkit-scrollbar-thumb {
+    background: #d1d5db !important;
+    border-radius: 4px !important;
+}
+
+.mutations-container .mutations-table::-webkit-scrollbar-thumb:hover {
+    background: #3b82f6 !important;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .mutations-container .mutations-table .data-table {
+        min-width: 800px !important;
+    }
+    
+    .mutations-container .mutations-table .data-table th:nth-child(1),
+    .mutations-container .mutations-table .data-table td:nth-child(1) {
+        width: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;
+    }
+    
+    .mutations-container .mutations-table .data-table th:nth-child(2),
+    .mutations-container .mutations-table .data-table td:nth-child(2) {
+        left: 60px !important;
+        width: 120px !important;
+        min-width: 120px !important;
+        max-width: 120px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .mutations-container .mutations-table .data-table {
+        min-width: 600px !important;
+    }
+    
+    .mutations-container .mutations-table .data-table th:nth-child(1),
+    .mutations-container .mutations-table .data-table td:nth-child(1) {
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+    }
+    
+    .mutations-container .mutations-table .data-table th:nth-child(2),
+    .mutations-container .mutations-table .data-table td:nth-child(2) {
+        left: 50px !important;
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+    }
+}/
+* ===== 成功的Sticky表格样式 ===== */
+/* 基于mutations-fixed.html的成功实现 */
+
+/* 表格容器样式 */
+.sticky-table-container {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: visible;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+}
+
+/* Dark mode support */
+[data-theme="dark"] .sticky-table-container {
+    border-color: #374151;
+    background-color: #1f2937;
+}
+
+/* 表格基础样式 */
+.sticky-table {
+    width: 100%;
+    min-width: 1000px; /* 确保触发水平滚动 */
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: white;
+}
+
+[data-theme="dark"] .sticky-table {
+    background-color: #1f2937;
+}
+
+/* 所有单元格基础样式 */
+.sticky-table th,
+.sticky-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+    color: #111827; /* 确保浅色模式下文字为深色 */
+}
+
+/* 确保所有文本元素在浅色模式下使用深色文字 */
+.sticky-table td strong,
+.sticky-table td span.mutation-name,
+.sticky-table td span.obtainment-method,
+.sticky-table td span.mutation-description {
+    color: #111827;
+}
+
+[data-theme="dark"] .sticky-table th,
+[data-theme="dark"] .sticky-table td {
+    border-bottom-color: #374151;
+    color: #f9fafb; /* 确保深色模式下文字为浅色 */
+}
+
+/* 确保所有文本元素在深色模式下使用浅色文字 */
+[data-theme="dark"] .sticky-table td strong,
+[data-theme="dark"] .sticky-table td span.mutation-name,
+[data-theme="dark"] .sticky-table td span.obtainment-method,
+[data-theme="dark"] .sticky-table td span.mutation-description {
+    color: #f9fafb;
+}
+
+/* 表头样式 */
+.sticky-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+[data-theme="dark"] .sticky-table th {
+    background-color: #374151;
+    color: #f9fafb;
+    border-bottom-color: #4b5563;
+}
+
+/* 第一列（Image）sticky样式 */
+.sticky-table th:first-child,
+.sticky-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background-color: white;
+    border-right: 2px solid #d1d5db;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+
+/* 表头第一列特殊背景 */
+.sticky-table th:first-child {
+    background-color: #f9fafb;
+}
+
+[data-theme="dark"] .sticky-table th:first-child,
+[data-theme="dark"] .sticky-table td:first-child {
+    background-color: #1f2937;
+    border-right-color: #4b5563;
+}
+
+[data-theme="dark"] .sticky-table th:first-child {
+    background-color: #374151;
+}
+
+/* 第二列（Name）sticky样式 */
+.sticky-table th:nth-child(2),
+.sticky-table td:nth-child(2) {
+    position: sticky;
+    left: 80px;
+    z-index: 9;
+    background-color: white;
+    border-right: 2px solid #d1d5db;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 表头第二列特殊背景 */
+.sticky-table th:nth-child(2) {
+    background-color: #f9fafb;
+}
+
+[data-theme="dark"] .sticky-table th:nth-child(2),
+[data-theme="dark"] .sticky-table td:nth-child(2) {
+    background-color: #1f2937;
+    border-right-color: #4b5563;
+}
+
+[data-theme="dark"] .sticky-table th:nth-child(2) {
+    background-color: #374151;
+}
+
+/* 其他列样式 */
+.sticky-table th:nth-child(3),
+.sticky-table td:nth-child(3) {
+    width: 120px;
+    text-align: center;
+}
+
+.sticky-table th:nth-child(4),
+.sticky-table td:nth-child(4) {
+    width: 100px;
+    text-align: center;
+}
+
+.sticky-table th:nth-child(5),
+.sticky-table td:nth-child(5) {
+    width: 300px;
+}
+
+.sticky-table th:nth-child(6),
+.sticky-table td:nth-child(6) {
+    width: 350px;
+}
+
+/* 行hover效果 */
+.sticky-table tbody tr:hover {
+    background-color: #f3f4f6;
+}
+
+.sticky-table tbody tr:hover td:first-child,
+.sticky-table tbody tr:hover td:nth-child(2) {
+    background-color: #f3f4f6;
+}
+
+[data-theme="dark"] .sticky-table tbody tr:hover {
+    background-color: #374151;
+}
+
+[data-theme="dark"] .sticky-table tbody tr:hover td:first-child,
+[data-theme="dark"] .sticky-table tbody tr:hover td:nth-child(2) {
+    background-color: #374151;
+}
+
+/* 图片样式 */
+.sticky-table .mutation-image {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* 滚动条样式 */
+.sticky-table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.sticky-table-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+.sticky-table-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.sticky-table-container::-webkit-scrollbar-thumb:hover {
+    background: #3b82f6;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    /* 表格提示样式 */
+    .table-tip {
+        font-size: 12px;
+        position: sticky;
+        left: 0;
+        z-index: 20;
+    }
+    
+    /* 表格样式 */
+    .sticky-table {
+        min-width: 500px; /* 减少最小宽度，因为隐藏了一列 */
+    }
+    
+    /* 所有表头文字设置为12px，加粗 */
+    .sticky-table th {
+        font-size: 12px;
+        font-weight: 700;
+    }
+    
+    /* Name列内容字号设置为12px */
+    .sticky-table td:nth-child(2) {
+        font-size: 12px;
+    }
+    
+    .sticky-table th:first-child,
+    .sticky-table td:first-child {
+        width: 60px;
+        min-width: 60px;
+        max-width: 60px;
+    }
+    
+    .sticky-table th:nth-child(2),
+    .sticky-table td:nth-child(2) {
+        left: 60px;
+        width: 120px;
+        min-width: 120px;
+        max-width: 120px;
+    }
+    
+    /* 隐藏Obtainment列（第5列） */
+    .sticky-table th:nth-child(5),
+    .sticky-table td:nth-child(5) {
+        display: none;
+    }
+    
+    /* 调整Description列宽度以填充空间 */
+    .sticky-table th:nth-child(6),
+    .sticky-table td:nth-child(6) {
+        width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 表格提示样式 */
+    .table-tip {
+        font-size: 12px;
+        position: sticky;
+        left: 0;
+        z-index: 20;
+    }
+    
+    .sticky-table {
+        min-width: 400px; /* 进一步减少最小宽度 */
+    }
+    
+    /* 所有表头文字设置为12px，加粗 */
+    .sticky-table th {
+        font-size: 12px;
+        font-weight: 700;
+        padding: 8px 6px; /* 减小内边距 */
+    }
+    
+    /* Name列内容字号设置为12px */
+    .sticky-table td:nth-child(2) {
+        font-size: 12px;
+    }
+    
+    .sticky-table th:first-child,
+    .sticky-table td:first-child {
+        width: 50px;
+        min-width: 50px;
+        max-width: 50px;
+    }
+    
+    .sticky-table th:nth-child(2),
+    .sticky-table td:nth-child(2) {
+        left: 50px;
+        width: 100px;
+        min-width: 100px;
+        max-width: 100px;
+    }
+    
+    /* 隐藏Obtainment列（第5列） */
+    .sticky-table th:nth-child(5),
+    .sticky-table td:nth-child(5) {
+        display: none;
+    }
+    
+    /* 调整其他列宽度 */
+    .sticky-table th:nth-child(3),
+    .sticky-table td:nth-child(3) {
+        width: 80px;
+    }
+    
+    .sticky-table th:nth-child(4),
+    .sticky-table td:nth-child(4) {
+        width: 70px;
+    }
+    
+    .sticky-table th:nth-child(6),
+    .sticky-table td:nth-child(6) {
+        width: 200px;
+    }
+    
+    /* 减小单元格内边距 */
+    .sticky-table td {
+        padding: 8px 6px;
     }
 }
