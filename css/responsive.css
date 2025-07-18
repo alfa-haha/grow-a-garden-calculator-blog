@@ -423,8 +423,13 @@
     }
     
     .crop-grid {
-        grid-template-columns: repeat(3, 1fr);
-        max-height: 120px;
+        grid-template-columns: repeat(4, 1fr);
+        max-height: 400px;
+    }
+    
+    .crop-grid-compact {
+        grid-template-columns: repeat(4, 1fr);
+        max-height: 400px;
     }
     
     .crop-option-name {

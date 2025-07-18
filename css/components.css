@@ -1015,13 +1015,18 @@
     .mutation-option-compact {
         width: calc(25% - 4px);
         margin: 2px;
-        padding: 4px 2px;
-        font-size: 9px;
+        padding: 6px 3px;
+        font-size: 12px;
     }
     
     .mutation-option-compact .mutation-name {
-        font-size: 9px;
-        line-height: 1.1;
+        font-size: 12px;
+        line-height: 1.2;
+    }
+    
+    .mutation-option-compact .mutation-effect {
+        font-size: 12px;
+        font-weight: 700;
     }
     
     .mutation-option-compact .mutation-effect {

@@ -2633,9 +2633,60 @@ class App {
         const menuToggle = document.getElementById('menu-toggle');
         const navMenu = document.getElementById('nav-menu');
         if (menuToggle && navMenu) {
-            menuToggle.addEventListener('click', () => {
+            // Toggle menu on button click
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation(); // 防止事件冒泡
                 navMenu.classList.toggle('active');
                 menuToggle.classList.toggle('active');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+
+            // Close menu when clicking on menu links
+            const navLinks = navMenu.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                });
+            });
+
+            // Touch events for mobile swipe to close
+            let startY = 0;
+            let startX = 0;
+            
+            navMenu.addEventListener('touchstart', (e) => {
+                startY = e.touches[0].clientY;
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+
+            navMenu.addEventListener('touchmove', (e) => {
+                if (!navMenu.classList.contains('active')) return;
+                
+                const currentY = e.touches[0].clientY;
+                const currentX = e.touches[0].clientX;
+                const diffY = startY - currentY;
+                const diffX = Math.abs(startX - currentX);
+                
+                // 向上滑动超过50px且水平移动不超过30px时关闭菜单
+                if (diffY > 50 && diffX < 30) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            }, { passive: true });
+
+            // Close menu on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
             });
         }
 
