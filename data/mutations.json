@@ -6,7 +6,7 @@
       "category": "Growth Mutations",
       "sheckles_multiplier": 1,
       "stack_bonus": false,
-      "appearance": "RipeSugarAppleIcon.png",
+      "appearance": "Placeholder.png",
       "visual_description": "Magenta in color",
       "obtainment": "This mutation can only be added to Sugar Apple."
     },
@@ -26,7 +26,7 @@
       "category": "Growth Mutations",
       "sheckles_multiplier": 50,
       "stack_bonus": false,
-      "appearance": "Tomato Rainbow.gif",
+      "appearance": "Tomato_Rainbow.png",
       "visual_description": "Continuously changes color, Emits yellow particles and a rainbow above it",
       "obtainment": "0.1% chance to grow replacing the normal variant. Can be applied by the Butterfly pet when a crop has 5+ mutations, and all previous mutations will be removed."
     },
@@ -56,7 +56,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 2,
       "stack_bonus": true,
-      "appearance": "Strawberry Moonlit.png",
+      "appearance": "Strawberry_Moonlit.png",
       "visual_description": "Glowing, purple aroma, Purple in color",
       "obtainment": "During Night, with a max of 6 plants being moonlit every 2 minutes during the duration of the Night."
     },
@@ -66,7 +66,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 3,
       "stack_bonus": true,
-      "appearance": "Rosy Delight Clay Mutation.png",
+      "appearance": "Rosy_Delight_Clay_Mutation.png",
       "visual_description": "Appears a brown-ish color and has a unique texture",
       "obtainment": "By combining the 'Wet' mutation and 'Sandy' mutation."
     },
@@ -86,7 +86,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 2,
       "stack_bonus": true,
-      "appearance": "Strawberry Choc Png.png",
+      "appearance": "Strawberry_Choc.png",
       "visual_description": "Brown in color, Dripping with chocolate syrup",
       "obtainment": "From a Chocolate Sprinkler. During Chocolate Rain. Using a Mutation Choc Spray on a crop."
     },
@@ -96,7 +96,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 3,
       "stack_bonus": true,
-      "appearance": "Sandy_Tomato.gif",
+      "appearance": "Sandy_Tomato.png",
       "visual_description": "Tan color, Emits puffs of sand around the fruit",
       "obtainment": "During Sandstorm"
     },
@@ -106,7 +106,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 4,
       "stack_bonus": true,
-      "appearance": "Bloodlitdragonfruit png.png",
+      "appearance": "Bloodlitdragonfruit_png.png",
       "visual_description": "Shining, Red in color",
       "obtainment": "During Blood Moon, which has a chance to replace Night every 4 hours."
     },
@@ -146,7 +146,7 @@
       "category": "Temperature Mutations",
       "sheckles_multiplier": 10,
       "stack_bonus": true,
-      "appearance": "Mango Frozen.png",
+      "appearance": "Mango_Frozen.png",
       "visual_description": "Encased in an ice block.",
       "obtainment": "If a crop has both Wet/Drenched and Chilled mutations. Can be applied by Polar Bear. Can be applied by the Flower Froster Sprinkler (only applies to flower type plants)"
     },
@@ -156,7 +156,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 90,
       "stack_bonus": true,
-      "appearance": "aurora gif.gif",
+      "appearance": "Aurora_gif.png",
       "visual_description": "Pulses between blues and purples, Releases a faint smoke from above the crop",
       "obtainment": "Given during Aurora Borealis."
     },
@@ -176,7 +176,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 120,
       "stack_bonus": true,
-      "appearance": "Strawberry Celestial.PNG",
+      "appearance": "Strawberry_Celestial.png",
       "visual_description": "Slightly reflectant, Sparkling yellow and purple",
       "obtainment": "When a crop is struck during Meteor Shower."
     },
@@ -196,7 +196,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 4,
       "stack_bonus": true,
-      "appearance": "Obraz 2025-06-07 173233267.png",
+      "appearance": "Obraz_2025-06-07_173233267.png",
       "visual_description": "Unharvested: Black in color, Sparking. Harvested: Black in color, Emits ash particles",
       "obtainment": "Can be applied by the Cooked Owl pet. Can be applied by the Mutation Spray Burnt."
     },
@@ -206,7 +206,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 4,
       "stack_bonus": true,
-      "appearance": "pineapple_verdant.png",
+      "appearance": "Pineapple_verdant.png",
       "visual_description": "Green in color, Emits green rectangular particles",
       "obtainment": "Small chance to be applied by the Scarlet Macaw pet or the Solar Flare admin weather."
     },
@@ -226,7 +226,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 5,
       "stack_bonus": true,
-      "appearance": "Plasma tomato.png",
+      "appearance": "Plasma_tomato.png",
       "visual_description": "Neon, Pinkish purple in color",
       "obtainment": "During a Laser Storm."
     },
@@ -236,7 +236,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 5,
       "stack_bonus": true,
-      "appearance": "Honeyglazed template fr2.png",
+      "appearance": "Honeyglazed_template_fr2.png",
       "visual_description": "Emits a yellow fog, Dripping in honey",
       "obtainment": "From a Honey Sprinkler. Can be applied by the Bear Bee pet."
     },
@@ -246,7 +246,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 5,
       "stack_bonus": true,
-      "appearance": "MoonBlossomHeavenlyAnimated.gif",
+      "appearance": "Heavenly.png",
       "visual_description": "Emits golden, shining stars from the base",
       "obtainment": "During a Floating Jandel event. (Can only be spawned by admins)"
     },
@@ -256,7 +256,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 8,
       "stack_bonus": true,
-      "appearance": "Fried tomato2.png",
+      "appearance": "Fried_tomato2.png",
       "visual_description": "Small yellow particles fall from the crop",
       "obtainment": "During a Fried Chicken event."
     },
@@ -276,7 +276,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 10,
       "stack_bonus": true,
-      "appearance": "Ember_Lily_Cooked.PNG",
+      "appearance": "Ember_Lily_Cooked.PNG.png",
       "visual_description": "Orange in color, Emits white steam and red swirls",
       "obtainment": "Small chance to be applied by the Cooked Owl pet."
     },
@@ -296,7 +296,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 25,
       "stack_bonus": true,
-      "appearance": "Cactus Zombified.png",
+      "appearance": "Cactus_Zombified.png",
       "visual_description": "Emits a green fog, Dripping with green liquid",
       "obtainment": "Can be applied by the Chicken Zombie pet."
     },
@@ -346,7 +346,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 100,
       "stack_bonus": true,
-      "appearance": "Moon Mango Paradisal.png",
+      "appearance": "Moon_Mango_Paradisal.png",
       "visual_description": "Lime Green in color, Emits sun ray-like particles.",
       "obtainment": "Occurs when a plant is both Verdant and Sundried, replaces both mutations."
     },
@@ -356,7 +356,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 100,
       "stack_bonus": true,
-      "appearance": "Alienlikegif.gif",
+      "appearance": "Alienlikegif.png",
       "visual_description": "Cyan in color, Cyan particles emitted from the fruit, Parts of fruit can be fully transparent/invisible, or be partially transparent.",
       "obtainment": "During the Alien Invasion Event"
     },
@@ -376,7 +376,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 125,
       "stack_bonus": true,
-      "appearance": "Disco Mutation.gif",
+      "appearance": "Disco_Mutation.png",
       "visual_description": "Shining, Flashing red, pink, yellow, green, and blue (in that order) constantly",
       "obtainment": "During a Disco event. (Can only be spawned by admins) Can be applied by the Disco Bee pet."
     },
@@ -396,7 +396,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 135,
       "stack_bonus": true,
-      "appearance": "Voidblueberrry.jpg",
+      "appearance": "Voidblueberrry.png",
       "visual_description": "Emits black hole particles",
       "obtainment": "During a Black Hole event. (Can only be spawned by admins)"
     },
@@ -406,7 +406,7 @@
       "category": "Environmental Mutations",
       "sheckles_multiplier": 150,
       "stack_bonus": true,
-      "appearance": "Dawnbound Sunflower.png",
+      "appearance": "Dawnbound_Sunflower.png",
       "visual_description": "Glows a pure white",
       "obtainment": "During the Sun God Event, by getting 4 players holding 4 Sunflowers with each flower touching in front of the Sun God. This mutation can only be applied to Sunflowers."
     }
@@ -426,21 +426,90 @@
       "Drenched replaces Wet"
     ],
     "pet_mutations": [
-      {"pet": "Dragonfly", "mutation": "Gold", "release": "Update 1.04.0"},
-      {"pet": "Polar Bear", "mutations": ["Chilled", "Frozen"], "release": "Update 1.04.0"},
-      {"pet": "Chicken Zombie", "mutation": "Zombified", "release": "Update 1.06.0"},
-      {"pet": "Bear Bee", "mutation": "HoneyGlazed", "release": "Update 1.08.0"},
-      {"pet": "Bee, Honey Bee, Petal Bee, Queen Bee", "mutation": "Pollinated", "release": "Update 1.08.0"},
-      {"pet": "Wasp, Tarantula Hawk", "mutation": "Pollinated", "release": "Update 1.09.0"},
-      {"pet": "Disco Bee", "mutation": "Disco", "release": "Update 1.09.0"},
-      {"pet": "Butterfly", "mutation": "Rainbow", "release": "Update 1.09.0"},
-      {"pet": "Cooked Owl", "mutations": ["Burnt", "Cooked"], "release": "Update 1.10.0"},
-      {"pet": "Pack Bee", "mutation": "Pollinated", "release": "Update 1.10.0"},
-      {"pet": "Scarlet Macaw", "mutation": "Verdant", "release": "Update 1.11.0"},
-      {"pet": "Sea Turtle", "mutation": "Wet", "release": "Update 1.11.0"},
-      {"pet": "Hyacinth Macaw", "mutation": "Cloudtouched", "release": "Update 1.12.0"},
-      {"pet": "Raptor", "mutation": "Amber", "release": "Update 1.13.0"},
-      {"pet": "Pterodactyl", "mutations": ["Windstruck", "Twisted"], "release": "Update 1.13.0"}
+      {
+        "pet": "Dragonfly",
+        "mutation": "Gold",
+        "release": "Update 1.04.0"
+      },
+      {
+        "pet": "Polar Bear",
+        "mutations": [
+          "Chilled",
+          "Frozen"
+        ],
+        "release": "Update 1.04.0"
+      },
+      {
+        "pet": "Chicken Zombie",
+        "mutation": "Zombified",
+        "release": "Update 1.06.0"
+      },
+      {
+        "pet": "Bear Bee",
+        "mutation": "HoneyGlazed",
+        "release": "Update 1.08.0"
+      },
+      {
+        "pet": "Bee, Honey Bee, Petal Bee, Queen Bee",
+        "mutation": "Pollinated",
+        "release": "Update 1.08.0"
+      },
+      {
+        "pet": "Wasp, Tarantula Hawk",
+        "mutation": "Pollinated",
+        "release": "Update 1.09.0"
+      },
+      {
+        "pet": "Disco Bee",
+        "mutation": "Disco",
+        "release": "Update 1.09.0"
+      },
+      {
+        "pet": "Butterfly",
+        "mutation": "Rainbow",
+        "release": "Update 1.09.0"
+      },
+      {
+        "pet": "Cooked Owl",
+        "mutations": [
+          "Burnt",
+          "Cooked"
+        ],
+        "release": "Update 1.10.0"
+      },
+      {
+        "pet": "Pack Bee",
+        "mutation": "Pollinated",
+        "release": "Update 1.10.0"
+      },
+      {
+        "pet": "Scarlet Macaw",
+        "mutation": "Verdant",
+        "release": "Update 1.11.0"
+      },
+      {
+        "pet": "Sea Turtle",
+        "mutation": "Wet",
+        "release": "Update 1.11.0"
+      },
+      {
+        "pet": "Hyacinth Macaw",
+        "mutation": "Cloudtouched",
+        "release": "Update 1.12.0"
+      },
+      {
+        "pet": "Raptor",
+        "mutation": "Amber",
+        "release": "Update 1.13.0"
+      },
+      {
+        "pet": "Pterodactyl",
+        "mutations": [
+          "Windstruck",
+          "Twisted"
+        ],
+        "release": "Update 1.13.0"
+      }
     ]
   }
-} 
+}
