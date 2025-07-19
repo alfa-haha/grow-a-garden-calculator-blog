@@ -7,10 +7,9 @@ class PetsManager {
     constructor() {
         this.pets = [];
         this.filteredPets = [];
-        // 移除分页相关属性
-        // this.currentPage = 1;
-        // this.itemsPerPage = 20;
-        // this.totalPages = 1;
+        this.currentPage = 1;
+        this.itemsPerPage = 30;
+        this.totalPages = 1;
         this.isInitializing = false;
         this.isInitialized = false;
         
@@ -197,6 +196,17 @@ class PetsManager {
         if (resetButton) {
             resetButton.addEventListener('click', () => this.resetFilters());
         }
+        
+        // Pagination buttons
+        const prevButton = document.getElementById('prev-page');
+        if (prevButton) {
+            prevButton.addEventListener('click', () => this.goToPreviousPage());
+        }
+        
+        const nextButton = document.getElementById('next-page');
+        if (nextButton) {
+            nextButton.addEventListener('click', () => this.goToNextPage());
+        }
     }
 
     /**
@@ -256,8 +266,8 @@ class PetsManager {
             // Update filtered pets
             this.filteredPets = filtered;
             
-            // 移除页面重置逻辑
-            // this.currentPage = 1;
+            // 重置到第一页
+            this.currentPage = 1;
             
             // Render table with filtered data
             this.renderPetsTable();
@@ -432,23 +442,39 @@ class PetsManager {
         
         console.log('🔍 Debug: About to process pets, count:', this.filteredPets.length);
         
-        // 移除分页逻辑，显示所有宠物
-        const allPets = this.filteredPets;
+        // 计算分页
+        this.totalPages = Math.ceil(this.filteredPets.length / this.itemsPerPage);
         
-        console.log('🔍 Debug: All pets to display:', allPets);
+        // 确保当前页面在有效范围内
+        if (this.currentPage > this.totalPages) {
+            this.currentPage = Math.max(1, this.totalPages);
+        }
+        
+        // 获取当前页的宠物
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        const currentPagePets = this.filteredPets.slice(startIndex, endIndex);
+        
+        console.log('🔍 Debug: Current page pets to display:', currentPagePets);
+        console.log('🔍 Debug: Page info:', {
+            currentPage: this.currentPage,
+            totalPages: this.totalPages,
+            itemsPerPage: this.itemsPerPage,
+            totalPets: this.filteredPets.length
+        });
         
         // Clear existing rows
         tableBody.innerHTML = '';
         
-        // Add pet rows
-        allPets.forEach(pet => {
+        // Add pet rows for current page
+        currentPagePets.forEach(pet => {
             console.log('🔍 Debug: Creating row for pet:', pet);
             const row = this.createPetTableRow(pet);
             tableBody.appendChild(row);
         });
         
-        // 移除分页更新调用
-        // this.updatePagination();
+        // 更新分页控件
+        this.updatePagination();
     }
 
     /**
@@ -463,7 +489,7 @@ class PetsManager {
         
         // Name cell with image and name combined
         const nameCell = document.createElement('td');
-        nameCell.className = 'pet-name-cell';
+        nameCell.className = 'pet-name-cell sticky-column';
         
         // Image container
         const imageContainer = document.createElement('div');
@@ -472,7 +498,7 @@ class PetsManager {
         
         // 确保图片路径正确
         const imageName = pet.image || 'default.png';
-        image.src = `images/pets/${imageName}`;
+        image.src = `./images/pets/${imageName}`;
         image.alt = pet.name || 'Unknown Pet';
         image.className = 'pet-image';
         
@@ -521,9 +547,9 @@ class PetsManager {
         tierCell.appendChild(tierBadge);
         row.appendChild(tierCell);
         
-        // Trait cell - 使用description属性而不是trait
+        // Trait cell - 使用trait属性
         const traitCell = document.createElement('td');
-        traitCell.textContent = pet.description || '-';
+        traitCell.textContent = pet.trait || '-';
         traitCell.className = 'trait-cell';
         row.appendChild(traitCell);
         
@@ -538,12 +564,22 @@ class PetsManager {
         const obtainableText = pet.obtainable === true ? 'Yes' : pet.obtainable === false ? 'No' : (pet.obtainable || '-');
         obtainableCell.textContent = obtainableText;
         obtainableCell.className = 'obtainable-cell';
+        
+        // 添加颜色样式
+        if (obtainableText === 'Yes') {
+            obtainableCell.style.color = 'var(--success-color)';
+            obtainableCell.style.fontWeight = '600';
+        } else if (obtainableText === 'No') {
+            obtainableCell.style.color = 'var(--error-color)';
+            obtainableCell.style.fontWeight = '600';
+        }
+        
         row.appendChild(obtainableCell);
         
         console.log('🔍 Debug: Created row with cells:', {
             name: pet.name,
             tier: pet.tier,
-            trait: pet.description,
+            trait: pet.trait,
             hatchChance: pet.hatchchance,
             obtainable: pet.obtainable,
             imageName: imageName
@@ -553,17 +589,123 @@ class PetsManager {
     }
 
     /**
-     * Update pagination controls (disabled - no pagination)
+     * Go to previous page
+     */
+    goToPreviousPage() {
+        console.log('🔍 Debug: goToPreviousPage called, current page:', this.currentPage);
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            console.log('🔍 Debug: Moving to page:', this.currentPage);
+            this.renderPetsTable();
+        } else {
+            console.log('🔍 Debug: Already on first page');
+        }
+    }
+
+    /**
+     * Go to next page
+     */
+    goToNextPage() {
+        console.log('🔍 Debug: goToNextPage called, current page:', this.currentPage, 'total pages:', this.totalPages);
+        if (this.currentPage < this.totalPages) {
+            this.currentPage++;
+            console.log('🔍 Debug: Moving to page:', this.currentPage);
+            this.renderPetsTable();
+        } else {
+            console.log('🔍 Debug: Already on last page');
+        }
+    }
+
+    /**
+     * Go to specific page
+     * @param {number} page - Page number
+     */
+    goToPage(page) {
+        if (page >= 1 && page <= this.totalPages) {
+            this.currentPage = page;
+            this.renderPetsTable();
+        }
+    }
+
+    /**
+     * Update pagination controls
      */
     updatePagination() {
-        const paginationElement = document.getElementById('pagination');
-        if (!paginationElement) {
-            return;
+        // Update pagination info
+        const paginationInfoElement = document.getElementById('pagination-info-text');
+        if (paginationInfoElement) {
+            const startIndex = (this.currentPage - 1) * this.itemsPerPage + 1;
+            const endIndex = Math.min(this.currentPage * this.itemsPerPage, this.filteredPets.length);
+            paginationInfoElement.textContent = `Showing ${startIndex}-${endIndex} of ${this.filteredPets.length} pets`;
         }
-        
-        // 隐藏分页元素，因为我们不再使用分页
-        paginationElement.innerHTML = '';
-        paginationElement.style.display = 'none';
+
+        // Update previous button
+        const prevButton = document.getElementById('prev-page');
+        if (prevButton) {
+            prevButton.disabled = this.currentPage <= 1;
+        }
+
+        // Update next button
+        const nextButton = document.getElementById('next-page');
+        if (nextButton) {
+            nextButton.disabled = this.currentPage >= this.totalPages;
+        }
+
+        // Update page numbers
+        const paginationNumbers = document.getElementById('pagination-numbers');
+        if (paginationNumbers) {
+            paginationNumbers.innerHTML = '';
+            
+            // Calculate which page numbers to show
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, this.currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(this.totalPages, startPage + maxVisiblePages - 1);
+            
+            // Adjust start page if we're near the end
+            if (endPage - startPage < maxVisiblePages - 1) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            // Add first page and ellipsis if needed
+            if (startPage > 1) {
+                this.createPageButton(paginationNumbers, 1);
+                if (startPage > 2) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.textContent = '...';
+                    ellipsis.className = 'pagination-ellipsis';
+                    paginationNumbers.appendChild(ellipsis);
+                }
+            }
+
+            // Add page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                this.createPageButton(paginationNumbers, i);
+            }
+
+            // Add last page and ellipsis if needed
+            if (endPage < this.totalPages) {
+                if (endPage < this.totalPages - 1) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.textContent = '...';
+                    ellipsis.className = 'pagination-ellipsis';
+                    paginationNumbers.appendChild(ellipsis);
+                }
+                this.createPageButton(paginationNumbers, this.totalPages);
+            }
+        }
+    }
+
+    /**
+     * Create page button
+     * @param {HTMLElement} container - Container element
+     * @param {number} pageNumber - Page number
+     */
+    createPageButton(container, pageNumber) {
+        const button = document.createElement('button');
+        button.textContent = pageNumber;
+        button.className = `pagination-number ${pageNumber === this.currentPage ? 'active' : ''}`;
+        button.addEventListener('click', () => this.goToPage(pageNumber));
+        container.appendChild(button);
     }
 }
 

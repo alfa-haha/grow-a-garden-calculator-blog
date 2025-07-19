@@ -1,3 +1,381 @@
+/* ===== Pets表格样式 ===== */
+.pets-table-container {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.pets-table-wrapper {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 70vh;
+    position: relative;
+}
+
+.pets-data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--text-sm);
+    background-color: var(--bg-card);
+}
+
+.pets-table-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--bg-secondary);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.pets-table-header th {
+    padding: var(--spacing) var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.pets-table-header .sticky-column {
+    position: sticky;
+    left: 0;
+    z-index: 11;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.pets-table-body tr {
+    border-bottom: 1px solid var(--border-light);
+    transition: var(--transition);
+}
+
+.pets-table-body tr:hover {
+    background-color: var(--bg-secondary);
+}
+
+.pets-table-body td {
+    padding: var(--spacing-sm);
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.pets-table-body .sticky-column {
+    position: sticky;
+    left: 0;
+    background-color: var(--bg-card);
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+}
+
+.pets-table-body tr:hover .sticky-column {
+    background-color: var(--bg-secondary);
+}
+
+/* Name列样式 */
+.name-column {
+    width: 200px;
+    min-width: 200px;
+}
+
+.pet-name-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) !important;
+}
+
+.pet-image-container {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.pet-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius);
+}
+
+.pet-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+    border-radius: var(--radius);
+}
+
+.pet-name-text {
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    font-size: var(--text-sm);
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+/* 其他列样式 */
+.tier-column {
+    width: 120px;
+    min-width: 120px;
+}
+
+.trait-column {
+    width: 200px;
+    min-width: 200px;
+}
+
+.hatch-chance-column {
+    width: 120px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.obtainable-column {
+    width: 100px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.trait-cell {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: 1.3;
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+.hatch-chance-cell {
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.obtainable-cell {
+    text-align: center;
+    font-weight: 500;
+}
+
+/* 由于CSS不支持:contains伪类，我们将在JavaScript中处理颜色 */
+
+/* 稀有度徽章样式 */
+.badge.rarity {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+    text-align: center;
+    min-width: 70px;
+    display: inline-block;
+}
+
+.badge.rarity.common {
+    background-color: var(--rarity-common);
+}
+
+.badge.rarity.uncommon {
+    background-color: var(--rarity-uncommon);
+}
+
+.badge.rarity.rare {
+    background-color: var(--rarity-rare);
+}
+
+.badge.rarity.epic {
+    background-color: #8B5CF6;
+}
+
+.badge.rarity.legendary {
+    background-color: var(--rarity-legendary);
+}
+
+.badge.rarity.mythical {
+    background-color: var(--rarity-mythical);
+}
+
+.badge.rarity.divine {
+    background-color: var(--rarity-divine);
+}
+
+.badge.rarity.secret {
+    background-color: #A855F7;
+}
+
+.badge.rarity.unknown {
+    background-color: var(--text-secondary);
+}
+
+/* 分页样式 */
+.pets-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    margin-top: var(--spacing);
+}
+
+.pagination-info {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.pagination-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-numbers {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.pagination-number {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 32px;
+    text-align: center;
+}
+
+.pagination-number:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-color);
+}
+
+.pagination-number.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.pagination-ellipsis {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    display: flex;
+    align-items: center;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .pets-table-wrapper {
+        max-height: 60vh;
+    }
+    
+    .name-column {
+        width: 150px;
+        min-width: 150px;
+    }
+    
+    .pet-image-container {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .trait-column {
+        width: 150px;
+        min-width: 150px;
+    }
+    
+    .pets-pagination {
+        flex-direction: column;
+        gap: var(--spacing);
+    }
+    
+    .pagination-controls {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .pets-table-wrapper {
+        max-height: 50vh;
+    }
+    
+    .name-column {
+        width: 120px;
+        min-width: 120px;
+    }
+    
+    .pet-image-container {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .pet-name-text {
+        font-size: var(--text-xs);
+    }
+    
+    .trait-column {
+        width: 120px;
+        min-width: 120px;
+    }
+    
+    .tier-column,
+    .hatch-chance-column,
+    .obtainable-column {
+        width: 80px;
+        min-width: 80px;
+    }
+    
+    .pagination-numbers {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
 /* ===== 表单组件 ===== */
 .search-box {
     position: relative;

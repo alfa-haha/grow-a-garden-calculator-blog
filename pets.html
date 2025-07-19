@@ -233,21 +233,23 @@
                 <!-- 删除Grid View和List View部分 -->
 
                 <!-- Table View -->
-                <div class="pets-table" id="pets-table" style="display: block;">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Tier</th>
-                                <th>Trait</th>
-                                <th>Hatch Chance</th>
-                                <th>Obtainable</th>
-                            </tr>
-                        </thead>
-                        <tbody id="pets-table-body">
-                            <!-- Table rows will be generated dynamically via JavaScript -->
-                        </tbody>
-                    </table>
+                <div class="pets-table-container" id="pets-table-container" style="display: block;">
+                    <div class="pets-table-wrapper">
+                        <table class="pets-data-table">
+                            <thead class="pets-table-header">
+                                <tr>
+                                    <th class="name-column sticky-column">Name</th>
+                                    <th class="tier-column">Tier</th>
+                                    <th class="trait-column">Trait</th>
+                                    <th class="hatch-chance-column">Hatch Chance</th>
+                                    <th class="obtainable-column">Obtainable</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pets-table-body" class="pets-table-body">
+                                <!-- Table rows will be generated dynamically via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- Empty State -->
@@ -259,8 +261,21 @@
             </div>
 
             <!-- Pagination -->
-            <div class="pagination" id="pagination">
-                <!-- Pagination controls will be generated dynamically via JavaScript -->
+            <div class="pets-pagination" id="pets-pagination">
+                <div class="pagination-info">
+                    <span id="pagination-info-text">Showing 1-30 of 85 pets</span>
+                </div>
+                <div class="pagination-controls">
+                    <button class="pagination-btn" id="prev-page" disabled>
+                        <span>‹</span> Previous
+                    </button>
+                    <div class="pagination-numbers" id="pagination-numbers">
+                        <!-- Page numbers will be generated dynamically -->
+                    </div>
+                    <button class="pagination-btn" id="next-page">
+                        Next <span>›</span>
+                    </button>
+                </div>
             </div>
 
             <!-- 删除Rarity Statistics部分 -->
