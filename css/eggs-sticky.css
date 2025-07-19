@@ -1,0 +1,363 @@
+/* ===== Eggs表格固定表头样式 ===== */
+
+/* 表格容器样式 */
+.eggs-table {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 140vh;
+    max-width: 100%;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    /* 移动端滚动优化 */
+    -webkit-overflow-scrolling: touch;
+    /* 确保在移动端正常工作 */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    /* 减少容器间隔 */
+    margin: 0;
+}
+
+/* 数据表格基础样式 */
+.eggs-table .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--text-sm);
+    background-color: var(--bg-card);
+    margin: 0;
+}
+
+/* 固定表头样式 */
+.eggs-table .data-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--bg-secondary);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.eggs-table .data-table thead th {
+    padding: var(--spacing) var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    /* 确保在移动端Safari中正常工作 */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+/* 表格主体样式 */
+.eggs-table .data-table tbody tr {
+    border-bottom: 1px solid var(--border-light);
+    transition: var(--transition);
+}
+
+.eggs-table .data-table tbody tr:hover {
+    background-color: var(--bg-secondary);
+}
+
+.eggs-table .data-table tbody td {
+    padding: var(--spacing-sm);
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-light);
+}
+
+/* 图片列样式 */
+.eggs-table .data-table td:first-child {
+    width: 80px;
+    text-align: center;
+}
+
+.eggs-table .data-table td:first-child img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+}
+
+/* 名称列样式 */
+.eggs-table .data-table td:nth-child(2) {
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 150px;
+}
+
+/* 价格列样式 */
+.eggs-table .data-table td:nth-child(3) {
+    font-weight: 500;
+    color: var(--success-color);
+    min-width: 100px;
+}
+
+/* 孵化时间列样式 */
+.eggs-table .data-table td:nth-child(4) {
+    color: var(--text-secondary);
+    min-width: 120px;
+}
+
+/* 孵化概率列样式 */
+.eggs-table .data-table td:nth-child(5) {
+    color: var(--text-secondary);
+    min-width: 200px;
+    font-size: var(--text-xs);
+}
+
+/* 移动端响应式样式 */
+@media (max-width: 768px) {
+    .eggs-table {
+        max-height: 120vh;
+        border-radius: var(--radius);
+        margin: 0;
+    }
+    
+    .eggs-table .data-table {
+        font-size: var(--text-xs);
+    }
+    
+    .eggs-table .data-table thead th {
+        padding: var(--spacing-sm) var(--spacing-xs);
+        font-size: var(--text-xs);
+        /* 确保移动端表头固定 */
+        position: sticky;
+        top: 0;
+        z-index: 15;
+        background-color: var(--bg-secondary);
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    .eggs-table .data-table tbody td {
+        padding: var(--spacing-xs);
+    }
+    
+    /* 调整列宽 */
+    .eggs-table .data-table td:first-child {
+        width: 60px;
+    }
+    
+    .eggs-table .data-table td:first-child img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .eggs-table .data-table td:nth-child(2) {
+        min-width: 120px;
+        font-size: var(--text-xs);
+    }
+    
+    .eggs-table .data-table td:nth-child(3) {
+        min-width: 80px;
+        font-size: var(--text-xs);
+    }
+    
+    .eggs-table .data-table td:nth-child(4) {
+        min-width: 100px;
+        font-size: var(--text-xs);
+    }
+    
+    .eggs-table .data-table td:nth-child(5) {
+        min-width: 150px;
+        font-size: 10px;
+        line-height: 1.2;
+    }
+}
+
+/* 小屏手机样式 */
+@media (max-width: 480px) {
+    .eggs-table {
+        max-height: 100vh;
+        margin: 0;
+    }
+    
+    .eggs-table .data-table thead th {
+        padding: var(--spacing-xs);
+        font-size: 10px;
+        /* 确保小屏手机表头固定 */
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background-color: var(--bg-secondary);
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        /* 添加阴影以增强视觉效果 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .eggs-table .data-table tbody td {
+        padding: var(--spacing-xs);
+    }
+    
+    /* 进一步调整列宽 */
+    .eggs-table .data-table td:first-child {
+        width: 50px;
+    }
+    
+    .eggs-table .data-table td:first-child img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .eggs-table .data-table td:nth-child(2) {
+        min-width: 100px;
+        font-size: 10px;
+    }
+    
+    .eggs-table .data-table td:nth-child(3) {
+        min-width: 70px;
+        font-size: 10px;
+    }
+    
+    .eggs-table .data-table td:nth-child(4) {
+        min-width: 80px;
+        font-size: 10px;
+    }
+    
+    .eggs-table .data-table td:nth-child(5) {
+        min-width: 120px;
+        font-size: 9px;
+        line-height: 1.1;
+    }
+}
+
+/* 确保在深色主题下表头背景正确 */
+[data-theme="dark"] .eggs-table .data-table thead th {
+    background-color: var(--bg-secondary);
+    border-bottom-color: var(--border-color);
+}
+
+/* 滚动条样式 */
+.eggs-table::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.eggs-table::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+}
+
+.eggs-table::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: var(--radius);
+}
+
+.eggs-table::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+.eggs-table::-webkit-scrollbar-corner {
+    background: var(--bg-secondary);
+}
+/*
+ 针对iOS Safari的特殊处理 */
+@supports (-webkit-touch-callout: none) {
+    .eggs-table .data-table thead th {
+        /* iOS Safari需要额外的z-index */
+        z-index: 25;
+        /* 确保背景不透明 */
+        background-color: var(--bg-secondary) !important;
+        /* 添加边框以确保视觉分离 */
+        border-bottom: 2px solid var(--border-color) !important;
+    }
+}
+
+/* 针对Android Chrome的特殊处理 */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .eggs-table .data-table thead th {
+        /* Android Chrome可能需要额外的transform */
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* 确保在所有移动设备上表头都能正确固定 */
+@media (max-width: 768px) {
+    .eggs-table .data-table thead {
+        /* 确保整个thead都是sticky */
+        position: sticky;
+        top: 0;
+        z-index: 15;
+        background-color: var(--bg-secondary);
+    }
+    
+    .eggs-table .data-table thead th {
+        /* 重置position以避免冲突 */
+        position: relative;
+        background-color: var(--bg-secondary);
+    }
+}
+
+/* 横屏模式优化 */
+@media (max-width: 768px) and (orientation: landscape) {
+    .eggs-table {
+        max-height: 80vh;
+        margin: 0;
+    }
+}
+
+/* 超小屏幕优化 */
+@media (max-width: 320px) {
+    .eggs-table {
+        max-height: 90vh;
+        margin: 0;
+    }
+    
+    .eggs-table .data-table td:nth-child(5) {
+        min-width: 100px;
+        font-size: 8px;
+    }
+}
+/* 减少容
+器间隔优化 */
+.eggs-container {
+    margin: 0;
+    padding: 0;
+}
+
+/* 移动端容器间隔优化 */
+@media (max-width: 768px) {
+    .eggs-container {
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* 减少页面容器的padding */
+    .container {
+        padding-left: var(--spacing-sm);
+        padding-right: var(--spacing-sm);
+    }
+    
+    /* 减少filter-section的margin */
+    .filter-section {
+        margin-bottom: var(--spacing);
+    }
+}
+
+@media (max-width: 480px) {
+    .eggs-container {
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* 进一步减少页面容器的padding */
+    .container {
+        padding-left: var(--spacing-xs);
+        padding-right: var(--spacing-xs);
+    }
+    
+    /* 减少filter-section的margin和padding */
+    .filter-section {
+        margin-bottom: var(--spacing-sm);
+        padding: var(--spacing-sm);
+    }
+}

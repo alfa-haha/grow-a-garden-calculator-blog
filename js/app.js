@@ -3335,13 +3335,19 @@ class SEOManager {
      * Set meta tag content
      */
     setMetaTag(id, attribute = null, value) {
+        if (id === 'title') {
+            // Special case for title tag - always update document.title
+            document.title = value;
+            const titleElement = document.getElementById(id) || document.querySelector('title');
+            if (titleElement) {
+                titleElement.textContent = value;
+            }
+            return;
+        }
+        
         const element = document.getElementById(id);
         if (element) {
-            if (id === 'title') {
-                // Special case for title tag
-                document.title = value;
-                element.textContent = value;
-            } else if (attribute) {
+            if (attribute) {
                 element.setAttribute(attribute, value);
             }
         } else {

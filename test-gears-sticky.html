@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gears表格固定表头测试</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/gears-sticky.css">
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .instructions {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .instructions {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>⚙️ Gears表格固定表头测试</h1>
+        
+        <div class="instructions">
+            <h3>测试说明：</h3>
+            <ul>
+                <li><strong>移动端测试：</strong>在手机或平板上打开此页面</li>
+                <li><strong>桌面测试：</strong>缩小浏览器窗口到移动端尺寸</li>
+                <li><strong>滚动测试：</strong>向上滑动表格内容，表头应该保持固定在顶部</li>
+                <li><strong>水平滚动：</strong>表格应该可以左右滑动查看所有列</li>
+                <li><strong>视觉效果：</strong>表头背景应该保持不透明，有清晰的分界线</li>
+                <li><strong>兼容性：</strong>在iOS Safari和Android Chrome上都应该正常工作</li>
+            </ul>
+            <p><strong>提示：</strong>如果你在移动设备上查看，请尝试向上滑动表格内容来测试固定表头功能。</p>
+        </div>
+
+        <div class="gears-container">
+            <div class="gears-table" id="gears-table">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Tier</th>
+                            <th>Description</th>
+                            <th>Obtainable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 生成测试数据 -->
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/ff6b6b/ffffff?text=⚙️" alt="Gear 1"></td>
+                            <td>Basic Shovel</td>
+                            <td>100 coins</td>
+                            <td><span class="badge tier common">Common</span></td>
+                            <td>A simple shovel for digging. Increases digging speed by 10%.</td>
+                            <td><span class="obtainable-status yes">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/4ecdc4/ffffff?text=⚙️" alt="Gear 2"></td>
+                            <td>Iron Pickaxe</td>
+                            <td>500 coins</td>
+                            <td><span class="badge tier uncommon">Uncommon</span></td>
+                            <td>A sturdy iron pickaxe. Increases mining efficiency by 25%.</td>
+                            <td><span class="obtainable-status yes">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/45b7d1/ffffff?text=⚙️" alt="Gear 3"></td>
+                            <td>Golden Watering Can</td>
+                            <td>2000 coins</td>
+                            <td><span class="badge tier rare">Rare</span></td>
+                            <td>A magical watering can that waters multiple plants at once. Increases watering range by 3x3.</td>
+                            <td><span class="obtainable-status yes">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/f7b731/ffffff?text=⚙️" alt="Gear 4"></td>
+                            <td>Diamond Hoe</td>
+                            <td>10000 coins</td>
+                            <td><span class="badge tier legendary">Legendary</span></td>
+                            <td>The ultimate farming tool. Automatically tills soil in a 5x5 area and plants seeds.</td>
+                            <td><span class="obtainable-status yes">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/5f27cd/ffffff?text=⚙️" alt="Gear 5"></td>
+                            <td>Mythical Harvester</td>
+                            <td>50000 coins</td>
+                            <td><span class="badge tier mythical">Mythical</span></td>
+                            <td>A legendary harvesting machine that automatically harvests crops in a large area. Increases harvest yield by 200%.</td>
+                            <td><span class="obtainable-status no">No</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/ff3838/ffffff?text=⚙️" alt="Gear 6"></td>
+                            <td>Divine Fertilizer Spreader</td>
+                            <td>100000 coins</td>
+                            <td><span class="badge tier divine">Divine</span></td>
+                            <td>Spreads divine fertilizer that makes crops grow instantly. Can be used once per day.</td>
+                            <td><span class="obtainable-status no">No</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/2f3542/ffffff?text=⚙️" alt="Gear 7"></td>
+                            <td>Crafted Seed Planter</td>
+                            <td>5000 coins</td>
+                            <td><span class="badge tier craftable">Craftable</span></td>
+                            <td>A player-crafted seed planting device. Plants seeds in a 3x3 pattern automatically.</td>
+                            <td><span class="obtainable-status yes">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/ff6348/ffffff?text=⚙️" alt="Gear 8"></td>
+                            <td>Speed Boots</td>
+                            <td>1500 coins</td>
+                            <td><span class="badge tier uncommon">Uncommon</span></td>
+                            <td>Boots that increase movement speed by 50%. Perfect for quick farm management.</td>
+                            <td><span class="obtainable-status yes">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/ff9ff3/ffffff?text=⚙️" alt="Gear 9"></td>
+                            <td>Magic Gloves</td>
+                            <td>3000 coins</td>
+                            <td><span class="badge tier rare">Rare</span></td>
+                            <td>Enchanted gloves that allow you to carry more items. Increases inventory space by 50%.</td>
+                            <td><span class="obtainable-status yes">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/54a0ff/ffffff?text=⚙️" alt="Gear 10"></td>
+                            <td>Weather Control Device</td>
+                            <td>25000 coins</td>
+                            <td><span class="badge tier legendary">Legendary</span></td>
+                            <td>A device that can control weather patterns. Can make it rain or shine on command.</td>
+                            <td><span class="obtainable-status no">No</span></td>
+                        </tr>
+                        <!-- 重复一些行来创建更多内容用于滚动测试 -->
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/ff6b6b/ffffff?text=⚙️" alt="Gear 11"></td>
+                            <td>Test Shovel 1</td>
+                            <td>100 coins</td>
+                            <td><span class="badge tier common">Common</span></td>
+                            <td>A test shovel for demonstration purposes. Basic functionality included.</td>
+                            <td><span class="obtainable-status yes">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/4ecdc4/ffffff?text=⚙️" alt="Gear 12"></td>
+                            <td>Test Pickaxe 2</td>
+                            <td>500 coins</td>
+                            <td><span class="badge tier uncommon">Uncommon</span></td>
+                            <td>Another test item with improved stats and better performance.</td>
+                            <td><span class="obtainable-status yes">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/45b7d1/ffffff?text=⚙️" alt="Gear 13"></td>
+                            <td>Test Tool 3</td>
+                            <td>2000 coins</td>
+                            <td><span class="badge tier rare">Rare</span></td>
+                            <td>A rare test tool with special abilities and enhanced features for testing purposes.</td>
+                            <td><span class="obtainable-status yes">Yes</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/f7b731/ffffff?text=⚙️" alt="Gear 14"></td>
+                            <td>Test Equipment 4</td>
+                            <td>10000 coins</td>
+                            <td><span class="badge tier legendary">Legendary</span></td>
+                            <td>Legendary test equipment with maximum performance and advanced capabilities.</td>
+                            <td><span class="obtainable-status no">No</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://via.placeholder.com/50x50/5f27cd/ffffff?text=⚙️" alt="Gear 15"></td>
+                            <td>Test Device 5</td>
+                            <td>50000 coins</td>
+                            <td><span class="badge tier mythical">Mythical</span></td>
+                            <td>A mythical test device with extraordinary powers and unlimited potential for testing.</td>
+                            <td><span class="obtainable-status no">No</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script src="verify-sticky-header.js"></script>
+    <script>
+        // 添加一些测试功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.querySelector('.gears-table');
+            const statusDiv = document.createElement('div');
+            statusDiv.style.cssText = `
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                background: rgba(0,0,0,0.8);
+                color: white;
+                padding: 10px;
+                border-radius: 5px;
+                font-size: 12px;
+                z-index: 1000;
+                max-width: 200px;
+            `;
+            statusDiv.innerHTML = `
+                <div>屏幕宽度: <span id="screen-width">${window.innerWidth}px</span></div>
+                <div>表格滚动: <span id="scroll-top">0px</span></div>
+                <div>设备类型: <span id="device-type">${window.innerWidth <= 768 ? '移动端' : '桌面端'}</span></div>
+            `;
+            document.body.appendChild(statusDiv);
+            
+            // 监听滚动事件
+            table.addEventListener('scroll', function() {
+                document.getElementById('scroll-top').textContent = table.scrollTop + 'px';
+            });
+            
+            // 监听窗口大小变化
+            window.addEventListener('resize', function() {
+                document.getElementById('screen-width').textContent = window.innerWidth + 'px';
+                document.getElementById('device-type').textContent = window.innerWidth <= 768 ? '移动端' : '桌面端';
+            });
+            
+            // 添加测试按钮
+            const testButton = document.createElement('button');
+            testButton.textContent = '滚动到底部测试';
+            testButton.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 15px;
+                background: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 1000;
+            `;
+            testButton.addEventListener('click', function() {
+                table.scrollTop = table.scrollHeight;
+            });
+            document.body.appendChild(testButton);
+            
+            // 添加验证按钮
+            const verifyButton = document.createElement('button');
+            verifyButton.textContent = '验证固定表头';
+            verifyButton.style.cssText = `
+                position: fixed;
+                bottom: 70px;
+                right: 20px;
+                padding: 10px 15px;
+                background: #28a745;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 1000;
+            `;
+            verifyButton.addEventListener('click', function() {
+                // 修改验证脚本以适配gears表格
+                console.log('🔍 开始验证Gears固定表头功能...');
+                
+                const table = document.querySelector('.gears-table');
+                const thead = document.querySelector('.gears-table .data-table thead');
+                const ths = document.querySelectorAll('.gears-table .data-table thead th');
+                
+                console.log('✅ 表格元素检查:');
+                console.log('  - 表格容器:', table ? '存在' : '❌ 不存在');
+                console.log('  - 表头:', thead ? '存在' : '❌ 不存在');
+                console.log('  - 表头列数:', ths.length);
+                
+                if (table && thead) {
+                    const tableStyles = window.getComputedStyle(table);
+                    const theadStyles = window.getComputedStyle(thead);
+                    
+                    console.log('✅ 样式检查:');
+                    console.log('  - 表格overflow-y:', tableStyles.overflowY);
+                    console.log('  - 表格max-height:', tableStyles.maxHeight);
+                    console.log('  - 表头position:', theadStyles.position);
+                    console.log('  - 表头top:', theadStyles.top);
+                    console.log('  - 表头z-index:', theadStyles.zIndex);
+                }
+                
+                alert('验证完成！请查看控制台输出。');
+            });
+            document.body.appendChild(verifyButton);
+        });
+    </script>
+</body>
+</html>
