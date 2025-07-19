@@ -4,7 +4,39 @@ Professional Grow A Garden calculator tool for Roblox, providing precise crop va
 
 ## 🚀 最新更新 (2025年1月)
 
-### 🐛 **Generator页面Meta标签显示错误修复** (最新紧急修复)
+### 🔧 **URL规范化SEO优化** (最新重要更新)
+
+**问题描述**: 发现同一内容被Google以不同的URL格式索引，导致重复内容问题：
+- `/gears` 和 `/gears.html` 同时被索引
+- `/eggs` 和 `/eggs.html` 同时被索引  
+- `/mutations` 和 `/mutations.html` 同时被索引
+- `/crops` 和 `/crops.html` 同时被索引
+
+**解决方案**:
+1. ✅ **创建.htaccess文件**: 设置301重定向，将带.html的URL重定向到简洁URL
+2. ✅ **更新内部链接**: 统一所有HTML文件中的链接，使用简洁URL格式
+3. ✅ **设置canonical标签**: 为所有页面设置正确的首选URL
+4. ✅ **更新sitemap.xml**: 移除带.html的URL，只保留简洁URL
+5. ✅ **添加SEO优化**: 为缺失的页面添加完整的SEO meta标签
+
+**技术实现**:
+```apache
+# 301重定向规则
+Redirect 301 /gears.html /gears
+Redirect 301 /eggs.html /eggs
+Redirect 301 /mutations.html /mutations
+Redirect 301 /crops.html /crops
+Redirect 301 /pets.html /pets
+Redirect 301 /generator.html /generator
+```
+
+**优化效果**:
+- ✅ 消除重复内容问题
+- ✅ 提升SEO排名效果
+- ✅ 统一URL结构，提升用户体验
+- ✅ 保持向后兼容性
+
+### 🐛 **Generator页面Meta标签显示错误修复** (已修复)
 
 **问题描述**: generator.html页面中meta标签内容被错误地嵌套和重复，导致浏览器将这些meta标签作为页面内容显示出来，而不是作为元数据处理。
 

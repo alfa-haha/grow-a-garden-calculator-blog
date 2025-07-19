@@ -7,43 +7,37 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://growagardencalculator.blog/calculator.html</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://growagardencalculator.blog/crops.html</loc>
+    <loc>https://growagardencalculator.blog/crops</loc>
     <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://growagardencalculator.blog/pets.html</loc>
+    <loc>https://growagardencalculator.blog/pets</loc>
     <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://growagardencalculator.blog/eggs.html</loc>
+    <loc>https://growagardencalculator.blog/eggs</loc>
     <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://growagardencalculator.blog/gears.html</loc>
+    <loc>https://growagardencalculator.blog/gears</loc>
     <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://growagardencalculator.blog/mutations.html</loc>
+    <loc>https://growagardencalculator.blog/mutations</loc>
     <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://growagardencalculator.blog/generator.html</loc>
+    <loc>https://growagardencalculator.blog/generator</loc>
     <lastmod>2025-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
