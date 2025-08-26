@@ -4,6 +4,10 @@
 # Enable rewrite engine
 RewriteEngine On
 
+# Redirect www to non-www (for consistent canonical URLs)
+RewriteCond %{HTTP_HOST} ^www\.growagardencalculator\.blog$ [NC]
+RewriteRule ^(.*)$ https://growagardencalculator.blog/$1 [R=301,L]
+
 # Redirect .html URLs to clean URLs (301 permanent redirect)
 Redirect 301 /gears.html /gears
 Redirect 301 /eggs.html /eggs
