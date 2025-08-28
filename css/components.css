@@ -5605,3 +5605,130 @@ noscript .crop-grid-static {
         padding: 8px 6px;
     }
 }
+
+/* ===== Language Switcher Styles ===== */
+.language-switcher {
+    position: relative;
+    display: inline-block;
+    margin-right: var(--spacing-sm);
+}
+
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+    min-width: 60px;
+}
+
+.lang-btn:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.lang-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-color-alpha);
+}
+
+.lang-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.lang-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* Language Dropdown */
+.lang-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 150px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.lang-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.lang-option:last-child {
+    border-bottom: none;
+}
+
+.lang-option:hover {
+    background: var(--bg-secondary);
+    color: var(--primary-color);
+}
+
+.lang-option.active {
+    background: var(--primary-light);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.lang-option .flag {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .language-switcher {
+        margin-right: 0.25rem;
+    }
+    
+    .lang-btn {
+        padding: 0.4rem 0.6rem;
+        min-width: 50px;
+    }
+    
+    .lang-text {
+        display: none;
+    }
+    
+    .lang-dropdown {
+        right: -20px;
+        min-width: 130px;
+    }
+}

@@ -11,6 +11,10 @@
       gtag('config', 'G-VVQPS0SR7D');
     </script>
     
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1795894285291235"
+         crossorigin="anonymous"></script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="title">GAG Calculator - Grow A Garden Calculator Magic</title>
@@ -331,14 +335,28 @@
                 </a>
             </div>
             <div class="nav-menu" id="nav-menu">
-                        <a href="crops" class="nav-link">Crops</a>
-        <a href="pets" class="nav-link">Pets</a>
-        <a href="eggs" class="nav-link">Eggs</a>
-        <a href="gears" class="nav-link">Gears</a>
-        <a href="mutations" class="nav-link">Mutations</a>
-        <a href="generator" class="nav-link">Generator</a>
+                        <a href="crops" class="nav-link" data-i18n="nav.crops">Crops</a>
+        <a href="pets" class="nav-link" data-i18n="nav.pets">Pets</a>
+        <a href="eggs" class="nav-link" data-i18n="nav.eggs">Eggs</a>
+        <a href="gears" class="nav-link" data-i18n="nav.gears">Gears</a>
+        <a href="mutations" class="nav-link" data-i18n="nav.mutations">Mutations</a>
+        <a href="generator" class="nav-link" data-i18n="nav.generator">Generator</a>
             </div>
             <div class="nav-actions">
+                <div class="language-switcher">
+                    <button class="lang-btn" id="lang-toggle" title="Switch Language" data-i18n-title="common.switchLanguage">
+                        <span class="lang-icon">🌐</span>
+                        <span class="lang-text" data-i18n="common.language">EN</span>
+                    </button>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <button class="lang-option" data-lang="en">
+                            <span class="flag">🇺🇸</span> English
+                        </button>
+                        <button class="lang-option" data-lang="zh">
+                            <span class="flag">🇨🇳</span> 中文
+                        </button>
+                    </div>
+                </div>
                 <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
                     <span class="theme-icon">🌙</span>
                 </button>
@@ -357,8 +375,8 @@
         <section class="calculator-module" id="calculator-module">
             <div class="container">
                 <div class="module-header">
-                    <h2 class="module-title">🧮 Grow A Garden Calculator</h2>
-                    <p class="module-description">
+                    <h2 class="module-title" data-i18n="calculator.title">🧮 Grow A Garden Calculator</h2>
+                    <p class="module-description" data-i18n="calculator.description">
                         Grow Smart, Trade Smart - Grow A Garden Mutation & Value Calculator Magic!
                     </p>
                 </div>
@@ -369,24 +387,24 @@
                         <div class="calculator-input-panel">
                             <!-- Quick Crop Selection -->
                             <div class="calc-section">
-                                <h3 class="calc-section-title">🌾 Select Crop</h3>
+                                <h3 class="calc-section-title" data-i18n="calculator.selectCrop">🌾 Select Crop</h3>
                                 <div class="crop-selector-compact">
                                     <div class="search-box">
-                                        <input type="text" id="hero-crop-search" placeholder="Select Crop - enter text to search crops..." class="search-input">
+                                        <input type="text" id="hero-crop-search" placeholder="Select Crop - enter text to search crops..." data-i18n-placeholder="calculator.searchPlaceholder" class="search-input">
                                         <span class="search-icon">🔍</span>
                                     </div>
                                     
                                     <!-- Category Filters -->
                                     <div class="category-filters" id="category-filters">
-                                        <button class="category-btn active" data-category="all">All</button>
-                                        <button class="category-btn" data-category="common">Common</button>
-                                        <button class="category-btn" data-category="uncommon">Uncommon</button>
-                                        <button class="category-btn" data-category="rare">Rare</button>
-                                        <button class="category-btn" data-category="legendary">Legendary</button>
-                                        <button class="category-btn" data-category="mythical">Mythical</button>
-                                        <button class="category-btn" data-category="divine">Divine</button>
-                                        <button class="category-btn" data-category="prismatic">Prismatic</button>
-                                        <button class="category-btn" data-category="transcendent">Transcendent</button>
+                                        <button class="category-btn active" data-category="all" data-i18n="common.all">All</button>
+                                        <button class="category-btn" data-category="common" data-i18n="rarity.common">Common</button>
+                                        <button class="category-btn" data-category="uncommon" data-i18n="rarity.uncommon">Uncommon</button>
+                                        <button class="category-btn" data-category="rare" data-i18n="rarity.rare">Rare</button>
+                                        <button class="category-btn" data-category="legendary" data-i18n="rarity.legendary">Legendary</button>
+                                        <button class="category-btn" data-category="mythical" data-i18n="rarity.mythical">Mythical</button>
+                                        <button class="category-btn" data-category="divine" data-i18n="rarity.divine">Divine</button>
+                                        <button class="category-btn" data-category="prismatic" data-i18n="rarity.prismatic">Prismatic</button>
+                                        <button class="category-btn" data-category="transcendent" data-i18n="rarity.transcendent">Transcendent</button>
                                     </div>
                                     
                                     <div class="crop-grid-compact" id="hero-crop-grid">
@@ -623,22 +641,22 @@
 
                             <!-- Mutation Selection -->
                             <div class="calc-section">
-                                <h3 class="calc-section-title">🌟 GAG Mutations</h3>
+                                <h3 class="calc-section-title" data-i18n="calculator.mutations">🌟 GAG Mutations</h3>
                                 <div class="mutation-selector-compact">
                                     <div class="mutation-row">
-                                        <label class="mutation-label">Growth:</label>
+                                        <label class="mutation-label" data-i18n="mutations.growth">Growth:</label>
                                         <div class="mutation-options-inline" id="hero-growth-mutations">
                                             <!-- Growth mutations will be dynamically loaded from mutations(new).json -->
                                         </div>
                                     </div>
                                     <div class="mutation-row">
-                                        <label class="mutation-label">Temperature:</label>
+                                        <label class="mutation-label" data-i18n="mutations.temperature">Temperature:</label>
                                         <div class="mutation-options-inline" id="hero-temperature-mutations">
                                             <!-- Temperature mutations will be dynamically loaded from mutations(new).json -->
                                         </div>
                                     </div>
                                     <div class="mutation-row">
-                                        <label class="mutation-label">Environment:</label>
+                                        <label class="mutation-label" data-i18n="mutations.environmental">Environment:</label>
                                         <div class="mutation-options-inline" id="hero-environmental-mutations">
                                             <!-- Environmental mutations will be dynamically loaded from mutations(new).json -->
                                         </div>
@@ -648,17 +666,17 @@
 
                             <!-- Additional Parameters -->
                             <div class="calc-section">
-                                <h3 class="calc-section-title">⚙️ Parameters</h3>
+                                <h3 class="calc-section-title" data-i18n="calculator.parameters">⚙️ Parameters</h3>
                                 <div class="parameter-selector-compact">
                                     <div class="parameter-row-group">
                                         <div class="parameter-item">
-                                            <label class="parameter-label">Weight (kg):</label>
+                                            <label class="parameter-label" data-i18n="calculator.weight">Weight (kg):</label>
                                             <div class="parameter-input-group">
                                                 <input type="number" id="hero-weight" class="parameter-input" value="2.85" min="0" step="0.01" max="999999">
                                             </div>
                                         </div>
                                         <div class="parameter-item">
-                                            <label class="parameter-label">Quantity (pcs):</label>
+                                            <label class="parameter-label" data-i18n="calculator.quantity">Quantity (pcs):</label>
                                             <div class="parameter-input-group">
                                                 <input type="number" id="hero-quantity" class="parameter-input" value="1" min="1" step="1" max="999999">
                                             </div>
@@ -666,7 +684,7 @@
                                     </div>
                                     <div class="parameter-row-group">
                                         <div class="parameter-item">
-                                            <label class="parameter-label">Friend Boost:</label>
+                                            <label class="parameter-label" data-i18n="calculator.friendBoost">Friend Boost:</label>
                                             <div class="parameter-input-group">
                                                 <input type="range" id="hero-friend-boost" class="parameter-slider" min="0" max="100" step="10" value="0">
                                                 <input type="number" id="hero-friend-boost-input" class="parameter-input friend-boost-input" min="0" max="100" step="10" value="0">
@@ -674,7 +692,7 @@
                                             </div>
                                         </div>
                                         <div class="parameter-item">
-                                            <label class="parameter-label">Max Mutation:</label>
+                                            <label class="parameter-label" data-i18n="calculator.maxMutation">Max Mutation:</label>
                                             <div class="parameter-input-group">
                                                 <label class="parameter-toggle">
                                                     <input type="checkbox" id="hero-max-mutation" class="parameter-checkbox">
@@ -690,13 +708,13 @@
 
                         <!-- Right Panel: Calculator Results -->
                         <div class="calculator-output-panel">
-                            <h3 class="calc-section-title">💰 Results</h3>
+                            <h3 class="calc-section-title" data-i18n="calculator.results">💰 Results</h3>
                             <div class="result-display-compact" id="hero-result-display">
                                 <div class="result-crop-info">
                                     <div class="crop-display">
                                         <span class="crop-icon-large" id="hero-result-crop-icon">🥕</span>
                                         <div class="crop-info-text">
-                                            <span class="crop-name" id="hero-result-crop-name">Select a crop</span>
+                                            <span class="crop-name" id="hero-result-crop-name" data-i18n="common.selectCropFirst">Select a crop</span>
                                             <span class="crop-rarity" id="hero-result-crop-rarity">-</span>
                                         </div>
                                     </div>
@@ -704,27 +722,27 @@
                                 
                                 <div class="calculation-summary">
                                     <div class="calc-row-compact">
-                                        <span class="calc-label">Base Value:</span>
+                                        <span class="calc-label" data-i18n="calculator.baseValue">Base Value:</span>
                                         <span class="calc-value" id="hero-base-value">0</span>
                                     </div>
                                     <div class="calc-row-compact">
-                                        <span class="calc-label">Total Multiplier:</span>
+                                        <span class="calc-label" data-i18n="calculator.totalMultiplier">Total Multiplier:</span>
                                         <span class="calc-value" id="hero-multiplier">×1</span>
                                     </div>
                                     <div class="calc-row-compact final-value">
-                                        <span class="calc-label">Total Value:</span>
+                                        <span class="calc-label" data-i18n="calculator.totalValue">Total Value:</span>
                                         <span class="calc-value-large" id="hero-final-value">0</span>
                                     </div>
                                 </div>
                             </div>
                             
                             <div class="calc-actions">
-                                <button class="btn btn-secondary" id="hero-reset-btn">🔄 Reset</button>
+                                <button class="btn btn-secondary" id="hero-reset-btn" data-i18n="calculator.reset">🔄 Reset</button>
                             </div>
-                            <h3 class="calc-section-title">🧮 Value to Weight</h3>
+                            <h3 class="calc-section-title" data-i18n="calculator.valueToWeight">🧮 Value to Weight</h3>
                             <div class="result-display-compact" id="value-to-weight-module" style="margin-top: 0;">
                                 <div class="calc-row-compact" style="margin-bottom: 0.5rem; flex-direction: column; align-items: stretch;">
-                                    <label for="target-value-input" class="calc-label" style="display:block; text-align:center; margin-bottom:0.5rem;">Target Value (Sheckles):</label>
+                                    <label for="target-value-input" class="calc-label" style="display:block; text-align:center; margin-bottom:0.5rem;" data-i18n="calculator.targetValue">Target Value (Sheckles):</label>
                                     <div class="value-to-weight-input-group" style="display:flex; flex-direction:column; align-items:center; max-width: 260px; margin: 0 auto; width:100%;">
                                         <input type="number" id="target-value-input" class="parameter-input" placeholder="1000000" min="1" style="width: 100%; height: 2.5em; font-size: 1.15em; text-align:center; border-radius: 0.6em; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 0.7em;">
                                         <button class="btn btn-primary" id="calculate-weight-btn" 
@@ -746,12 +764,12 @@
                                             "
                                             onmouseover="this.style.background='#e0f7ef';this.style.color='#047857';"
                                             onmouseout="this.style.background='#fff';this.style.color='#059669';"
-                                        >Calculate</button>
+                                        data-i18n="calculator.calculate">Calculate</button>
                                     </div>
                                 </div>
                                 <div id="value-to-weight-result" style="margin-top:0.5rem;"></div>
                                 <div style="margin-top:1.1em; text-align:center; font-size:0.92em; color:#6B7280; line-height:1.5;">
-                                    Note: This reverses the above calculation. Value-to-weight results depend on Mutations, Quantity, and Friend Boost.
+                                    <span data-i18n="calculator.valueToWeightNote">Note: This reverses the above calculation. Value-to-weight results depend on Mutations, Quantity, and Friend Boost.</span>
                                 </div>
                             </div>
                         </div>
@@ -765,12 +783,12 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <h2>Why You Need Our GAG Calculator for Roblox?</h2>
-                        <p>The Grow A Garden Calculator is your secret weapon for dominating Roblox's most popular farming game! This free, powerful tool helps you calculate exact crop values using the same formulas as the official game. With our comprehensive database of all 106 fruits and 43 mutation types, you'll never guess crop worth again.</p>
+                        <h2 data-i18n="hero.whyNeed">Why You Need Our GAG Calculator for Roblox?</h2>
+                        <p data-i18n="hero.description1">The Grow A Garden Calculator is your secret weapon for dominating Roblox's most popular farming game! This free, powerful tool helps you calculate exact crop values using the same formulas as the official game. With our comprehensive database of all 106 fruits and 43 mutation types, you'll never guess crop worth again.</p>
                         
-                        <p>Whether you're trading a Golden Mango or planning your next Rainbow mutation strategy, our GAG Calculator gives you instant, accurate results. From beginner Strawberries to legendary Dragon Fruit worth billions of Sheckles, we've got every crop covered. Plus, our advanced mutation system calculates incredible multipliers up to 5,450x - that's real profit potential!</p>
+                        <p data-i18n="hero.description2">Whether you're trading a Golden Mango or planning your next Rainbow mutation strategy, our GAG Calculator gives you instant, accurate results. From beginner Strawberries to legendary Dragon Fruit worth billions of Sheckles, we've got every crop covered. Plus, our advanced mutation system calculates incredible multipliers up to 5,450x - that's real profit potential!</p>
                         
-                        <p>Perfect for trade analysis, inventory valuation, and profit optimization, this Grow A Garden Value Calculator turns every player into a farming expert. Join thousands of successful Roblox players who use our tool daily to maximize their earnings and dominate the marketplace!</p>
+                        <p data-i18n="hero.description3">Perfect for trade analysis, inventory valuation, and profit optimization, this Grow A Garden Value Calculator turns every player into a farming expert. Join thousands of successful Roblox players who use our tool daily to maximize their earnings and dominate the marketplace!</p>
                         
                     </div>
                 </div>
@@ -780,33 +798,33 @@
         <!-- Features Section -->
         <section class="features">
             <div class="container">
-                <h2 class="section-title">Advanced Roblox Calculator Features</h2>
+                <h2 class="section-title" data-i18n="features.title">Advanced Roblox Calculator Features</h2>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">🧮</div>
-                        <h3 class="feature-title">99.9% Accurate Calculations</h3>
-                        <p class="feature-description">
+                        <h3 class="feature-title" data-i18n="features.accuracy.title">99.9% Accurate Calculations</h3>
+                        <p class="feature-description" data-i18n="features.accuracy.description">
                             Uses official Grow A Garden formulas for precise crop valuations every time
                         </p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🌟</div>
-                        <h3 class="feature-title">Complete Mutation System</h3>
-                        <p class="feature-description">
+                        <h3 class="feature-title" data-i18n="features.mutations.title">Complete Mutation System</h3>
+                        <p class="feature-description" data-i18n="features.mutations.description">
                             Calculate all 106 crops and 43 mutations including Shocked (100x), Celestial (120x), and Rainbow (50x) effects
                         </p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🎯</div>
-                        <h3 class="feature-title">Fastest Updates</h3>
-                        <p class="feature-description">
+                        <h3 class="feature-title" data-i18n="features.updates.title">Fastest Updates</h3>
+                        <p class="feature-description" data-i18n="features.updates.description">
                             Stay current with latest crop prices and mutation multipliers as the game evolves
                         </p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🆓</div>
-                        <h3 class="feature-title">Completely Free</h3>
-                        <p class="feature-description">
+                        <h3 class="feature-title" data-i18n="features.free.title">Completely Free</h3>
+                        <p class="feature-description" data-i18n="features.free.description">
                             Access all premium calculator features without any cost or hidden fees
                         </p>
                     </div>
@@ -817,33 +835,33 @@
         <!-- Quick Start Section -->
         <section class="quick-start">
             <div class="container">
-                <h2 class="section-title">🚀 How to Use GAG Value Calculator?</h2>
+                <h2 class="section-title" data-i18n="quickStart.title">🚀 How to Use GAG Value Calculator?</h2>
                 <div class="steps-grid">
                     <div class="step-card">
                         <div class="step-number">1</div>
-                        <h3 class="step-title">Select Your Crop</h3>
-                        <p class="step-description">
+                        <h3 class="step-title" data-i18n="quickStart.step1.title">Select Your Crop</h3>
+                        <p class="step-description" data-i18n="quickStart.step1.description">
                             Pick from 106 available crops and fruits in our complete Grow A Garden database
                         </p>
                     </div>
                     <div class="step-card">
                         <div class="step-number">2</div>
-                        <h3 class="step-title">Choose Mutations</h3>
-                        <p class="step-description">
+                        <h3 class="step-title" data-i18n="quickStart.step2.title">Choose Mutations</h3>
+                        <p class="step-description" data-i18n="quickStart.step2.description">
                             Add Golden, Rainbow, or environmental in total 43 mutations to see value multipliers instantly
                         </p>
                     </div>
                     <div class="step-card">
                         <div class="step-number">3</div>
-                        <h3 class="step-title">Get Instant Results</h3>
-                        <p class="step-description">
+                        <h3 class="step-title" data-i18n="quickStart.step3.title">Get Instant Results</h3>
+                        <p class="step-description" data-i18n="quickStart.step3.description">
                             View your crop's exact worth in Sheckles with detailed breakdown
                         </p>
                     </div>
                     <div class="step-card">
                         <div class="step-number">4</div>
-                        <h3 class="step-title">Optimize Strategy</h3>
-                        <p class="step-description">
+                        <h3 class="step-title" data-i18n="quickStart.step4.title">Optimize Strategy</h3>
+                        <p class="step-description" data-i18n="quickStart.step4.description">
                             Use insights to plan your next planting and mutation hunting approach
                         </p>
                     </div>
@@ -857,19 +875,19 @@
                 <div class="stats-grid">
                     <div class="stat-item">
                         <div class="stat-number">106</div>
-                        <div class="stat-label">Crop Types</div>
+                        <div class="stat-label" data-i18n="stats.cropTypes">Crop Types</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">43</div>
-                        <div class="stat-label">Mutation Types</div>
+                        <div class="stat-label" data-i18n="stats.mutationTypes">Mutation Types</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">52,900x</div>
-                        <div class="stat-label">Max Multiplier</div>
+                        <div class="stat-label" data-i18n="stats.maxMultiplier">Max Multiplier</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">99.9%</div>
-                        <div class="stat-label">Calculation Accuracy</div>
+                        <div class="stat-label" data-i18n="stats.accuracy">Calculation Accuracy</div>
                     </div>
                 </div>
             </div>
@@ -878,65 +896,65 @@
         <!-- FAQ Section -->
         <section class="faq">
             <div class="container">
-                <h2 class="section-title">❓ FAQ About Grow A Garden Mutations Value Calculator</h2>
+                <h2 class="section-title" data-i18n="faq.title">❓ FAQ About Grow A Garden Mutations Value Calculator</h2>
                 <div class="faq-grid">
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3>How accurate is this Grow A Garden Calculator compared to in-game values?</h3>
+                            <h3 data-i18n="faq.q1.question">How accurate is this Grow A Garden Calculator compared to in-game values?</h3>
                             <span class="faq-toggle">+</span>
                         </div>
                         <div class="faq-answer">
-                            <p>Our calculator uses the exact same formulas as the official Grow A Garden game, ensuring 99.9% accuracy for all crop valuations and mutation calculations.</p>
+                            <p data-i18n="faq.q1.answer">Our calculator uses the exact same formulas as the official Grow A Garden game, ensuring 99.9% accuracy for all crop valuations and mutation calculations.</p>
                         </div>
                     </div>
                     
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3>Can I calculate values for multiple mutations on the same crop?</h3>
+                            <h3 data-i18n="faq.q2.question">Can I calculate values for multiple mutations on the same crop?</h3>
                             <span class="faq-toggle">+</span>
                         </div>
                         <div class="faq-answer">
-                            <p>Absolutely! Our GAG Calculator supports stacking mutations and accurately calculates combined multiplier effects up to 52,900x for maximum value optimization.</p>
+                            <p data-i18n="faq.q2.answer">Absolutely! Our GAG Calculator supports stacking mutations and accurately calculates combined multiplier effects up to 52,900x for maximum value optimization.</p>
                         </div>
                     </div>
                     
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3>Does the calculator include all crops from Grow A Garden?</h3>
+                            <h3 data-i18n="faq.q3.question">Does the calculator include all crops from Grow A Garden?</h3>
                             <span class="faq-toggle">+</span>
                         </div>
                         <div class="faq-answer">
-                            <p>Yes! Our database includes all 106 official fruits from common varieties like Apple and Banana to legendary crops like Dragon Fruit and Moon Mango.</p>
+                            <p data-i18n="faq.q3.answer">Yes! Our database includes all 106 official fruits from common varieties like Apple and Banana to legendary crops like Dragon Fruit and Moon Mango.</p>
                         </div>
                     </div>
                     
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3>Is the Grow A Garden Value Calculator free to use?</h3>
+                            <h3 data-i18n="faq.q4.question">Is the Grow A Garden Value Calculator free to use?</h3>
                             <span class="faq-toggle">+</span>
                         </div>
                         <div class="faq-answer">
-                            <p>Completely free! Access all features including crop calculations, mutation analysis, and trade evaluation without any cost or registration required.</p>
+                            <p data-i18n="faq.q4.answer">Completely free! Access all features including crop calculations, mutation analysis, and trade evaluation without any cost or registration required.</p>
                         </div>
                     </div>
                     
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3>How often do you update the crop prices and mutation values?</h3>
+                            <h3 data-i18n="faq.q5.question">How often do you update the crop prices and mutation values?</h3>
                             <span class="faq-toggle">+</span>
                         </div>
                         <div class="faq-answer">
-                            <p>We update our Grow A Garden Calculator regularly to match the latest game changes, ensuring you always have current and accurate official information.</p>
+                            <p data-i18n="faq.q5.answer">We update our Grow A Garden Calculator regularly to match the latest game changes, ensuring you always have current and accurate official information.</p>
                         </div>
                     </div>
                     
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3>Can I use this calculator to analyze trades with other players?</h3>
+                            <h3 data-i18n="faq.q6.question">Can I use this calculator to analyze trades with other players?</h3>
                             <span class="faq-toggle">+</span>
                         </div>
                         <div class="faq-answer">
-                            <p>Perfect for trading! Input both sides of any trade to instantly see if it's a win, fair deal, or loss before making decisions.</p>
+                            <p data-i18n="faq.q6.answer">Perfect for trading! Input both sides of any trade to instantly see if it's a win, fair deal, or loss before making decisions.</p>
                         </div>
                     </div>
                 </div>
@@ -948,33 +966,33 @@
             <div class="container">
                 <div class="cta-content">
                     <div class="cta-text">
-                        <h2 class="cta-title">🚀 Ready to Dominate Grow A Garden Trading?</h2>
-                        <p class="cta-description">
+                        <h2 class="cta-title" data-i18n="cta.title">🚀 Ready to Dominate Grow A Garden Trading?</h2>
+                        <p class="cta-description" data-i18n="cta.description">
                             Join thousands of successful Roblox players who use our GAG Calculator daily to maximize profits and make winning trades. Calculate your crop values now with 99.9% accuracy!
                         </p>
                     </div>
                     <div class="cta-actions">
                         <button class="btn btn-cta-primary" id="cta-start-calculating">
                             <span class="btn-icon">🧮</span>
-                            Start Calculating Now
+                            <span data-i18n="cta.startCalculating">Start Calculating Now</span>
                         </button>
                         <button class="btn btn-cta-secondary" id="cta-explore-database">
                             <span class="btn-icon">📊</span>
-                            Explore Crop Database
+                            <span data-i18n="cta.exploreDatabase">Explore Crop Database</span>
                         </button>
                     </div>
                     <div class="cta-features">
                         <div class="cta-feature">
                             <span class="cta-feature-icon">⚡</span>
-                            <span class="cta-feature-text">Instant Results</span>
+                            <span class="cta-feature-text" data-i18n="cta.instantResults">Instant Results</span>
                         </div>
                         <div class="cta-feature">
                             <span class="cta-feature-icon">🎯</span>
-                            <span class="cta-feature-text">99.9% Accurate</span>
+                            <span class="cta-feature-text" data-i18n="cta.accurate">99.9% Accurate</span>
                         </div>
                         <div class="cta-feature">
                             <span class="cta-feature-icon">🆓</span>
-                            <span class="cta-feature-text">Always Free</span>
+                            <span class="cta-feature-text" data-i18n="cta.alwaysFree">Always Free</span>
                         </div>
                     </div>
                 </div>
@@ -989,7 +1007,7 @@
                 <div class="footer-section">
                     <h3><span class="footer-logo">🌱</span> GAG Calculator</h3>
                     <div class="social-share">
-                        <h4>Share with Friends</h4>
+                        <h4 data-i18n="footer.shareWithFriends">Share with Friends</h4>
                         <div class="social-buttons">
                             <button class="social-btn facebook" data-platform="facebook" title="Share on Facebook">
                                 <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -1019,27 +1037,27 @@
                     </div>
                 </div>
                 <div class="footer-section">
-                    <h4>Calculators</h4>
-                    <a href="index.html#calculator-module">Value Calculator</a>
-                                    <a href="crops">Mutations Calculator</a>
-                <a href="pets">Trade Calculator</a>
-                <a href="pets">WFL Calculator</a>
+                    <h4 data-i18n="footer.calculators">Calculators</h4>
+                    <a href="index.html#calculator-module" data-i18n="footer.valueCalculator">Value Calculator</a>
+                                    <a href="crops" data-i18n="footer.mutationsCalculator">Mutations Calculator</a>
+                <a href="pets" data-i18n="footer.tradeCalculator">Trade Calculator</a>
+                <a href="pets" data-i18n="footer.wflCalculator">WFL Calculator</a>
                 </div>
                 <div class="footer-section">
-                    <h4>Resources</h4>
-                    <a href="crops">Crops Tier List</a>
-                    <a href="eggs">Eggs Tier List</a>
-                    <a href="gears">Gear Tier List</a>
+                    <h4 data-i18n="footer.resources">Resources</h4>
+                    <a href="crops" data-i18n="footer.cropsTierList">Crops Tier List</a>
+                    <a href="eggs" data-i18n="footer.eggsTierList">Eggs Tier List</a>
+                    <a href="gears" data-i18n="footer.gearTierList">Gear Tier List</a>
                 </div>
                 <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>Found a bug or got a better idea? Don’t be shy—hit me up!</p>
+                    <h4 data-i18n="footer.contact">Contact</h4>
+                    <p data-i18n="footer.contactDescription">Found a bug or got a better idea? Don't be shy—hit me up!</p>
                     <p>📧 <a href="mailto:hello@growagardencalculator.blog" class="email-link" title="Click to send email">hello@growagardencalculator.blog</a></p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 growagardencalculator.blog. All Rights Reserved</p>
-                <p>This web site is not endorsed by, directly affiliated with，or officially associated with Grow A Garden. </p>
+                <p data-i18n="footer.copyright">&copy; 2025 growagardencalculator.blog. All Rights Reserved</p>
+                <p data-i18n="footer.disclaimer">This web site is not endorsed by, directly affiliated with，or officially associated with Grow A Garden. </p>
             </div>
         </div>
     </footer>
@@ -1051,6 +1069,7 @@
 
     <!-- JavaScript -->
     <script src="js/canonical-fix.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/app.js"></script>
     <script src="js/calculator.js"></script>
     <script src="js/data-manager.js"></script>

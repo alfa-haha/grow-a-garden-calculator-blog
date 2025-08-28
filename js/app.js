@@ -61,6 +61,12 @@ class App {
             // Detect current page
             this.detectCurrentPage();
             
+            // Wait for i18n to be ready
+            if (window.i18n && !window.i18n.initialized) {
+                console.log('🌍 Waiting for i18n initialization...');
+                await window.i18n.init();
+            }
+            
             // Initialize core components
             await this.initComponents();
             
@@ -69,6 +75,9 @@ class App {
             
             // Load user settings
             this.loadUserSettings();
+            
+            // Setup language switcher
+            this.setupLanguageSwitcher();
             
             // Setup global error handling
             this.setupErrorHandling();
@@ -463,9 +472,13 @@ class App {
         let html = '';
         growthMutations.forEach(mutation => {
             const mutationId = mutation.id.toLowerCase();
+            // 添加变异名称翻译支持
+            const mutationText = window.i18n ?
+                window.i18n.t(`mutations.names.${mutationId}`) || mutation.name :
+                mutation.name;
             html += `
                 <div class="mutation-option-compact" data-mutation="${mutationId}">
-                    <span class="mutation-name">${mutation.name}</span>
+                    <span class="mutation-name">${mutationText}</span>
                     <span class="mutation-effect">×${mutation.sheckles_multiplier}</span>
                 </div>
             `;
@@ -488,9 +501,13 @@ class App {
         let html = '';
         tempMutations.forEach(mutation => {
             const mutationId = mutation.id.toLowerCase();
+            // 添加变异名称翻译支持
+            const mutationText = window.i18n ?
+                window.i18n.t(`mutations.names.${mutationId}`) || mutation.name :
+                mutation.name;
             html += `
                 <div class="mutation-option-compact" data-mutation="${mutationId}">
-                    <span class="mutation-name">${mutation.name}</span>
+                    <span class="mutation-name">${mutationText}</span>
                     <span class="mutation-effect">+${mutation.sheckles_multiplier}×</span>
                 </div>
             `;
@@ -512,9 +529,13 @@ class App {
         let html = '';
         envMutations.forEach(mutation => {
             const mutationId = mutation.id.toLowerCase();
+            // 添加变异名称翻译支持
+            const mutationText = window.i18n ?
+                window.i18n.t(`mutations.names.${mutationId}`) || mutation.name :
+                mutation.name;
             html += `
                 <div class="mutation-option-compact" data-mutation="${mutationId}">
-                    <span class="mutation-name">${mutation.name}</span>
+                    <span class="mutation-name">${mutationText}</span>
                     <span class="mutation-effect">+${mutation.sheckles_multiplier}×</span>
                 </div>
             `;
@@ -1129,7 +1150,7 @@ class App {
         }
         
         // 设置模态框内容
-        document.getElementById('modal-crop-name').textContent = crop.name;
+        document.getElementById('modal-crop-name').textContent = window.i18n?.t(`crops.names.${crop.id}`) || crop.name;
         // 设置作物ID到data-crop-id属性
         document.getElementById('modal-crop-name').dataset.cropId = cropId;
         
@@ -1259,15 +1280,26 @@ class App {
 
         const rarityColor = rarityColors[crop.rarity] || '#9CA3AF';
         
+        // Get translated rarity text
+        const rarityText = window.i18n ? 
+            window.i18n.t(`rarity.${crop.rarity.toLowerCase()}`) : 
+            crop.rarity;
+        
+        // Format price with currency
+        const currency = window.i18n ? window.i18n.t('common.currency') : 'Sheckles';
+        const formattedPrice = window.i18n ? 
+            window.i18n.formatNumber(crop.sellValue) : 
+            crop.sellValue.toLocaleString();
+        
         return `
             <div class="crop-item" data-crop-id="${crop.id}" data-rarity="${crop.rarity}">
                 <div class="crop-icon" style="background-color: ${rarityColor}20; border-color: ${rarityColor};">
                     ${crop.icon}
                 </div>
                 <div class="crop-info">
-                    <div class="crop-name">${crop.name}</div>
-                    <div class="crop-rarity" style="color: ${rarityColor};">${crop.rarity}</div>
-                    <div class="crop-price">💰 ${crop.sellValue}</div>
+                    <div class="crop-name">${window.i18n?.t(`crops.names.${crop.id}`) || crop.name}</div>
+                    <div class="crop-rarity" style="color: ${rarityColor};">${rarityText}</div>
+                    <div class="crop-price">💰 ${formattedPrice}</div>
                 </div>
             </div>
         `;
@@ -1369,8 +1401,17 @@ class App {
         const minValue = crop.minimum_value || crop.sellValue || 0;
         const buyPrice = crop.sheckle_price || crop.buyPrice || 0;
         
-        // 显示格式：最小价值（这是玩家关心的收益值）
-        const displayPrice = minValue > 0 ? `💰 ${this.formatNumber(minValue)}` : 'N/A';
+        // 显示格式：最小价值（这是玩家关心的收益值）- 添加多语言支持
+        const currency = window.i18n ? window.i18n.t('common.currency') : 'Sheckles';
+        const formattedPrice = window.i18n ? 
+            window.i18n.formatNumber(minValue) : 
+            this.formatNumber(minValue);
+        const displayPrice = minValue > 0 ? `💰 ${formattedPrice}` : 'N/A';
+        
+        // 添加稀有度翻译
+        const rarityText = window.i18n ? 
+            window.i18n.t(`rarity.${rarity.toLowerCase()}`) : 
+            rarity;
         
         // Debug log for first few crops
         if (crop.id === 'carrot' || crop.id === 'strawberry') {
@@ -1380,6 +1421,7 @@ class App {
                 tier: crop.tier,
                 rarity: crop.rarity,
                 finalRarity: rarity,
+                rarityText: rarityText,
                 minimum_value: crop.minimum_value,
                 sheckle_price: crop.sheckle_price,
                 sellValue: crop.sellValue,
@@ -1402,9 +1444,9 @@ class App {
                         <span class="crop-icon-fallback" style="display: none;">${crop.icon}</span>
                     ` : `<span class="crop-icon-fallback">${crop.icon}</span>`}
                 </div>
-                <div class="crop-name">${crop.name}</div>
+                <div class="crop-name">${window.i18n?.t(`crops.names.${crop.id}`) || crop.name}</div>
                 <div class="crop-price">${displayPrice}</div>
-                <div class="crop-rarity">${rarity}</div>
+                <div class="crop-rarity">${rarityText}</div>
             </div>
         `;
     }
@@ -1661,7 +1703,7 @@ class App {
                 <td>
                     <div class="crop-cell">
                         ${imageHTML}
-                        <span class="crop-name">${crop.name}</span>
+                        <span class="crop-name">${window.i18n?.t(`crops.names.${crop.id}`) || crop.name}</span>
                     </div>
                 </td>
                 <td>${crop.category}</td>
@@ -1965,14 +2007,25 @@ class App {
             }
         }
         if (cropName) cropName.textContent = crop.name;
-        if (cropRarity) cropRarity.textContent = crop.rarity || crop.tier;
+        if (cropRarity) {
+            const rarityText = window.i18n ? 
+                window.i18n.t(`rarity.${(crop.rarity || crop.tier).toLowerCase()}`) : 
+                (crop.rarity || crop.tier);
+            cropRarity.textContent = rarityText;
+        }
 
         // Update calculation values using new structure
         const baseValue = document.getElementById('hero-base-value');
         const multiplier = document.getElementById('hero-multiplier');
         const finalValue = document.getElementById('hero-final-value');
         
-        if (baseValue) baseValue.textContent = this.formatNumber(calc.baseValue);
+        if (baseValue) {
+            const currency = window.i18n ? window.i18n.t('common.currency') : 'Sheckles';
+            const formattedValue = window.i18n ? 
+                window.i18n.formatNumber(calc.baseValue) : 
+                this.formatNumber(calc.baseValue);
+            baseValue.textContent = `${formattedValue} ${currency}`;
+        }
         if (multiplier) {
             // Show the total multiplier from new calculation
             multiplier.textContent = `×${calc.totalMultiplier.toFixed(2)}`;
@@ -1983,7 +2036,13 @@ class App {
                 multiplier.classList.remove('max-mutation-multiplier');
             }
         }
-        if (finalValue) finalValue.textContent = this.formatNumber(calc.finalValue);
+        if (finalValue) {
+            const currency = window.i18n ? window.i18n.t('common.currency') : 'Sheckles';
+            const formattedValue = window.i18n ? 
+                window.i18n.formatNumber(calc.finalValue) : 
+                this.formatNumber(calc.finalValue);
+            finalValue.textContent = `${formattedValue} ${currency}`;
+        }
 
         // 新增：显示weight
         let weightRow = document.getElementById('hero-weight-row');
@@ -2712,7 +2771,12 @@ class App {
         const finalValue = document.getElementById('hero-final-value');
 
         if (cropIcon) cropIcon.textContent = '🥕';
-        if (cropName) cropName.textContent = 'Select a crop';
+        if (cropName) {
+            const selectText = window.i18n ? 
+                window.i18n.t('common.selectCropFirst') : 
+                'Select a crop';
+            cropName.textContent = selectText;
+        }
         if (cropRarity) cropRarity.textContent = '-';
         if (baseValue) baseValue.textContent = '0';
         if (multiplier) {
@@ -3124,6 +3188,117 @@ class App {
             localStorage.setItem('garden-pro-settings', JSON.stringify(settings));
         } catch (error) {
             console.warn('⚠️ Failed to save user settings:', error);
+        }
+    }
+
+    /**
+     * Setup language switcher functionality
+     */
+    setupLanguageSwitcher() {
+        const langToggle = document.getElementById('lang-toggle');
+        const langDropdown = document.getElementById('lang-dropdown');
+        
+        if (!langToggle || !langDropdown) {
+            console.warn('⚠️ Language switcher elements not found');
+            return;
+        }
+
+        // Toggle dropdown visibility
+        langToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+                langDropdown.classList.remove('show');
+            }
+        });
+
+        // Handle language selection
+        document.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const selectedLang = e.currentTarget.getAttribute('data-lang');
+                
+                if (selectedLang && window.i18n) {
+                    console.log(`🌐 Switching language to: ${selectedLang}`);
+                    
+                    // Switch language
+                    const success = await window.i18n.switchLanguage(selectedLang);
+                    
+                    if (success) {
+                        // Update app state
+                        this.state.language = selectedLang;
+                        this.saveUserSettings();
+                        
+                        // Re-render dynamic content that needs translation
+                        this.refreshDynamicContent();
+                        
+                        console.log(`✅ Language switched to: ${selectedLang}`);
+                    } else {
+                        console.error(`❌ Failed to switch language to: ${selectedLang}`);
+                    }
+                }
+                
+                // Close dropdown
+                langDropdown.classList.remove('show');
+            });
+        });
+
+        // Set initial language state
+        if (window.i18n) {
+            const currentLang = window.i18n.getCurrentLanguage();
+            document.querySelectorAll('.lang-option').forEach(option => {
+                const lang = option.getAttribute('data-lang');
+                option.classList.toggle('active', lang === currentLang);
+            });
+        }
+
+        console.log('🌐 Language switcher setup completed');
+    }
+
+    /**
+     * Refresh dynamic content after language change
+     */
+    refreshDynamicContent() {
+        try {
+            console.log(`🔄 Refreshing dynamic content for language: ${window.i18n?.getCurrentLanguage()}`);
+            
+            // Re-render crop grid if on index page (both regular and hero grids)
+            if (this.state.currentPage === 'index') {
+                if (typeof this.renderCropGrid === 'function') {
+                    this.renderCropGrid();
+                }
+                if (typeof this.renderHeroCropGrid === 'function') {
+                    this.renderHeroCropGrid();
+                }
+            }
+            
+            // Re-render mutations if available (both regular and hero mutations)
+            if (typeof this.renderMutations === 'function') {
+                this.renderMutations();
+            }
+            if (typeof this.renderHeroMutations === 'function') {
+                this.renderHeroMutations();
+            }
+            
+            // Re-render any currently selected crop results to update currency display
+            if (this.state.currentPage === 'index' && typeof this.recalculateHero === 'function') {
+                // Only recalculate if there's already a crop selected
+                const selectedCropName = document.getElementById('hero-result-crop-name');
+                if (selectedCropName && selectedCropName.textContent && 
+                    !selectedCropName.textContent.includes('Select') && 
+                    !selectedCropName.textContent.includes('请先选择')) {
+                    this.recalculateHero();
+                }
+            }
+            
+            // Update any other dynamic content that needs translation
+            console.log('✅ Dynamic content refreshed for new language');
+        } catch (error) {
+            console.warn('⚠️ Error refreshing dynamic content:', error);
         }
     }
 
