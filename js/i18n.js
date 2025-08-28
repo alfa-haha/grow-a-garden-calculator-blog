@@ -9,7 +9,7 @@ class I18nManager {
         this.fallbackLanguage = 'en';
         this.translations = {};
         this.dataCache = {};
-        this.supportedLanguages = ['en', 'zh'];
+        this.supportedLanguages = ['en', 'zh', 'es', 'ko', 'fr', 'de', 'pt', 'ru', 'id'];
         this.initialized = false;
         
         console.log('🌐 I18nManager initialized');
@@ -328,7 +328,14 @@ class I18nManager {
     getLanguageName(language) {
         const names = {
             'en': 'English',
-            'zh': '中文'
+            'zh': '中文',
+            'es': 'Español',
+            'ko': '한국어',
+            'fr': 'Français',
+            'de': 'Deutsch',
+            'pt': 'Português',
+            'ru': 'Русский',
+            'id': 'Bahasa Indonesia'
         };
         
         return names[language] || language;
@@ -342,7 +349,18 @@ class I18nManager {
      */
     formatNumber(number, options = {}) {
         try {
-            const locale = this.currentLanguage === 'zh' ? 'zh-CN' : 'en-US';
+            const localeMap = {
+                'zh': 'zh-CN',
+                'es': 'es-ES',
+                'ko': 'ko-KR',
+                'fr': 'fr-FR',
+                'de': 'de-DE',
+                'pt': 'pt-PT',
+                'ru': 'ru-RU',
+                'id': 'id-ID',
+                'en': 'en-US'
+            };
+            const locale = localeMap[this.currentLanguage] || 'en-US';
             return new Intl.NumberFormat(locale, options).format(number);
         } catch (error) {
             console.warn('Number formatting failed, using fallback:', error);
@@ -358,7 +376,18 @@ class I18nManager {
      */
     formatDate(date, options = {}) {
         try {
-            const locale = this.currentLanguage === 'zh' ? 'zh-CN' : 'en-US';
+            const localeMap = {
+                'zh': 'zh-CN',
+                'es': 'es-ES',
+                'ko': 'ko-KR',
+                'fr': 'fr-FR',
+                'de': 'de-DE',
+                'pt': 'pt-PT',
+                'ru': 'ru-RU',
+                'id': 'id-ID',
+                'en': 'en-US'
+            };
+            const locale = localeMap[this.currentLanguage] || 'en-US';
             return new Intl.DateTimeFormat(locale, options).format(date);
         } catch (error) {
             console.warn('Date formatting failed, using fallback:', error);
